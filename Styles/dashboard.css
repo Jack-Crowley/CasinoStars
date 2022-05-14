@@ -1,0 +1,108 @@
+body {
+    background-color: #232228;
+    font-family: 'Roboto';
+}
+.top {
+    font-size: large;
+}
+
+.parent {
+    padding: 20px;
+    margin: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+h2.header {
+    padding-left: 40px;
+    margin-bottom: 0;
+}
+
+.item {
+    background-color: #0c0b10;
+    padding: 20px;
+    color: white;
+}
+
+.item h4 {
+    font-weight: lighter;
+    font-size: 2em;
+}
+
+.item h3.P {
+    color: #0fdc6f;
+}
+
+.item.P {
+    background-color: #0c0b10;
+    background-image:
+    radial-gradient(
+      circle at top right,
+      rgba(15, 220, 111, 0.2),
+      #0c0b10 40%
+    );
+}
+
+.item.N {
+    background-color: #0c0b10;
+    background-image:
+    radial-gradient(
+      circle at top right,
+      rgba(204, 54, 54, 0.2),
+      #0c0b10 40%
+    );
+}
+
+.item h3.N {
+    color: #cc3636;
+}
+
+.item h3.neutral {
+    color: #ffb94a;
+}
+
+.item h3 span.win {
+    color: #0fdc6f;
+}
+
+.item h3 span.slash {
+    color: white;
+}
+.item h3 span.lose {
+    color: #cc3636;
+}
+.item:nth-child(4) {
+    grid-row: span 2;
+    grid-column: span 2;
+}
+.item:nth-child(5) {
+    grid-row: span 2;
+}
+
+td {
+    font-size: 2em;
+    color: #a9a9a9
+}
+
+td.P {
+    color: #0fdc6f
+}
+
+td.N {
+    color: #cc3636
+}
+
+.gamecard-layout {
+    padding: 20px;
+    margin: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+.card-image img {
+    height: 200px;;
+}
