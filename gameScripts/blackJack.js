@@ -5,7 +5,7 @@ class BlackJack {
     deck;
     center;
 
-    constructor() {
+    constructor(numOfPlayers) {
         this.numOfPlayers = numOfPlayers;
         this.playerlist = new PlayerList;
         this.pot = new Pot;
@@ -14,7 +14,7 @@ class BlackJack {
         this.deck.shuffle();
 
         for (let i = 0; i < numOfPlayers; i++) {
-            player = new Player(100)
+            let player = new Player(100)
             this.playerlist.addPlayer(player)
         }
     }

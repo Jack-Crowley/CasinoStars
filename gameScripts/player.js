@@ -21,13 +21,17 @@ class PlayerList {
 class Player {
     hand;
     money;
+    hasblackjack;
+    bet;
 
     constructor(money) {
         this.hand = [];
         this.money = money;
+        this.hasblackjack = false;
+        this.bet = 0;
     }
 
-    isBankrupt () {
+    getScore () {
         let score = 0;
         let hasAce = false;
         for (let i = 0; i < this.hand.length; i++) {
@@ -35,20 +39,26 @@ class Player {
             if (value == 'A') {
                 value = 11;
                 hasAce = true;
+            } else if (value == "K" || value == "Q" || value == "J" || value == 'T') {
+                value = 10;
             }
-            if (value == "K" || value == "Q" || value == "J" || value == 'T') value = 10;
+            value = Number(value)
             score += value;
         }
         if (score > 21 && hasAce) {
             if (score > 31) {
-                return true;
+                return score-10;
             }
-            return false;
+            return score-10;
         }else if (score > 21) {
-            return true;
+            return score;
         }else {
-            return false;
+            return score;
         }
+    }
+
+    receiveMoney(amount) {
+        this.money += amount;
     }
 
     placeBet(amount) {
@@ -58,11 +68,15 @@ class Player {
         } else {
             this.money -= amount;
         }
-        return amount;
+        this.bet = amount;
     }
 
     drawCard(card) {
         this.hand.push(card);
+    }
+
+    hasBlackJack() {
+        this.hasBlackJack = true;
     }
 }
 

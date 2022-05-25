@@ -8,9 +8,6 @@ class Deck {
                 this.deck.push(new Card(suits[i], values[n]));
             }
         }
-        this.str = function() {
-            'TO DO LATER';
-        }
     }
 
     draw() {
@@ -29,6 +26,47 @@ class Deck {
             // swap the positions of the chosen element with the current element
             this.deck[i] = this.deck[j]
             this.deck[j] = temp;
+        }
+    }
+}
+
+class Blackjackecks extends Deck {
+    constructor() {
+        super()
+        for (let i = 0; i < suits.length; i++) {
+            for (let n = 0; n < values.length; n++) {
+                this.deck.push(new Card(suits[i], values[n]));
+            }
+        }
+        for (let i = 0; i < suits.length; i++) {
+            for (let n = 0; n < values.length; n++) {
+                this.deck.push(new Card(suits[i], values[n]));
+            }
+        }
+        for (let i = 0; i < suits.length; i++) {
+            for (let n = 0; n < values.length; n++) {
+                this.deck.push(new Card(suits[i], values[n]));
+            }
+        }
+        for (let i = 0; i < suits.length; i++) {
+            for (let n = 0; n < values.length; n++) {
+                this.deck.push(new Card(suits[i], values[n]));
+            }
+        }
+        for (let i = 0; i < suits.length; i++) {
+            for (let n = 0; n < values.length; n++) {
+                this.deck.push(new Card(suits[i], values[n]));
+            }
+        }
+        for (let i = 0; i < suits.length; i++) {
+            for (let n = 0; n < values.length; n++) {
+                this.deck.push(new Card(suits[i], values[n]));
+            }
+        }
+        for (let i = 0; i < suits.length; i++) {
+            for (let n = 0; n < values.length; n++) {
+                this.deck.push(new Card(suits[i], values[n]));
+            }
         }
     }
 }
