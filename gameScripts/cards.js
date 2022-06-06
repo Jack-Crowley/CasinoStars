@@ -72,9 +72,19 @@ class Blackjackecks extends Deck {
 }
 
 class Card {
+    suit;
+    value;
+    numval;
+    str;
     constructor(suit, value) {
         this.suit = suit;
         this.value = value;
+        if (this.value = "A") this.numval = 14;
+        if (this.vaue = "K") this.numval = 13;
+        if (this.value = "Q") this.numval = 12;
+        if (this.value = "J") this.numval = 11;
+        if (this.value = "T") this.numval = 10;
+        else this.numval = this.value;
         this.str = value + " of " + suit;
     }
 }
