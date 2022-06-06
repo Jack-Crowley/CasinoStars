@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="Styles/navbar.css">
     <link rel="stylesheet" href="Styles/scrollbar.css">
+    <link rel="stylesheet" href="Styles/statistics.css">
     <title>Casino Stars</title>
 </head>
 <body>
@@ -22,6 +24,120 @@
           </ul>
         </div>
       </nav>
-      <h2 class="white-text header center">History</h2>
+    <h2 class="white-text header">Overall Statistics</h2>
+    <div class="parent">
+      <div class="item center z-depth-5 chart">
+        <div class="row tabchooser">
+          <div class="col s12 tabchooser">
+            <ul class="tabs tabchooser">
+              <li class="tab col s2"><a class="active" href="#Earning1">Daily</a></li>
+              <li class="tab col s2"><a href="#Earning2">Weekly</a></li>
+              <li class="tab col s2 "><a href="#Earning3">Monthly</a></li>
+            </ul>
+          </div>
+          <h4 class="left white-text chart-title">Earnings</h4>
+          <div id="Earning1" class="col s12 white-text">
+            <canvas class="chart" data-type="daily" data-values ='124,3,-50,400,20,20,-50,400,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0' data-title = 'Daily Earnings' data-tabs = '3' data-chart='Earning' style="background-color: #0c0b10;" height="75px"></canvas>
+          </div>
+          <div id="Earning2" class="col s12 white-text">
+            <canvas class="" data-type="weekly" data-values ='12,34,132,7,-10,213,534,5,1' data-title = 'Weekly Earnings' data-tabs = '3' data-chart='Earning' style="background-color: #0c0b10;" height="75px"></canvas>
+          </div>
+          <div id="Earning3" class="col s12 white-text">
+            <canvas class="" data-type="monthly" data-values ='124,3,-50,400,20,20,-50,400,0,0,0,0,12,34,132,7,-10,213,534,5,1,-2,-56,71,341,-200,423,5,1,66,1,-203,453' data-title = 'Monthly Earnings' data-tabs = '3' data-chart='Earning' style="background-color: #0c0b10;" height="75px"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="item center z-depth-5 P">
+        <h4 class="white-text">Total Earning</h4>
+        <h3 class="P">12421</h3>
+      </div>
+      <div class="item z-depth-5 center earningSwitchText P">
+        <h4 class="white-text" data-main="Profit" data-one = 'Daily' data-two="Weekly" data-three="Monthly">Daily Profit</h4>
+        <h3 class="P"  data-one = '12321' data-two="38412" data-three="-1231">12321</h3>
+      </div>
+    </div>
+    <div class="parent">
+      <div class="item center z-depth-5 chart">
+        <div class="row tabchooser">
+          <div class="col s12 tabchooser">
+            <ul class="tabs tabchooser">
+              <li class="tab col s2"><a href="#GP1">Daily</a></li>
+              <li class="tab col s2"><a class="active" href="#GP2">Weekly</a></li>
+              <li class="tab col s2 "><a href="#GP3">Monthly</a></li>
+            </ul>
+          </div>
+          <h4 class="left white-text chart-title">Amount Of Games Played</h4>
+          <div id="GP1" class="col s12 white-text">
+            <canvas class="" data-type="daily" data-values ='2,3,1,0,2,1,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0' data-title = 'Daily Games Played' data-tabs = '3' data-chart='GP' style="background-color: #0c0b10;" height="75px"></canvas>
+          </div>
+          <div id="GP2" class="col s12 white-text">
+            <canvas class="chart" data-type="weekly" data-values ='5,4,1,8,2,3,10' data-title = 'Weekly Games Played' data-tabs = '3' data-chart='GP' style="background-color: #0c0b10;" height="75px"></canvas>
+          </div>
+          <div id="GP3" class="col s12 white-text">
+            <canvas class="" data-type="monthly" data-values ='1,2,5,1,3,2,5,1,4,3,5,6,1,3,5,10,5,3,1,3,4,5,1,3,4,5,6,5,4,3,5,6' data-title = 'Monthly Games Played' data-tabs = '3' data-chart='GP' style="background-color: #0c0b10;" height="75px"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="item center z-depth-5 P">
+        <h4 class="white-text">Total Games Played</h4>
+        <h3 class="P">140</h3>
+      </div>
+      <div class="item z-depth-5 center GPSwitchText P">
+        <h4 class="white-text" data-main="Games Played" data-one = 'Daily' data-two="Weekly" data-three="Monthly">Daily Games Played</h4>
+        <h3 class="P"  data-one = '10' data-two="42" data-three="74">10</h3>
+      </div>
+    </div>
+    <h2 class="white-text header">Individual Games</h2>
+    <div class="gamesparent">
+      <div class="item">
+        <div class="row tabchooser">
+          <div class="col s12 tabchooser">
+            <ul class="tabs tabchooser">
+              <li class="tab col s3"><a class="active" href="#Baccarat">Baccarat</a></li>
+              <li class="tab col s3"><a href="#Blackjack">Blackjack</a></li>
+              <li class="tab col s2 "><a href="#Roulette">Roulette</a></li>
+              <li class="tab col s2 "><a href="#Slots">Slots</a></li>
+              <li class="tab col s2 "><a href="#Poker">Poker</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="statsparent">
+          <div class="gamestatitem">
+            <h3 class="white-text">Pass</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+
+      document.querySelectorAll('.tabs').forEach((tab) => {
+        var options = {}
+        var instance = M.Tabs.init(tab, options);
+      });
+      
+
+      const today = new Date()
+      const dailyValues = []
+      for (let i = 0; i <= today.getHours()+1; i++) {
+        dailyValues.push(`${i}:00`)
+      }
+      const weeklyValues = []
+      for (let i = 6; i >= 0; i--) {
+        let tempDate = new Date()
+        tempDate.setDate(today.getDate() - i)
+        weeklyValues.push(`${tempDate.getMonth()+1}/${tempDate.getDate()}`)
+      }
+      const monthyValues = []
+      for (let i = 29; i >= 0; i--) {
+        let tempDate = new Date()
+        tempDate.setDate(today.getDate() - i)
+        monthyValues.push(`${tempDate.getMonth()+1}/${tempDate.getDate()}`)
+      }
+
+    </script>
+    <script src="/Scripts/statistics.js"></script>
 </body>
 </html>
