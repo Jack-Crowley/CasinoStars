@@ -176,6 +176,18 @@ class Player {
         this.hasBlackJack = true;
     }
 }
+class BaccaratPlayer extends Player {
+    self;
+    banker;
+    tie;
+
+    constructor() {
+        super(money)
+        this.self = false;
+        this.banker = false;
+        this.tie = false;
+    }
+}
 
 class Pot {
     money;
