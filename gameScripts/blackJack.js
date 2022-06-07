@@ -3,14 +3,12 @@ class BlackJack {
     playerlist;
     pot;
     deck;
-    center;
 
     constructor(numOfPlayers) {
         this.numOfPlayers = numOfPlayers;
         this.playerlist = new PlayerList;
         this.pot = new Pot;
-        this.deck = new Deck;
-        this.center = [];
+        this.deck = new Blackjackecks;
         this.deck.shuffle();
 
         for (let i = 0; i < numOfPlayers; i++) {

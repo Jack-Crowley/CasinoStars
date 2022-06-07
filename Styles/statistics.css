@@ -1,0 +1,104 @@
+body {
+    background-color: #232228;
+    font-family: 'Roboto';
+}
+
+h2.header {
+    padding-left: 40px
+}
+
+.parent {
+    padding: 40px 20px;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    column-gap: 20px;
+    row-gap: 20px;
+    background-color: #1d1c22;
+}
+
+.gamesparent {
+    padding: 40px 20px;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: 20px;
+    row-gap: 20px;
+    background-color: #1d1c22;
+}
+
+.statsparent {
+    padding: 40px 20px;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+.item {
+    background-color: #0c0b10;
+}
+
+.gamestatitem {
+    background-color: #17151d;
+}
+
+.tabchooser {
+    background-color: #0c0b10;
+}
+
+.item.chart {
+    grid-row: span 2;
+}
+
+.chart-title {
+    margin-left: 2em;
+}
+
+.tabs {
+    margin-top: 1em
+}
+
+.tabs .tab a{
+    color:#fff;
+}
+
+.tabs .tab a:hover {
+    background-color:#15141b;
+    color: #fff
+}
+
+.tabs .tab a.active {
+    background-color:#211f28;
+    color:rgb(255, 255, 255);
+}
+
+.tabs .indicator {
+    background-color:rgb(143, 143, 143);
+}
+
+
+.item.P {
+    background-color: #0c0b10;
+    background-image:
+    radial-gradient(
+      circle at top right,
+      rgba(15, 220, 111, 0.2),
+      #0c0b10 40%
+    );
+}
+
+.item.N {
+    background-color: #0c0b10;
+    background-image:
+    radial-gradient(
+      circle at top right,
+      rgba(204, 54, 54, 0.2),
+      #0c0b10 40%
+    );
+}
+
+.item h3.P {
+    color: #0fdc6f;
+}

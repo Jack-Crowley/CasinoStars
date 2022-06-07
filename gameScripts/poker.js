@@ -3,12 +3,17 @@ class Poker {
     playerlist;
     pot;
     dealerIndex;
+    deck;
+    bb;
 
-    constructor(numOfPlayers) {
+    constructor(numOfPlayers, bigblind) {
         this.numOfPlayers = numOfPlayers;
         this.playerlist = new PlayerList;
         this.pot = new Pot;
         this.dealerIndex = 0;
+        this.deck = new Deck;
+        this.deck.shuffle();
+        this.bb = bigblind;
         
         for (let i = 0; i < numOfPlayers; i++) {
             this.playerlist.addPlayer()
@@ -21,12 +26,22 @@ class Poker {
 
     rotateDealer() {
         this.dealerIndex++;
-        this.dealerIndex % (this.numOfPlayers-1);
+        this.dealerIndex %= (this.numOfPlayers-1);
     }
 
     drawCards() {
-        for (let i = 0; i < this.numOfPlayers; i++) {
-            this.playerlist[this.dealerIndex+1]
+        for (const player of this.playerlist) {
+            player.drawCard(this.deck.draw());
         }
+    }
+
+    bet(player, amount) {
+        if (amount > player.money) {
+            amount = player.money;
+            player.money = 0;
+        }else {
+            player.money -= amount;
+        }
+        this.pot += amount;
     }
 }

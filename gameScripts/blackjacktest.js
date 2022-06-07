@@ -129,19 +129,57 @@ class Deck {
         }
     }
 }
+class Blackjackecks extends Deck {
+    constructor() {
+        super()
+        for (let i = 0; i < suits.length; i++) {
+            for (let n = 0; n < values.length; n++) {
+                this.deck.push(new Card(suits[i], values[n]));
+            }
+        }
+        for (let i = 0; i < suits.length; i++) {
+            for (let n = 0; n < values.length; n++) {
+                this.deck.push(new Card(suits[i], values[n]));
+            }
+        }
+        for (let i = 0; i < suits.length; i++) {
+            for (let n = 0; n < values.length; n++) {
+                this.deck.push(new Card(suits[i], values[n]));
+            }
+        }
+        for (let i = 0; i < suits.length; i++) {
+            for (let n = 0; n < values.length; n++) {
+                this.deck.push(new Card(suits[i], values[n]));
+            }
+        }
+        for (let i = 0; i < suits.length; i++) {
+            for (let n = 0; n < values.length; n++) {
+                this.deck.push(new Card(suits[i], values[n]));
+            }
+        }
+        for (let i = 0; i < suits.length; i++) {
+            for (let n = 0; n < values.length; n++) {
+                this.deck.push(new Card(suits[i], values[n]));
+            }
+        }
+        for (let i = 0; i < suits.length; i++) {
+            for (let n = 0; n < values.length; n++) {
+                this.deck.push(new Card(suits[i], values[n]));
+            }
+        }
+    }
+}
 class BlackJack {
     numOfPlayers;
     playerlist;
     pot;
     deck;
-    center;
 
     constructor(numOfPlayers) {
         this.numOfPlayers = numOfPlayers;
         this.playerlist = new PlayerList;
         this.pot = new Pot;
-        this.deck = new Deck;
-        this.center = [];
+        this.deck = new Blackjackecks;
         this.deck.shuffle();
 
         for (let i = 0; i < numOfPlayers; i++) {
