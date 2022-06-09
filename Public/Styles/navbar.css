@@ -17,3 +17,8 @@ nav li a {
 nav li a.active {
     color: #dedede
 }
+
+nav li.right {
+    padding-right: 20px;
+    font-size: 2em;
+}

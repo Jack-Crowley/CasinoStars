@@ -6,7 +6,6 @@ function createChart() {
     })
     charts = []
     document.querySelectorAll('canvas.chart').forEach((canvas) => {
-        console.log(canvas.dataset.values)
         let up = (ctx, value) => ctx.p0.parsed.y < ctx.p1.parsed.y ? value : undefined
         let down = (ctx, value) => ctx.p0.parsed.y < ctx.p1.parsed.y ? value : undefined
 
@@ -154,3 +153,7 @@ document.querySelectorAll('.tab a').forEach((tab) => {
         }
     })
 })
+
+window.onresize = () =>{
+    createChart()
+}

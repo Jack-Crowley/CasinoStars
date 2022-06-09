@@ -21,10 +21,10 @@ const genericOptions = {
 };
 
 let data = {
-labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7'],
+labels: weeklyValues,
 datasets: [{
     label: 'Weekly Profit',
-    data: [182, 121, 63, 99, 12, 33, -9],
+    data: canvas.dataset.values.split(','),
     backgroundColor: [
     'rgba(255, 26, 104, 0.2)',
     'rgba(54, 162, 235, 0.2)',
