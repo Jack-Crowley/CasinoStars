@@ -1,0 +1,24 @@
+nav {
+    background-color: #232228;
+    border: 0;
+    padding-top: 15px;
+    padding-bottom: 75px;
+}
+
+nav img {
+        margin-left: 50px;
+        margin-right: 50px;
+}
+
+nav li a {
+    color: #878787
+}
+
+nav li a.active {
+    color: #dedede
+}
+
+nav li.right {
+    padding-right: 20px;
+    font-size: 2em;
+}
