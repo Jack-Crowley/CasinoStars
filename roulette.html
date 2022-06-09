@@ -7,22 +7,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="Styles/navbar.css">
-    <link rel="stylesheet" href="Styles/scrollbar.css">
+    <link rel="stylesheet" href="Public/Styles/navbar.css">
+    <link rel="stylesheet" href="Public/Styles/scrollbar.css">
+    <link rel="stylesheet" href="Public/Styles/dashboard.css">
     <title>Casino Stars</title>
 </head>
 <body>
-    <nav>
-        <div class="nav">
-          <ul>
-            <li><img src="/images/logo.png" alt="" width="75"></li>
-            <li><a href="dashboard.html" class="">Dashboard</a></li>
-            <li><a href="games.html" class="">Games</a></li>
-            <li><a href="stat.html" class="active">Statistics</a></li>
-            <li><a href="history.html" class="">History</a></li>
-          </ul>
-        </div>
-      </nav>
-      <h2 class="white-text header center">History</h2>
+  <canvas width="100%" height="100%"></canvas>
+  <script>
+    var canvas = document.querySelector('canvas');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  </script>
+  <script src="Public/gameScripts\roulette.js"></script>
+  <script src="Public/Scripts/rouletteloop.js"></script>
 </body>
 </html>
