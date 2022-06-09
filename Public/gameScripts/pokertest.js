@@ -176,12 +176,7 @@ class Player {
             }else if (values[i] == 2) {
                 if (twopair) {
                     highest = i+2
-<<<<<<< HEAD:gameScripts/pokertest.js
-                }
-                else if (pair) {
-=======
                 }else if (pair) {
->>>>>>> 6e6ebc9b94cd3e410f74712258096c712ae95e3a:Public/gameScripts/pokertest.js
                     twopair = true;
                     highest = i+2
                 }else {
