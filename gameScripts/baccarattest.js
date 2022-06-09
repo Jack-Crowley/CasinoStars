@@ -34,6 +34,7 @@ class BaccaratCard extends Card {
     numval;
     str;
     constructor(suit, value) {
+        super(suit, value)
         this.suit = suit;
         this.value = value;
         switch (this.value) {
@@ -65,7 +66,17 @@ class Deck {
         this.deck = [];
         for (let i = 0; i < suits.length; i++) {
             for (let n = 0; n < values.length; n++) {
-                this.deck.push(new Card(suits[i], values[n]));
+                this.deck.push(new BaccaratCard(suits[i], values[n]));
+            }
+        }
+        for (let i = 0; i < suits.length; i++) {
+            for (let n = 0; n < values.length; n++) {
+                this.deck.push(new BaccaratCard(suits[i], values[n]));
+            }
+        }
+        for (let i = 0; i < suits.length; i++) {
+            for (let n = 0; n < values.length; n++) {
+                this.deck.push(new BaccaratCard(suits[i], values[n]));
             }
         }
     }
@@ -86,21 +97,6 @@ class Deck {
             // swap the positions of the chosen element with the current element
             this.deck[i] = this.deck[j]
             this.deck[j] = temp;
-        }
-    }
-}
-class BaccaratDeck extends Deck {
-    constructor() {
-        super()
-        for (let i = 0; i < suits.length; i++) {
-            for (let n = 0; n < values.length; n++) {
-                this.deck.push(new Card(suits[i], values[n]));
-            }
-        }
-        for (let i = 0; i < suits.length; i++) {
-            for (let n = 0; n < values.length; n++) {
-                this.deck.push(new Card(suits[i], values[n]));
-            }
         }
     }
 }
@@ -281,7 +277,7 @@ class BaccaratPlayer extends Player {
     left;
     right;
 
-    constructor() {
+    constructor(money) {
         super(money)
         this.self = false;
         this.banker = false;
@@ -319,7 +315,7 @@ class Baccarat {
     constructor(numOfPlayers) {
         this.numOfPlayers = numOfPlayers;
         this.playerlist = new PlayerList;
-        this.deck = new BaccaratDeck;
+        this.deck = new Deck;
         this.deck.shuffle();
         this.playerhand = [];
         this.dealerhand = [];
@@ -327,7 +323,7 @@ class Baccarat {
         this.dealertotal = 0;
 
         for (let i = 0; i < numOfPlayers; i++) {
-            this.playerlist.push(new BaccaratPlayer(100))
+            this.playerlist.addPlayer(new BaccaratPlayer(100))
         }
     }
 
@@ -344,36 +340,32 @@ class Baccarat {
 
 const {question} = require(`readline-sync`)
 
-let run = true;
+let run = 1;
 while (run) {
     let game = new Baccarat(4);
 
-    for (const player of game.playerlist.players) {
+    for (let i = 0; i < game.playerlist.players.length; i++) {
+        console.log(`Player ${i+1}:`)
         let betOn = question(`Would you like to bet on your hand (1), the banker's hand (2), or a tie (3)? `)
         let bet = Number(question(`How much money would you like to bet? `))
-        if (side == 'left') {
-            player.left = true;
-        }else {
-            player.right = true;
-        }
         if (betOn == '1') {
-            player.self = true;
+            game.playerlist.players[i].self = true;
         }else if (betOn == '2') {
-            player.banker = true;
+            game.playerlist.players[i].banker = true;
         }else {
-            player.tie = true;
+            game.playerlist.players[i].tie = true;
         }
-        game.bet(player, bet)
+        game.bet(game.playerlist.players[i], bet)
     }
 
     game.playerhand.push(game.deck.draw())
     game.playertotal+= game.playerhand[0].numval
     game.dealerhand.push(game.deck.draw())
-    game.dealertotal+= game.playerhand[0].numval
+    game.dealertotal+= game.dealerhand[0].numval
     game.playerhand.push(game.deck.draw())
     game.playertotal+= game.playerhand[1].numval
     game.dealerhand.push(game.deck.draw())
-    game.dealertotal+= game.playerhand[1].numval
+    game.dealertotal+= game.dealerhand[1].numval
     game.dealertotal %= 10;
     game.playertotal %= 10;
 
@@ -385,7 +377,11 @@ while (run) {
             console.log(`\t${card.str}`)
         }
         console.log(`and has a total of ${game.playertotal}`)
-        console.log('They draw a card.')
+        let card = game.deck.draw();
+        console.log(`They drew the ${card.str}.`)
+        game.playerhand.push(card)
+        game.playertotal+= game.playerhand[2].numval
+        game.playertotal %= 10;
     }else if (game.playertotal == 6 || game.playertotal == 7) {
         console.log(`The player's cards are: `)
         for (const card of game.playerhand) {
@@ -408,6 +404,8 @@ while (run) {
                 let card = game.deck.draw()
                 game.dealerhand.push(card)
                 console.log(`They drew the ${card.str}`)
+                game.dealertotal += game.dealerhand[2].numval
+                game.dealertotal %= 10;
             }else {
                 console.log(`They stand.`)
             }
@@ -416,6 +414,8 @@ while (run) {
                 let card = game.deck.draw()
                 game.dealerhand.push(card)
                 console.log(`They drew the ${card.str}`)
+                game.dealertotal+= game.dealerhand[2].numval
+                game.dealertotal %= 10;
             }else {
                 console.log(`They stand.`)
             }
@@ -424,6 +424,8 @@ while (run) {
                 let card = game.deck.draw()
                 game.dealerhand.push(card)
                 console.log(`They drew the ${card.str}`)
+                game.dealertotal+= game.dealerhand[2].numval
+                game.dealertotal %= 10;
             }else {
                 console.log(`They stand.`)
             }
@@ -432,6 +434,8 @@ while (run) {
                 let card = game.deck.draw()
                 game.dealerhand.push(card)
                 console.log(`They drew the ${card.str}`)
+                game.dealertotal+= game.dealerhand[2].numval
+                game.dealertotal %= 10;
             }else {
                 console.log(`They stand.`)
             }
@@ -439,6 +443,8 @@ while (run) {
             let card = game.deck.draw()
             game.dealerhand.push(card)
             console.log(`They drew the ${card.str}`)
+            game.dealertotal+= game.dealerhand[2].numval
+            game.dealertotal %= 10;
         }
     }
     console.log(`Player cards are:`)
@@ -476,4 +482,5 @@ while (run) {
             }
         }
     }
+    run = Number(question('You would like to play again. Yes (1) or No (0) '))
 }
