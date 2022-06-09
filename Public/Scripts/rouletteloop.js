@@ -55,22 +55,22 @@ function draw(){
     ctx.arc(canvas.width/2, canvas.height/2, 15, 0, 2 * Math.PI, false)
     ctx.closePath();
     ctx.stroke();
-    ctx.fillRect(canvas.width/4-300, canvas.height/4-100, 300, 100)
+    ctx.fillRect(canvas.width/4-300, canvas.height/4-70, 300, 100)
     ctx.font = "75px Arial";
     ctx.fillStyle = "white";
-    ctx.fillText("Bet:", canvas.width/4-220, canvas.height/4-20)
+    ctx.fillText("Bet:", canvas.width/4-220, canvas.height/4+10)
     ctx.fillStyle = 'gray';
-    ctx.fillRect(canvas.width/4-300, canvas.height/4+5, 300, 100)
+    ctx.fillRect(canvas.width/4-300, canvas.height/4+35, 300, 100)
     ctx.fillStyle = "white";
-    ctx.fillText("Red", canvas.width/4-220, canvas.height/4+80)
+    ctx.fillText("Red", canvas.width/4-220, canvas.height/4+110)
     ctx.fillStyle = 'gray';
-    ctx.fillRect(canvas.width/4-300, canvas.height/4+110, 300, 100)
+    ctx.fillRect(canvas.width/4-300, canvas.height/4+140, 300, 100)
     ctx.fillStyle = "white";
-    ctx.fillText("Black", canvas.width/4-240, canvas.height/4+190)
+    ctx.fillText("Black", canvas.width/4-240, canvas.height/4+220)
     ctx.fillStyle = 'gray';
-    ctx.fillRect(canvas.width/4-300, canvas.height/4+215, 300, 100)
+    ctx.fillRect(canvas.width/4-300, canvas.height/4+245, 300, 100)
     ctx.fillStyle = "white";
-    ctx.fillText("Green", canvas.width/4-250, canvas.height/4+290)
+    ctx.fillText("Green", canvas.width/4-250, canvas.height/4+320)
 }
 
 function start() {
@@ -82,4 +82,35 @@ function start() {
 canvas.addEventListener("click", function(event) {
     //Handle click events
     //Get position of click on canvas: event.offsetX, event.offsetY
+    if (event.offsetX > canvas.width/4-300 && event.offsetX < canvas.width/4 && event.offsetY > canvas.height/4+5 && event.offsetY < canvas.height/4+105) {
+        bet = 'red';
+        ctx.fillStyle = 'red';
+        ctx.fillRect(canvas.width/4-300, canvas.height/4+35, 300, 100)
+        ctx.fillStyle = 'gray';
+        ctx.fillRect(canvas.width/4-300, canvas.height/4+140, 300, 100)
+        ctx.fillRect(canvas.width/4-300, canvas.height/4+245, 300, 100)
+        ctx.fillStyle = "white";
+        ctx.fillText("Black", canvas.width/4-240, canvas.height/4+220)
+        ctx.fillText("Green", canvas.width/4-250, canvas.height/4+320)
+    }else if (event.offsetX > canvas.width/4-300 && event.offsetX < canvas.width/4 && event.offsetY > canvas.height/4+110 && event.offsetY < canvas.height/4+210) {
+        bet = 'black';
+        ctx.fillStyle = 'black';
+        ctx.fillRect(canvas.width/4-300, canvas.height/4+140, 300, 100)
+        ctx.fillStyle = 'gray';
+        ctx.fillRect(canvas.width/4-300, canvas.height/4+35, 300, 100)  
+        ctx.fillRect(canvas.width/4-300, canvas.height/4+245, 300, 100)
+        ctx.fillStyle = "white";
+        ctx.fillText("Red", canvas.width/4-220, canvas.height/4+110)
+        ctx.fillText("Green", canvas.width/4-250, canvas.height/4+320)
+    }else if (event.offsetX > canvas.width/4-300 && event.offsetX < canvas.width/4 && event.offsetY > canvas.height/4+215 && event.offsetY < canvas.height/4+315) {
+        bet = 'green';
+        ctx.fillStyle = 'green';
+        ctx.fillRect(canvas.width/4-300, canvas.height/4+245, 300, 100)
+        ctx.fillStyle = 'gray';
+        ctx.fillRect(canvas.width/4-300, canvas.height/4+35, 300, 100)  
+        ctx.fillRect(canvas.width/4-300, canvas.height/4+140, 300, 100)
+        ctx.fillStyle = "white";
+        ctx.fillText("Red", canvas.width/4-220, canvas.height/4+110)
+        ctx.fillText("Black", canvas.width/4-240, canvas.height/4+220)
+    }
 });
