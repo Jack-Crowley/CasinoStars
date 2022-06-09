@@ -110,3 +110,12 @@ td.N {
 .Game-Title {
     padding-left: 20px;
 }
+
+.card-content {
+    color: black
+}
+
+ul.rules {
+    list-style-type:circle;
+    font-size: 2em;
+}
