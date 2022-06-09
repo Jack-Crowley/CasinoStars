@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="/Styles/dashboard.css">
+    <link rel="stylesheet" href="/Styles/navbar.css">
+    <link rel="stylesheet" href="/Styles/scrollbar.css">
+    <title>Casino Stars</title>
+</head>
+<body>
+  <nav>
+    <div class="nav">
+      <ul>
+        <li><img src="images/logo.png" alt="" width="75"></li>
+        <li><a href="/" class="active">Dashboard</a></li>
+        <li><a href="/games" class="">Games</a></li>
+        <li><a href="/stat" class="">Statistics</a></li>
+        <li><a href="/history" class="">History</a></li>
+        <%function getTotal() {
+          let sum = 0
+          inventory.forEach((num) => {
+            sum+=num.profit
+          })
+          return sum
+        }%>
+        <%function getDay() {
+          // console.log()
+          let date = new Date()
+          let tdate = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+          let sum = 0
+          // console.log('test')
+          inventory.forEach((num) => {
+            if (getDate(num) == tdate) {
+              sum+=num.profit
+            }
+          })
+          return sum
+        }%>
+        <%function getWeek() {
+          // console.log()
+          let today = new Date()
+          let dates = []
+          let values = []
+          for (let i = 7; i >= 0; i--) {
+            let tempDate = new Date()
+            tempDate.setDate(today.getDate() - i)
+            dates.push(`${tempDate.getFullYear()}-${tempDate.getMonth()+1}-${tempDate.getDate()}`)
+          }
+          dates.forEach((date) => {
+            tempvalues = 0
+            inventory.forEach((item) => {
+              if (getDate(item) == date) {
+                tempvalues += item.profit
+              }
+            })
+            values.push(tempvalues)
+          })
+          return values.join(',')
+        }%>
+        <% function getBestGames() {
+          const games = new Map();
+          games.set("Blackjack",0);
+          games.set("Poker",0);
+          games.set("Baccarat",0);
+          games.set("Slots",0);
+          games.set("Roulette",0);
+
+          inventory.forEach((elm) => {
+            games.set(elm.game, games.get(elm.game)+elm.profit)
+          })
+          const mapSort1 = new Map([...games.entries()].sort((a, b) => b[1] - a[1]));
+          let firstGame = [...games][0]
+          let secondGame = [...games][1]
+          let thirdGame = [...games][2]
+          return [[firstGame[0], firstGame[1]],[secondGame[0], secondGame[1]], [thirdGame[0], thirdGame[1]]]
+        }
+        %>
+        
+        <li class="right"><%=getTotal()%></li>
+      </ul>
+    </div>
+  </nav>
+        
+    
+    <h2 class="white-text header">Dashboard</h2>
+    <div class="parent">
+        <div class="item center z-depth-5 P">
+          <h4>Daily Return</h4>
+          <% function getDate(day) {            
+            let date = new Date(day.date);
+            return date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+          }%>
+          <h3 class="center P"><%=getDay()%></h3>
+        </div>
+        <%console.log(inventory[0].date)%>
+        <div class="item center z-depth-5 P">
+          <h4>Total Return</h4>
+          <h3 class="P"><%=getTotal()%></h3>
+        </div>
+        <div class="item center z-depth-5 N">
+          <h4>Streak</h4>
+          <h3 class="N">0</h3>
+        </div>
+        <div class="item z-depth-5 chart center">
+          <h4>Weekly Profit</h4>
+          <canvas class="chart"style="background-color: #0c0b10;" width="1350" height="300" data-values = '<%=getWeek()%>'></canvas>
+        </div>
+        <div class="item center z-depth-5">
+          <h4>Best Preforming Games</h4>
+          <table class="container">
+            <thead>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="center">
+                <td class="center">1</td>
+                <td class="center"><%=getBestGames()[0][0]%></td>
+                <td class="P center"><%=getBestGames()[0][1]%></td>
+              </tr>
+              <tr class="center">
+                <td class="center">2</td>
+                <td class="center"><%=getBestGames()[1][0]%></td>
+                <td class="P center"><%=getBestGames()[1][1]%></td>
+              </tr>
+              <tr class="center">
+                <td class="center">3</td>
+                <td class="center"><%=getBestGames()[2][0]%></td>
+                <td class="N center"><%=getBestGames()[2][1]%></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <h2 class="white-text header">Games Suggested For You</h2>
+      <a href="#pokermodal" class="modal-trigger">
+      <div class="gamecard-layout">
+        <div class="card game">
+          <div class="card-image">
+            <img src="images/poker.jpg">
+          </div>
+          <div class="card-content">
+            <p>Poker</p>
+          </div>
+        </div>
+        </a>
+        <a href="#bjmodal" class="modal-trigger">
+          <div class="card game">
+            <div class="card-image">
+              <img src="images/BlackJack.jpg">
+            </div>
+            <div class="card-content">
+              <p>BlackJack</p>
+            </div>
+          </div>
+        </a>
+        
+        <div class="card game">
+          <div class="card-image">
+            <img src="images/slots.jpg">
+          </div>
+          <div class="card-content">
+            <p>Slots</p>
+          </div>
+        </div>
+        <div class="card game">
+          <div class="card-image">
+            <img src="images/roulette.jpg">
+          </div>
+          <div class="card-content">
+            <p>Roulette</p>
+          </div>
+        </div>
+        <div class="card game">
+          <div class="card-image">
+            <img src="images/Baccarat.jpg">
+          </div>
+          <div class="card-content">
+            <p>Baccarat</p>
+          </div>
+        </div>
+      </div>
+
+    <!-- Modal Structure -->
+    <div id="bjmodal" class="modal modal-fixed-footer">
+      <div class="modal-header">
+        <img src="/images/BlackJackBanner.jpg" alt="" height="200" width="100%">
+      </div>
+      <div class="modal-content">
+        <h4 class="Game-Title">BlackJack</h4>
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs">
+              <li class="tab col s2"><a class="active" href="#playBJ">Settings</a></li>
+              <li class="tab col s2"><a href="#instructionsBJ">Instructions</a></li>
+              <li class="tab col s2"><a href="#scoreBJ">SCORING</a></li>
+            </ul>
+          </div>
+          <div id="playBJ" class="col s12">
+            <form action="/" method="post">
+              <p>Number of Computers</p>
+              <p class="range-field">
+                <input type="range" name="numOfComputers" min="0" max="4"/>
+              </p>
+              <input type="hidden" name="game" value = "bj">
+              <input type="submit" class="btn" value="PLAY">
+            </form>
+          </div>
+          <div id="instructionsBJ" class="col s12">
+            <h5>Blackjack is a card game in which players try to obtain a combination of cards worth 21 points. 
+              Here are the rules:
+            </h5>
+            <ol>
+              <li>Each player is dealt 2 cards face up and the dealer is dealt 1 card face up and 1 card face down</li>
+              <li>Each player can then either hit or stay
+                <ol>
+                  <li>If a player hits, they get another card</li>
+                  <li>If a player stays, they do not get another card
+                  </li>
+                </ol>
+              </li>
+              <li>Aces are worth either 1 or 11 points depending on what the player wants it to be</li>
+              <li>All face cards are worth 10</li>
+              <li>All other cards are worth the number written on them</li>
+              <li>After all of the players have gone, the dealer goes
+              </li>
+              <li>If the value of the dealer’s hand is less than 17, they must hit</li>
+              <li>If it is 17 or more, the dealer must stay
+              </li>
+            </ol>
+          </div>
+          <div id="scoreBJ" class="col s12">
+            <h5>Scoring</h5>
+            <ul>
+              <li>If the total of a player’s hand is more than 21, they lose</li>
+              <li>For each player, if they did not bust and either the dealer bust or they have a higher score than the dealer, they win money</li>
+              <li>If the player ties with the dealer, they get their money back
+              </li>
+            </ul>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div id="pokermodal" class="modal modal-fixed-footer">
+      <div class="modal-header">
+        <img src="/images/PokerBanner.jpg" alt="" height="200" width="100%">
+      </div>
+      <div class="modal-content">
+        <h4 class="Game-Title">Poker</h4>
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs">
+              <li class="tab col s2"><a class="active" href="#playPoker">Settings</a></li>
+              <li class="tab col s2"><a href="#instructionsPoker">Instructions</a></li>
+              <li class="tab col s2"><a href="#scoringPoker">Scoring</a></li>
+            </ul>
+          </div>
+          <div id="playPoker" class="col s12">
+            <form action="#" method="post">
+              <p>Number of Computers</p>
+              <p class="range-field">
+                <input type="range" name="numOfComputers" min="0" max="4"/>
+              </p>
+              <input type="hidden" value="poker">
+              <input type="text" name="playerBal" placeholder="Capped amount of money, leave blank if no cap">
+              <input type="submit" class="btn" value="PLAY">
+            </form>
+          </div>
+          <div id="instructionsPoker" class="col s12">
+            <h5>Poker is a challenging mind game whose ultimate objective is winning the pot. Here are the rules:</h5>
+            <ol class="rules">
+              <li>Each player is dealt 2 cards face down</li>
+              <li>The player to the left of the dealer automatically bids the small blind</li>
+              <li>The player to the left of the small blind automatically bids the big blind</li>
+              <li>Each of the next players then decides whether they want to call, raise, or fold
+                <ol>
+                  <li>If a player calls, then they match the current bid amount</li>
+                  <li>If a player raises, they decide how much they want to raise the bidding amount and each player must either match the new bid or fold</li>
+                  <li>If a player folds, they drop out of the round and cannot win</li>
+                </ol>
+              </li>
+              <li>The dealer puts a card out of play face down on the table</li>
+              <li>The dealer deals out 3 cards to the center face up</li>
+              <li>Each of the players bid again</li>
+              <li>If nobody has bid, or everyone before has checked, the player can also check</li>
+              <li>The dealer puts another card out of play face down on the table</li>
+              <li>The dealer deals another card to the center face up</li>
+              <li>Each of the players bid again</li>
+              <li>The dealer puts another card out of play face down on the table</li>
+              <li>The dealer deals one last card face up to the center of the table</li>
+              <li>Each player uses the 5 face up cards in the center as well as their 2 cards in order to create the best possible hand</li>
+              <li>Refers to Scoring</li>
+            </ol>
+          </div>
+          <div id="scoringPoker" class="col s12">
+              <h5>Scoring</h5>
+              <ul>
+                <li>Royal Flush</li>
+                <li>Straight Flush</li>
+                <li>Four of a Kind</li>
+                <li>Full House</li>
+                <li>Flush</li>
+                <li>Straight</li>
+                <li>Three of a kind</li>
+                <li>Two Pair</li>
+                <li>Pair</li>
+                <li>High Card</li>
+              </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script> 
+      M.AutoInit();
+      let today = new Date()
+      const weeklyValues = []
+      for (let i = 7; i >= 0; i--) {
+        let tempDate = new Date()
+        tempDate.setDate(today.getDate() - i)
+        weeklyValues.push(`${tempDate.getMonth()+1}/${tempDate.getDate()}`)
+      }
+      const canvas = document.querySelector('canvas')
+    </script>
+    <script src="Scripts/dashboard.js"></script>
+</body>
+</html>   

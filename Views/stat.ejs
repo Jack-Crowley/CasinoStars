@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="Styles/navbar.css">
+    <link rel="stylesheet" href="Styles/scrollbar.css">
+    <link rel="stylesheet" href="Styles/statistics.css">
+    <title>Casino Stars</title>
+</head>
+<body>
+    <nav>
+        <div class="nav">
+          <ul>
+            <li><img src="images/logo.png" alt="" width="75"></li>
+            <li><a href="/" class="">Dashboard</a></li>
+            <li><a href="/games" class="">Games</a></li>
+            <li><a href="/stat" class="active">Statistics</a></li>
+            <li><a href="/history" class="">History</a></li>
+            <%function getTotal() {
+              let sum = 0
+              inventory.forEach((num) => {
+                sum+=num.profit
+              })
+              return sum
+            }%>
+            <%function getDayEarning() {
+              // console.log()
+              let date = new Date()
+              let tdate = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+              let sum = 0
+              // console.log('test')
+              inventory.forEach((num) => {
+                if (getDate(num) == tdate) {
+                  sum+=num.profit
+                }
+              })
+              return sum
+            }%>
+            <% function getDate(day) {            
+              let date = new Date(day.date);
+              return date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+            }%>
+            <% function getDateNoDatabase(day) {            
+              return day.getFullYear()+'-' + (day.getMonth()+1) + '-'+day.getDate();
+            }%>
+            <%function getWeekEarning() {
+              // console.log()
+              let today = new Date()
+              let dates = []
+              let values = []
+              let sum = 0
+              for (let i = 7; i >= 0; i--) {
+                let tempDate = new Date()
+                tempDate.setDate(today.getDate() - i)
+                dates.push(`${tempDate.getFullYear()}-${tempDate.getMonth()+1}-${tempDate.getDate()}`)
+              }
+              dates.forEach((date) => {
+                tempvalues = 0
+                inventory.forEach((item) => {
+                  if (getDate(item) == date) {
+                    sum += item.profit
+                  }
+                })
+              })
+              return sum
+            }%>
+            <%function getMonthEarning() {
+              // console.log()
+              let today = new Date()
+              let dates = []
+              let values = []
+              let sum = 0
+              for (let i = 30; i >= 0; i--) {
+                let tempDate = new Date()
+                tempDate.setDate(today.getDate() - i)
+                dates.push(`${tempDate.getFullYear()}-${tempDate.getMonth()+1}-${tempDate.getDate()}`)
+              }
+              dates.forEach((date) => {
+                tempvalues = 0
+                inventory.forEach((item) => {
+                  if (getDate(item) == date) {
+                    sum += item.profit
+                  }
+                })
+              })
+              return sum
+            }%>
+            <%function getWeekProfit() {
+              // console.log()
+              let today = new Date()
+              let dates = []
+              let values = []
+              for (let i = 7; i >= 0; i--) {
+                let tempDate = new Date()
+                tempDate.setDate(today.getDate() - i)
+                dates.push(`${tempDate.getFullYear()}-${tempDate.getMonth()+1}-${tempDate.getDate()}`)
+              }
+              dates.forEach((date) => {
+                tempvalues = 0
+                inventory.forEach((item) => {
+                  if (getDate(item) == date) {
+                    tempvalues += item.profit
+                  }
+                })
+                values.push(tempvalues)
+              })
+              return values.join(',')
+            }%>
+            <%function getDailyProfit() {
+              let today = new Date()
+              let dates = []
+              let values = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+              inventory.forEach((date) => {
+                console.log(getDate(date), getDateNoDatabase(today), 'dates')
+                if (getDate(date) == getDateNoDatabase(today)) {
+                  console.log('Correct Date')
+                  let time = new Date(date.date);
+                  values[Math.ceil(time.getHours())+1] += date.profit
+                }
+              })
+              return values.join(',')
+            }%>
+            <%function getMonthProfit() {
+              let today = new Date()
+              let dates = []
+              let values = []
+              for (let i = 30; i >= 0; i--) {
+                let tempDate = new Date()
+                tempDate.setDate(today.getDate() - i)
+                dates.push(`${tempDate.getFullYear()}-${tempDate.getMonth()+1}-${tempDate.getDate()}`)
+              }
+              dates.forEach((date) => {
+                tempvalues = 0
+                inventory.forEach((item) => {
+                  if (getDate(item) == date) {
+                    tempvalues += item.profit
+                  }
+                })
+                values.push(tempvalues)
+              })
+              return values.join(',')
+            }%>
+            <%function getWeekGamesPlayed() {
+              // console.log()
+              let today = new Date()
+              let dates = []
+              let values = []
+              for (let i = 7; i >= 0; i--) {
+                let tempDate = new Date()
+                tempDate.setDate(today.getDate() - i)
+                dates.push(`${tempDate.getFullYear()}-${tempDate.getMonth()+1}-${tempDate.getDate()}`)
+              }
+              dates.forEach((date) => {
+                tempvalues = 0
+                inventory.forEach((item) => {
+                  if (getDate(item) == date) {
+                    tempvalues += 1
+                  }
+                })
+                values.push(tempvalues)
+              })
+              return values.join(',')
+            }%>
+            <%function getDailyGamesPlayed() {
+              let today = new Date()
+              let dates = []
+              let values = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+              inventory.forEach((date) => {
+                console.log(getDate(date), getDateNoDatabase(today), 'dates')
+                if (getDate(date) == getDateNoDatabase(today)) {
+                  console.log('Correct Date')
+                  let time = new Date(date.date);
+                  values[Math.ceil(time.getHours())+1] += 1
+                }
+              })
+              return values.join(',')
+            }%>
+            <%function getMonthGamesPlayed() {
+              let today = new Date()
+              let dates = []
+              let values = []
+              for (let i = 30; i >= 0; i--) {
+                let tempDate = new Date()
+                tempDate.setDate(today.getDate() - i)
+                dates.push(`${tempDate.getFullYear()}-${tempDate.getMonth()+1}-${tempDate.getDate()}`)
+              }
+              dates.forEach((date) => {
+                tempvalues = 0
+                inventory.forEach((item) => {
+                  if (getDate(item) == date) {
+                    tempvalues += 1
+                  }
+                })
+                values.push(tempvalues)
+              })
+              return values.join(',')
+            }%>
+            <%function MonthlyGamesPlayed() {
+              // console.log()
+              let today = new Date()
+              let dates = []
+              let values = []
+              let sum = 0
+              for (let i = 30; i >= 0; i--) {
+                let tempDate = new Date()
+                tempDate.setDate(today.getDate() - i)
+                dates.push(`${tempDate.getFullYear()}-${tempDate.getMonth()+1}-${tempDate.getDate()}`)
+              }
+              dates.forEach((date) => {
+                tempvalues = 0
+                inventory.forEach((item) => {
+                  if (getDate(item) == date) {
+                    sum += 1
+                  }
+                })
+              })
+              return sum
+            }
+            %>
+            <%function WeekGamesPlayed() {
+              // console.log()
+              let today = new Date()
+              let dates = []
+              let values = []
+              let sum = 0
+              for (let i = 7; i >= 0; i--) {
+                let tempDate = new Date()
+                tempDate.setDate(today.getDate() - i)
+                dates.push(`${tempDate.getFullYear()}-${tempDate.getMonth()+1}-${tempDate.getDate()}`)
+              }
+              dates.forEach((date) => {
+                tempvalues = 0
+                inventory.forEach((item) => {
+                  if (getDate(item) == date) {
+                    sum += 1
+                  }
+                })
+              })
+              return sum
+            }
+            %>
+            <%function DayGamesPlayed() {
+              // console.log()
+              let date = new Date()
+              let tdate = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+              let sum = 0
+              // console.log('test')
+              inventory.forEach((num) => {
+                if (getDate(num) == tdate) {
+                  sum+=1
+                }
+              })
+              return sum
+            }%>
+            <li class="right"><%=getTotal()%></li>
+          </ul>
+        </div>
+      </nav>
+    <h2 class="white-text header">Overall Statistics</h2>
+    <div class="parent">
+      <div class="item center z-depth-5 chart">
+        <div class="row tabchooser">
+          <div class="col s12 tabchooser">
+            <ul class="tabs tabchooser">
+              <li class="tab col s2"><a class="active" href="#Earning1">Daily</a></li>
+              <li class="tab col s2"><a href="#Earning2">Weekly</a></li>
+              <li class="tab col s2 "><a href="#Earning3">Monthly</a></li>
+            </ul>
+          </div>
+          <h4 class="left white-text chart-title">Earnings</h4>
+          <div id="Earning1" class="col s12 white-text">
+            <canvas class="chart" data-type="daily" data-values ='<%=getDailyProfit()%>' data-title = 'Daily Earnings' data-tabs = '3' data-chart='Earning' style="background-color: #0c0b10;" height="75px"></canvas>
+          </div>
+          <div id="Earning2" class="col s12 white-text">
+            <canvas class="" data-type="weekly" data-values ='<%=getWeekProfit()%>' data-title = 'Weekly Earnings' data-tabs = '3' data-chart='Earning' style="background-color: #0c0b10;" height="75px"></canvas>
+          </div>
+          <div id="Earning3" class="col s12 white-text">
+            <canvas class="" data-type="monthly" data-values ='<%=getMonthProfit()%>' data-title = 'Monthly Earnings' data-tabs = '3' data-chart='Earning' style="background-color: #0c0b10;" height="75px"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="item center z-depth-5 P">
+        <h4 class="white-text">Total Earning</h4>
+        <h3 class="P"><%=getTotal()%></h3>
+      </div>
+      <div class="item z-depth-5 center earningSwitchText P">
+        <h4 class="white-text" data-main="Profit" data-one = 'Daily' data-two="Weekly" data-three="Monthly">Daily Profit</h4>
+        <h3 class="P"  data-one = '<%=getDayEarning()%>' data-two="<%=getWeekEarning()%>" data-three="<%=getMonthEarning()%>"><%=getDayEarning()%></h3>
+      </div>
+    </div>
+    <div class="parent">
+      <div class="item center z-depth-5 chart">
+        <div class="row tabchooser">
+          <div class="col s12 tabchooser">
+            <ul class="tabs tabchooser">
+              <li class="tab col s2"><a href="#GP1">Daily</a></li>
+              <li class="tab col s2"><a class="active" href="#GP2">Weekly</a></li>
+              <li class="tab col s2 "><a href="#GP3">Monthly</a></li>
+            </ul>
+          </div>
+          <h4 class="left white-text chart-title">Amount Of Games Played</h4>
+          <div id="GP1" class="col s12 white-text">
+            <canvas class="" data-type="daily" data-values ='<%=getDailyGamesPlayed()%>>' data-title = 'Daily Games Played' data-tabs = '3' data-chart='GP' style="background-color: #0c0b10;" height="75px"></canvas>
+          </div>
+          <div id="GP2" class="col s12 white-text">
+            <canvas class="chart" data-type="weekly" data-values ='<%=getWeekGamesPlayed()%>' data-title = 'Weekly Games Played' data-tabs = '3' data-chart='GP' style="background-color: #0c0b10;" height="75px"></canvas>
+          </div>
+          <div id="GP3" class="col s12 white-text">
+            <canvas class="" data-type="monthly" data-values ='<%=getMonthGamesPlayed()%>' data-title = 'Monthly Games Played' data-tabs = '3' data-chart='GP' style="background-color: #0c0b10;" height="75px"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="item center z-depth-5 P">
+        <h4 class="white-text">Total Games Played</h4>
+        <h3 class="P"><%=inventory.length%></h3>
+      </div>
+      <div class="item z-depth-5 center GPSwitchText P">
+        <h4 class="white-text" data-main="Games Played" data-one = 'Daily' data-two="Weekly" data-three="Monthly">Daily Games Played</h4>
+        <h3 class="P"  data-one = '<%=DayGamesPlayed()%>' data-two="<%=WeekGamesPlayed()%>" data-three="<%=MonthlyGamesPlayed()%>"><%=WeekGamesPlayed()%></h3>
+      </div>
+    </div>
+    <%function GetGameStats(game) {
+      let gamesPlayed = 0
+      let totalProfit = 0
+      let max = 0
+      let min  = 0
+      inventory.forEach((num) => {
+        if (num.game == game) {
+          gamesPlayed++;
+          totalProfit += num.profit
+          if (num.profit > max) {
+            max = num.profit
+          }
+          if (num.profit < min) {
+            min = num.profit
+          }
+        }
+      })
+      return [gamesPlayed, totalProfit, max, min]
+    }%>
+    <h2 class="white-text header">Individual Games</h2>
+    <div class="gamesparent">
+      <div class="item">
+        <div class="row tabchooser">
+          <div class="col s12 tabchooser">
+            <ul class="tabs tabchooser">
+              <li class="tab col s3"><a class="active" href="#Baccarat">Baccarat</a></li>
+              <li class="tab col s3"><a href="#Blackjack">Blackjack</a></li>
+              <li class="tab col s2 "><a href="#Roulette">Roulette</a></li>
+              <li class="tab col s2 "><a href="#Slots">Slots</a></li>
+              <li class="tab col s2 "><a href="#Poker">Poker</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="" id="Blackjack">
+          <div class="gamestatitem center">
+            <h3 class="white-text stat-item">Games Played: </h3>
+            <h3 class="white-text"><%=GetGameStats('Blackjack')[0]%></h3>
+          </div>
+          <div class="gamestatitem center">
+            <h3 class="white-text stat-item">Total Profit: </h3>
+            <h3 class="white-text"><%=GetGameStats('Blackjack')[1]%></h3>
+          </div>
+          <div class="gamestatitem center">
+            <h3 class="white-text stat-item">Biggest Win: </h3>
+            <h3 class="white-text"><%=GetGameStats('Blackjack')[2]%></h3>
+          </div>
+          <div class="gamestatitem  center">
+            <h3 class="white-text stat-item">Biggest Loss: </h3>
+            <h3 class="white-text"><%=GetGameStats('Blackjack')[3]%></h3>
+          </div>
+        </div>
+        <div class="" id="Baccarat">
+          <div class="gamestatitem center">
+            <h3 class="white-text stat-item">Games Played: </h3>
+            <h3 class="white-text"><%=GetGameStats('Baccarat')[0]%></h3>
+          </div>
+          <div class="gamestatitem center">
+            <h3 class="white-text stat-item">Total Profit: </h3>
+            <h3 class="white-text"><%=GetGameStats('Baccarat')[1]%></h3>
+          </div>
+          <div class="gamestatitem center">
+            <h3 class="white-text stat-item">Biggest Win: </h3>
+            <h3 class="white-text"><%=GetGameStats('Baccarat')[2]%></h3>
+          </div>
+          <div class="gamestatitem  center">
+            <h3 class="white-text stat-item">Biggest Loss: </h3>
+            <h3 class="white-text"><%=GetGameStats('Baccarat')[3]%></h3>
+          </div>
+        </div>
+        <div class="" id="Poker">
+          <div class="gamestatitem center">
+            <h3 class="white-text stat-item">Games Played: </h3>
+            <h3 class="white-text"><%=GetGameStats('Poker')[0]%></h3>
+          </div>
+          <div class="gamestatitem center">
+            <h3 class="white-text stat-item">Total Profit: </h3>
+            <h3 class="white-text"><%=GetGameStats('Poker')[1]%></h3>
+          </div>
+          <div class="gamestatitem center">
+            <h3 class="white-text stat-item">Biggest Win: </h3>
+            <h3 class="white-text"><%=GetGameStats('Poker')[2]%></h3>
+          </div>
+          <div class="gamestatitem  center">
+            <h3 class="white-text stat-item">Biggest Loss: </h3>
+            <h3 class="white-text"><%=GetGameStats('Poker')[3]%></h3>
+          </div>
+        </div>
+        <div class="" id="Slots">
+          <div class="gamestatitem center">
+            <h3 class="white-text stat-item">Games Played: </h3>
+            <h3 class="white-text"><%=GetGameStats('Slots')[0]%></h3>
+          </div>
+          <div class="gamestatitem center">
+            <h3 class="white-text stat-item">Total Profit: </h3>
+            <h3 class="white-text"><%=GetGameStats('Slots')[1]%></h3>
+          </div>
+          <div class="gamestatitem center">
+            <h3 class="white-text stat-item">Biggest Win: </h3>
+            <h3 class="white-text"><%=GetGameStats('Slots')[2]%></h3>
+          </div>
+          <div class="gamestatitem  center">
+            <h3 class="white-text stat-item">Biggest Loss: </h3>
+            <h3 class="white-text"><%=GetGameStats('Slots')[3]%></h3>
+          </div>
+        </div>
+        <div class="" id="Roulette">
+          <div class="gamestatitem center">
+            <h3 class="white-text stat-item">Games Played: </h3>
+            <h3 class="white-text"><%=GetGameStats('Roulette')[0]%></h3>
+          </div>
+          <div class="gamestatitem center">
+            <h3 class="white-text stat-item">Total Profit: </h3>
+            <h3 class="white-text"><%=GetGameStats('Roulette')[1]%></h3>
+          </div>
+          <div class="gamestatitem center">
+            <h3 class="white-text stat-item">Biggest Win: </h3>
+            <h3 class="white-text"><%=GetGameStats('Roulette')[2]%></h3>
+          </div>
+          <div class="gamestatitem  center">
+            <h3 class="white-text stat-item">Biggest Loss: </h3>
+            <h3 class="white-text"><%=GetGameStats('Roulette')[3]%></h3>
+          </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+
+      document.querySelectorAll('.tabs').forEach((tab) => {
+        var options = {}
+        var instance = M.Tabs.init(tab, options);
+      });
+      
+
+      const today = new Date()
+      const dailyValues = []
+      for (let i = 0; i <= today.getHours()+1; i++) {
+        dailyValues.push(`${i}:00`)
+      }
+      const weeklyValues = []
+      for (let i = 7; i >= 0; i--) {
+        let tempDate = new Date()
+        tempDate.setDate(today.getDate() - i)
+        weeklyValues.push(`${tempDate.getMonth()+1}/${tempDate.getDate()}`)
+      }
+      const monthyValues = []
+      for (let i = 30; i >= 0; i--) {
+        let tempDate = new Date()
+        tempDate.setDate(today.getDate() - i)
+        monthyValues.push(`${tempDate.getMonth()+1}/${tempDate.getDate()}`)
+      }
+
+    </script>
+    <script src="/Scripts/statistics.js"></script>
+</body>
+</html>

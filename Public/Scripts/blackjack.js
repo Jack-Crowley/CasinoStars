@@ -22,12 +22,14 @@ class Player {
     money;
     hasblackjack;
     bet;
+    stand;
 
     constructor(money=0) {
         this.hand = [];
         this.money = money;
         this.hasblackjack = false;
         this.bet = 0;
+        this.stand = false
     }
 
     getScore () {
@@ -177,7 +179,7 @@ class BlackJack {
     constructor(numOfPlayers) {
         this.numOfPlayers = numOfPlayers;
         this.playerlist = new PlayerList;
-        this.deck = new Deck(8);
+        this.deck = new Deck(1);
         this.deck.shuffle();
 
         for (let i = 0; i < numOfPlayers; i++) {
@@ -252,10 +254,22 @@ class bj {
         this.blackjackgame = new BlackJack(2)
         this.deck = this.blackjackgame.deck
         this.buttons = []
-        this.cards = []
         this.betAmount = 0
         this.player1 = new Player()
         this.dealer = new Dealer()
+        this.players = []
+        this.positions = [[100, window.innerHeight*0.3],[window.innerWidth*0.7, window.innerHeight*0.3],[100, window.innerHeight*0.5],[window.innerWidth*0.7, window.innerHeight*0.5]]
+        console.log(numOfPlayers)
+        for (let i = 0; i < numOfPlayers; i++) {
+            console.log('Player Added')
+            this.players.push(new Player())
+        }
+        console.log(this.players)
+        
+    }
+
+    sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     drawboard() {
@@ -329,19 +343,36 @@ class bj {
         })
     }
 
-    startGame() {
-        this.playercard1 = this.deck.draw()
-        this.playercard2 = this.deck.draw()
-        this.dealerOpenCard = this.deck.draw()
-        this.dealerClosedCard = this.deck.draw()
-        this.player1.hand.push(this.playercard1)
-        this.player1.hand.push(this.playercard2)
-        this.dealer.openhand.push(this.dealerOpenCard)
-        this.dealer.hand.push(this.dealerOpenCard)
-        this.dealer.hand.push(this.dealerClosedCard)
-        this.turnOver=true
-        this.game()
+    async startGame() {
+        let timeBetweenCards = 500
         this.stage = 'game'
+        for (let i = 0; i < this.players.length; i++) {
+            console.log(i)
+            this.players[i].hand.push(this.deck.draw())
+            this.clearBoard()
+            await this.sleep(timeBetweenCards)
+        }
+        this.player1.hand.push(this.deck.draw())
+        this.clearBoard()
+        await this.sleep(timeBetweenCards)
+        let dealerCard = this.deck.draw()
+        this.dealer.hand.push(dealerCard)
+        this.dealer.openhand.push(dealerCard)
+        this.clearBoard()
+        await this.sleep(timeBetweenCards)
+        for (let i = 0; i < this.players.length; i++) {
+            console.log(i)
+            this.players[i].hand.push(this.deck.draw())
+            this.clearBoard()
+            await this.sleep(timeBetweenCards)
+        }
+        this.player1.hand.push(this.deck.draw())
+        this.clearBoard()
+        await this.sleep(timeBetweenCards)
+        this.dealer.hand.push(this.deck.draw())
+        this.clearBoard()
+        await this.sleep(timeBetweenCards)
+        this.turnOver = true
         this.clearBoard()
     }
 
@@ -349,6 +380,11 @@ class bj {
         this.buttons = []
         this.imageHand(this.player1.hand, window.innerWidth/2-150, window.innerHeight*0.7)
         this.imageHand(this.dealer.openhand, window.innerWidth/2-150, window.innerHeight*0.1)
+        console.log(this.players)
+        for (let i = 0; i < this.players.length; i++) {
+            console.log(this.positions[i][0], this.positions[i][1])
+            this.imageHand(this.players[i].hand, this.positions[i][0], this.positions[i][1])
+        }
         ctx.fillStyle='#fff'
         let betText = `Player Bet: ${this.getBetAmount()}`
         ctx.fillText(betText, 0, window.innerHeight*0.95)
@@ -381,10 +417,27 @@ class bj {
         }
     }
 
+    computer() {
+        for (let i = 0; i < this.players.length; i++) {
+            while (this.players[i].stand == false) {
+                let action = Math.floor(Math.random()*2)
+                if (action == 0) {
+                    let tempcard = this.deck.draw()
+                    this.players[i].hand.push(tempcard)
+                    if (this.players[0].getScore() > 21) {
+                        this.players[i].stand = true
+                    }
+                }
+                else {   
+                    this.players[i].stand = true
+                }
+            }
+        }
+    }
+
     hitOrStand(action) {
         if (action == 'hit') {
             let tempcard = this.deck.draw()
-            this.cards.push(tempcard)
             this.player1.hand.push(tempcard)
             if (this.player1.getScore() > 21) {
                 this.turnOver = false
@@ -433,6 +486,7 @@ class bj {
     }
 
     calcdealer() {
+        let i = 0
         this.dealer.openhand = []
         this.dealer.hand.forEach((card) => {
             this.dealer.openhand.push(card)
@@ -514,8 +568,9 @@ class bj {
     }
 }
 
+let playerCount = document.querySelector('.numPlayers').textContent
 let ctx = canvas.getContext('2d');
-let bjgame = new bj()
+let bjgame = new bj(playerCount)
 bjgame.bet()
 
 window.onresize = function() {
