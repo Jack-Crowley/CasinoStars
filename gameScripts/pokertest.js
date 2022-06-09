@@ -177,7 +177,7 @@ class Player {
                 if (twopair) {
                     highest = i+2
                 }
-                if (pair) {
+                else if (pair) {
                     twopair = true;
                     highest = i+2
                 }else {
