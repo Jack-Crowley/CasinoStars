@@ -41,13 +41,15 @@ class Ball {
         //     this.angle+= (2 * Math.PI)/190;
         // }
         if (this.angle <= (4 * Math.PI) + ((2*Math.PI)/38)*this.rand) {
+            console.log(this.angle)
             this.angle += (2 * Math.PI)/76;
         }else if (this.continue == false){
             this.getwinner();
-            console.log(FRAME_LENGTH)
-            let drawIntervalId = 0;
-            clearchips();
-            draw();
+            setTimeout(() => {
+                clearInterval(drawIntervalId)
+                clearchips();
+                draw();
+            }, 3000);
             this.continue = true;
         }
     }
@@ -82,6 +84,7 @@ let betnum = 0;
 let playerval = document.querySelector('p.playerval')
 let playerbal = playerval.dataset.playerval;
 // let drawIntervalId = window.setInterval(draw, FRAME_LENGTH);
+let drawIntervalId;
 draw();
 let ball;
 function clearchips() {
@@ -252,7 +255,7 @@ canvas.addEventListener("click", function(event) {
         if (typeof bet != "undefined" && betnum > 0) {
             ball = new Ball(window.innerWidth/2, window.innerHeight/2, 20);
             console.log(ball)
-            let drawIntervalId = window.setInterval(start, FRAME_LENGTH);
+            drawIntervalId = window.setInterval(start, FRAME_LENGTH);
         }
     }else if (Math.sqrt( (event.offsetX-canvas.width/4*3) ** 2 + (event.offsetY-(canvas.height/4-50)) **2 ) < 150) {
         if (playerbal >= 1) {
