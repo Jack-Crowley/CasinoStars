@@ -1,3 +1,5 @@
+console.log(canvas.width)
+console.log(canvas.height)
 const ctx = canvas.getContext("2d");
 const fruits = ['grape', 'watermelon', 'strawberry', 'cherry', 'orange', 'banana', 'apple', 'peach', 'blueberry', 'lemon', 'seven'];
 let reel1;
@@ -11,12 +13,13 @@ let betnum = 0;
 let playerval = document.querySelector('p.playerval')
 let playerbal = playerval.dataset.playerval;
 draw();
+getsymbol();
 function draw() {
     ctx.strokeStyle='fuchsia';
     ctx.lineWidth=3;
-    ctx.strokeRect(20, 20, canvas.width-50, canvas.height-50);
+    ctx.strokeRect(canvas.width/50, canvas.height/50, canvas.width/50*49, canvas.height/50*47);
     ctx.beginPath();
-    ctx.arc(canvas.width/2, canvas.height-80, 50, 0, 2 * Math.PI);
+    ctx.arc(canvas.width/50*25.6, canvas.height/50*44.5, canvas.width/15.36/2, 0, 2 * Math.PI);
     ctx.closePath();
     ctx.stroke();
     ctx.fillStyle='gold'
@@ -24,44 +27,45 @@ function draw() {
     ctx.fillStyle='DarkMagenta'
     const spin = new Image();
     spin.onload = function() {
-        ctx.drawImage(spin, canvas.width/2-50, canvas.height-130, 100, 100);
+        ctx.drawImage(spin, canvas.width/50*23.97, canvas.height/50*41, canvas.width/15.36, canvas.height/7.26);
     };
     spin.src = 'images/spin.png';
-    ctx.fillRect(canvas.width/2-285, canvas.height-115, 221, 80)
-    ctx.fillRect(canvas.width/2-514, canvas.height-115, 221, 80)
-    ctx.fillRect(25, canvas.height-115, 221, 80)
-    ctx.fillRect(canvas.width/2+400, canvas.height-115, 332, 80)
-    ctx.fillRect(canvas.width/2+58, canvas.height-115, 332, 80)
+    ctx.fillRect(canvas.width/3.09, canvas.height/50*42, canvas.width/6.95, canvas.height/9.075)
+    ctx.fillRect(canvas.width/5.75, canvas.height/50*42, canvas.width/6.95, canvas.height/9.075)
+    ctx.fillRect(canvas.width/100*2.5, canvas.height/50*42, canvas.width/6.95, canvas.height/9.075)
+    ctx.fillRect(canvas.width/50*38.9, canvas.height/50*42, canvas.width/4.626, canvas.height/9.075)
+    ctx.fillRect(canvas.width/50*27.8, canvas.height/50*42, canvas.width/4.626, canvas.height/9.075)
     ctx.fillStyle = 'white';
     ctx.font = '35px Arial'
     ctx.textAlign = 'center';
-    ctx.fillText("$1", 125, canvas.height-40)
-    ctx.fillText("$5", 355, canvas.height-40)
-    ctx.fillText("Bet", 125, canvas.height-80)
-    ctx.fillText("Bet", 355, canvas.height-80)
-    ctx.fillText(`Total Bet:`, 590, canvas.height-80)
-    ctx.fillText(`Win:`, 990, canvas.height-80)
-    ctx.fillText('Balance:', 1340, canvas.height-80)
-    ctx.fillText(`$${win}`, 990, canvas.height-40)
-    ctx.fillText(`$${betnum}`, 600, canvas.height-40)
-    ctx.fillText(`$${playerbal}`, 1340, canvas.height-40)
-    ctx.fillRect(canvas.width/15+5, canvas.height/10+5, 430, 490)
-    ctx.fillRect(canvas.width/15+447, canvas.height/10+5, 430, 490)
-    ctx.fillRect(canvas.width/15+889, canvas.height/10+5, 429, 490)
-    ctx.strokeRect(canvas.width/2-285, canvas.height-115, 221, 80)
-    ctx.strokeRect(canvas.width/2-514, canvas.height-115, 221, 80)
-    ctx.strokeRect(25, canvas.height-115, 221, 80)
-    ctx.strokeRect(canvas.width/2+400, canvas.height-115, 332, 80)
-    ctx.strokeRect(canvas.width/2+58, canvas.height-115, 332, 80)
-    ctx.strokeRect(canvas.width/15, canvas.height/10, 1325, 500)
-    ctx.strokeRect(canvas.width/15, canvas.height/10, 442, 500)
-    ctx.strokeRect(canvas.width/15+442, canvas.height/10, 442, 500)
-    ctx.strokeRect(canvas.width/15+884, canvas.height/10, 441, 500)
+    ctx.fillText("$1", canvas.width/12.288, canvas.height-canvas.height/18.15)
+    ctx.fillText("$5", canvas.width/4.326, canvas.height-canvas.height/18.15)
+    ctx.fillText("Bet", canvas.width/12.288, canvas.height-canvas.height/9.075)
+    ctx.fillText("Bet", canvas.width/4.326, canvas.height-canvas.height/9.075)
+    ctx.fillText(`Total Bet:`, canvas.width/2.603, canvas.height-canvas.height/9.075)
+    ctx.fillText(`Win:`, canvas.width/1.551, canvas.height-canvas.height/9.075)
+    ctx.fillText('Balance:', canvas.width/1.146, canvas.height-canvas.height/9.075)
+    ctx.fillText(`$${win}`, canvas.width/1.551, canvas.height-canvas.height/18.15)
+    ctx.fillText(`$${betnum}`, canvas.width/2.56, canvas.height-canvas.height/18.15)
+    ctx.fillText(`$${playerbal}`, canvas.width/1.146, canvas.height-canvas.height/18.15)
+    ctx.fillRect(canvas.width/12.4, canvas.height/9.355, canvas.width/3.572, canvas.height/1.481)
+    ctx.fillRect(canvas.width/2.71, canvas.height/9.355, canvas.width/3.572, canvas.height/1.481)
+    ctx.fillRect(canvas.width/1.523, canvas.height/9.355, canvas.width/3.58, canvas.height/1.481)
+    ctx.strokeRect(canvas.width/3.09, canvas.height/50*42, canvas.width/6.95, canvas.height/9.075)
+    ctx.strokeRect(canvas.width/5.75, canvas.height/50*42, canvas.width/6.95, canvas.height/9.075)
+    ctx.strokeRect(canvas.width/100*2.5, canvas.height/50*42, canvas.width/6.95, canvas.height/9.075)
+    ctx.strokeRect(canvas.width/50*38.9, canvas.height/50*42, canvas.width/4.626, canvas.height/9.075)
+    ctx.strokeRect(canvas.width/50*27.8, canvas.height/50*42, canvas.width/4.626, canvas.height/9.075)
+
+    ctx.strokeRect(canvas.width/13, canvas.height/10, canvas.width/1.159, canvas.height/1.452)
+    ctx.strokeRect(canvas.width/13, canvas.height/10, canvas.width/3.475, canvas.height/1.452)
+    ctx.strokeRect(canvas.width/2.742, canvas.height/10, canvas.width/3.475, canvas.height/1.452)
+    ctx.strokeRect(canvas.width/1.5327, canvas.height/10, canvas.width/3.482, canvas.height/1.452)
     ctx.strokeStyle = '#0078ff'
     ctx.lineWidth = 5;
-    ctx.strokeRect(canvas.width/15+5, canvas.height/10+5, 430, 490)
-    ctx.strokeRect(canvas.width/15+447, canvas.height/10+5, 430, 490)
-    ctx.strokeRect(canvas.width/15+889, canvas.height/10+5, 429, 490)
+    ctx.strokeRect(canvas.width/12.4, canvas.height/9.355, canvas.width/3.572, canvas.height/1.481)
+    ctx.strokeRect(canvas.width/2.71, canvas.height/9.355, canvas.width/3.572, canvas.height/1.481)
+    ctx.strokeRect(canvas.width/1.523, canvas.height/9.355, canvas.width/3.58, canvas.height/1.481)
 }
 
 function spin() {
@@ -74,23 +78,23 @@ function getsymbol() {
     reel3 = Math.floor(Math.random() * 11);
     let reel1img = new Image();
     reel1img.onload = function() {
-        ctx.drawImage(reel1img, 120, 100, 400, 400);
+        ctx.drawImage(reel1img, canvas.width/11, canvas.height/7.26, canvas.width/3.84, canvas.height/1.815);
     };
     reel1img.src = `images/Fruits/${fruits[reel1]}.png`;
     let reel2img = new Image();
     reel2img.onload = function() {
-        ctx.drawImage(reel2img, 570, 100, 400, 400);
+        ctx.drawImage(reel2img, canvas.width/2.694, canvas.height/7.26, canvas.width/3.84, canvas.height/1.815);
     };
     reel2img.src = `images/Fruits/${fruits[reel2]}.png`;
     let reel3img = new Image();
     reel3img.onload = function() {
-        ctx.drawImage(reel3img, 1000, 100, 400, 400);
+        ctx.drawImage(reel3img, canvas.width/1.49, canvas.height/7.26, canvas.width/3.84, canvas.height/1.815);
     };
     reel3img.src = `images/Fruits/${fruits[reel3]}.png`;
 }
 
 canvas.addEventListener('click', function(event)  {
-    if (Math.sqrt( (event.offsetX-(canvas.width/2-50)) ** 2 + (event.offsetY-(canvas.height-130)) **2 ) < 100) {
+    if (Math.sqrt( (event.offsetX-(canvas.width/50*25.6)) ** 2 + (event.offsetY-(canvas.height/50*44.5)) **2 ) < canvas.width/15.36) {
         spin();
         window.setTimeout(setTimeout(() => {
             clearInterval(drawIntervalId)
@@ -105,13 +109,13 @@ canvas.addEventListener('click', function(event)  {
             betnum = 0;
             win = 0;
         }, 3000))
-    }else if (event.offsetX > 25 && event.offsetX < 246 && event.offsetY > canvas.height-115 && event.offsetY < canvas.height-35) {
+    }else if (event.offsetX > canvas.width/100*2.5 && event.offsetX < canvas.width/100*2.5+canvas.width/6.95 && event.offsetY > canvas.height/50*42 && event.offsetY < canvas.height/50*42+canvas.height/9.075) {
         if (playerbal >= 1) {
             playerbal -= 1;
             betnum += 1;
             draw();
         }
-    }else if (event.offsetX > canvas.width/2-514 && event.offsetX < canvas.width/2-293 && event.offsetY > canvas.height-115 && event.offsetY < canvas.height-35) {
+    }else if (event.offsetX > canvas.width/5.75 && event.offsetX < canvas.width/5.75+canvas.width/6.95 && event.offsetY > canvas.height/50*42 && event.offsetY < canvas.height/50*42+canvas.height/9.075) {
         if (playerbal >= 5) {
             playerbal -= 5;
             betnum += 5;
