@@ -116,6 +116,14 @@ app.get('/blackjack', (req, res) => {
     });
 })
 
+app.get('/roulette', (req, res) => {
+    res.render('roulette')
+})
+
+app.get('/slots', (req, res) => {
+    res.render('slots')
+})
+
 app.post('/', ( req, res ) => {
     if (req.body.game == 'bj') {
         db.execute(get_total_profit_sql, (error, results) => {
