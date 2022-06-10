@@ -41,13 +41,15 @@ class Ball {
         //     this.angle+= (2 * Math.PI)/190;
         // }
         if (this.angle <= (4 * Math.PI) + ((2*Math.PI)/38)*this.rand) {
+            console.log(this.angle)
             this.angle += (2 * Math.PI)/76;
         }else if (this.continue == false){
             this.getwinner();
-            console.log(FRAME_LENGTH)
-            let drawIntervalId = 0;
-            clearchips();
-            draw();
+            setTimeout(() => {
+                clearInterval(drawIntervalId)
+                clearchips();
+                draw();
+            }, 3000);
             this.continue = true;
         }
     }
@@ -81,7 +83,6 @@ let bet;
 let betnum = 0;
 let playerval = document.querySelector('p.playerval')
 let playerbal = playerval.dataset.playerval;
-// let drawIntervalId = window.setInterval(draw, FRAME_LENGTH);
 draw();
 let ball;
 function clearchips() {
@@ -154,49 +155,49 @@ function draw(){
         one.onload = function() {
             ctx.drawImage(one, canvas.width/4*3, canvas.height/4-150, 150, 150);
         };
-        one.src = 'Public/images/PokerChips/one.png';
+        one.src = 'images/PokerChips/one.png';
     }
     if (playerbal >= 5) {
         const five = new Image();
         five.onload = function() {
             ctx.drawImage(five, canvas.width/4*3+170, canvas.height/4-150, 150, 150);
         };
-        five.src = 'Public/images/PokerChips/five.png';
+        five.src = 'images/PokerChips/five.png';
     }
     if (playerbal >= 10) {
         const ten = new Image();
         ten.onload = function() {
             ctx.drawImage(ten, canvas.width/4*3, canvas.height/4+20, 150, 150);
         };
-        ten.src = 'Public/images/PokerChips/ten.png';
+        ten.src = 'images/PokerChips/ten.png';
     }
     if (playerbal >= 25) {
         const twentyfive = new Image();
         twentyfive.onload = function() {
             ctx.drawImage(twentyfive, canvas.width/4*3+170, canvas.height/4+20, 150, 150);
         };
-        twentyfive.src = 'Public/images/PokerChips/twentyfive.png';
+        twentyfive.src = 'images/PokerChips/twentyfive.png';
     }
     if (playerbal >= 100) {
         const hundred = new Image();
         hundred.onload = function() {
             ctx.drawImage(hundred, canvas.width/4*3, canvas.height/4+190, 150, 150);
         };
-        hundred.src = 'Public/images/PokerChips/hundred.png';
+        hundred.src = 'images/PokerChips/hundred.png';
     }
     if (playerbal >= 500) {
         const fivehundred = new Image();
         fivehundred.onload = function() {
             ctx.drawImage(fivehundred, canvas.width/4*3+170, canvas.height/4+190, 150, 150);
         };
-        fivehundred.src = 'Public/images/PokerChips/fivehundred.png';
+        fivehundred.src = 'images/PokerChips/fivehundred.png';
     }
     if (playerbal >= 1000) {
         const thousand = new Image();
         thousand.onload = function() {
             ctx.drawImage(thousand, canvas.width/4*3, canvas.height/4+360, 150, 150);
         };
-        thousand.src = 'Public/images/PokerChips/thousand.png';
+        thousand.src = 'images/PokerChips/thousand.png';
     }
 
     ctx.fillRect(canvas.width/4-300, canvas.height/4+400, 300, 100)
@@ -252,7 +253,7 @@ canvas.addEventListener("click", function(event) {
         if (typeof bet != "undefined" && betnum > 0) {
             ball = new Ball(window.innerWidth/2, window.innerHeight/2, 20);
             console.log(ball)
-            let drawIntervalId = window.setInterval(start, FRAME_LENGTH);
+            drawIntervalId = window.setInterval(start, FRAME_LENGTH);
         }
     }else if (Math.sqrt( (event.offsetX-canvas.width/4*3) ** 2 + (event.offsetY-(canvas.height/4-50)) **2 ) < 150) {
         if (playerbal >= 1) {

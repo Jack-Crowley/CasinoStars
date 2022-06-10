@@ -9,20 +9,17 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="Styles/navbar.css">
     <link rel="stylesheet" href="Styles/scrollbar.css">
+    <link rel="stylesheet" href="Styles/dashboard.css">
     <title>Casino Stars</title>
 </head>
 <body>
-    <nav>
-        <div class="nav">
-          <ul>
-            <li><img src="/images/logo.png" alt="" width="75"></li>
-            <li><a href="dashboard.html" class="">Dashboard</a></li>
-            <li><a href="games.html" class="">Games</a></li>
-            <li><a href="stat.html" class="active">Statistics</a></li>
-            <li><a href="history.html" class="">History</a></li>
-          </ul>
-        </div>
-      </nav>
-      <h2 class="white-text header center">History</h2>
+  <p class="playerval" style="display:none" data-playerval="10000"></p>
+  <canvas width="100%" height="100%"></canvas>
+  <script>
+    var canvas = document.querySelector('canvas');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  </script>
+  <script src="Scripts/slots.js"></script>
 </body>
 </html>

@@ -4,36 +4,6 @@ class Card {
     numval;
     str;
     constructor(suit, value) {
-        this.suit = suit;
-        this.value = value;
-        switch (this.value) {
-            case 'A':
-                this.numval = 14;
-                break;
-            case 'K':
-                this.numval = 13;
-                break;
-            case 'Q':
-                this.numval = 12;
-                break;
-            case 'J':
-                this.numval = 11;
-                break;
-            case 'T':
-                this.numval = 10;
-                break;
-            default:
-                this.numval = Number(this.value);
-        }
-        this.str = value + " of " + suit;
-    }
-}
-class BaccaratCard extends Card {
-    suit;
-    value;
-    numval;
-    str;
-    constructor(suit, value) {
         super(suit, value)
         this.suit = suit;
         this.value = value;
@@ -59,6 +29,7 @@ class BaccaratCard extends Card {
         this.str = value + " of " + suit;
     }
 }
+
 class Deck {
     constructor() {
         let suits = ['clubs', 'spades', 'hearts', 'diamonds']
@@ -66,17 +37,17 @@ class Deck {
         this.deck = [];
         for (let i = 0; i < suits.length; i++) {
             for (let n = 0; n < values.length; n++) {
-                this.deck.push(new BaccaratCard(suits[i], values[n]));
+                this.deck.push(new Card(suits[i], values[n]));
             }
         }
         for (let i = 0; i < suits.length; i++) {
             for (let n = 0; n < values.length; n++) {
-                this.deck.push(new BaccaratCard(suits[i], values[n]));
+                this.deck.push(new Card(suits[i], values[n]));
             }
         }
         for (let i = 0; i < suits.length; i++) {
             for (let n = 0; n < values.length; n++) {
-                this.deck.push(new BaccaratCard(suits[i], values[n]));
+                this.deck.push(new Card(suits[i], values[n]));
             }
         }
     }
@@ -103,22 +74,20 @@ class Deck {
 class Player {
     hand;
     money;
-    hasblackjack;
     bet;
-    totalbet;
     middle;
-    fold;
-    check;
+    self;
+    banker;
+    tie;
 
     constructor(money) {
         this.hand = [];
         this.money = money;
-        this.hasblackjack = false;
         this.bet = 0;
-        this.totalbet = 0;
         this.middle = [];
-        this.fold = false;
-        this.check = false;
+        this.self = false;
+        this.banker = false;
+        this.tie = false;
     }
 
     getScore () {
@@ -270,22 +239,6 @@ class Player {
         this.hasBlackJack = true;
     }
 }
-class BaccaratPlayer extends Player {
-    self;
-    banker;
-    tie;
-    left;
-    right;
-
-    constructor(money) {
-        super(money)
-        this.self = false;
-        this.banker = false;
-        this.tie = false;
-        this.left = false;
-        this.right = false;
-    }
-}
 class PlayerList {
     players;
 
@@ -323,7 +276,7 @@ class Baccarat {
         this.dealertotal = 0;
 
         for (let i = 0; i < numOfPlayers; i++) {
-            this.playerlist.addPlayer(new BaccaratPlayer(100))
+            this.playerlist.addPlayer(new Player(100))
         }
     }
 

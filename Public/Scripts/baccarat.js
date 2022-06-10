@@ -1,152 +1,52 @@
-class PlayerList {
-    players;
-
-    constructor() {
-        this.players = [];
-    }
-
-    addPlayer(player) {
-        if (! this.players.includes(player)){
-            this.players.push(player);
-        }
-    }
-
-    removePlayer(player){
-        let index = this.players.indexOf(player);
-        if (index > -1)
-            this.players.splice(index, 1);
-    }
-}
-class Player {
-    hand;
-    money;
-    hasblackjack;
-    bet;
-    stand;
-
-    constructor(money=0) {
-        this.hand = [];
-        this.money = money;
-        this.hasblackjack = false;
-        this.bet = 0;
-        this.stand = false
-    }
-
-    getScore () {
-        let score = 0;
-        let hasAce = false;
-        for (let i = 0; i < this.hand.length; i++) {
-            let value = this.hand[i].value;
-            if (value == 'ace') {
-                value = 11;
-                hasAce++;
-            }
-            if (value == "king" || value == "queen" || value == "jack" || value == '10') value = 10;
-            value = Number(value)
-            score += value;
-        }
-        while (score > 21 && hasAce > 0) {
-            hasAce--; score-=10;
-        }
-        return score
-    }
-
-    receiveMoney(amount) {
-        this.money += amount;
-    }
-
-    placeBet(amount) {
-        if (amount > this.money) {
-            amount = this.money;
-            this.money = 0;
-        } else {
-            this.money -= amount;
-        }
-        return amount;
-    }
-
-    drawCard(card) {
-        this.hand.push(card);
-    }
-
-    hasBlackJack() {
-        this.hasblackjack = true;
-    }
-}
-
-class Dealer {
-    hand;
-    hasblackjack;
-    bet;
-    openhand;
-
-    constructor() {
-        this.hand = [];
-        let backcard = new Card('spades', 0)
-        this.openhand = [backcard];
-        this.hasblackjack = false;
-        this.bet = 0;
-    }
-
-    getScore () {
-        let score = 0;
-        let hasAce = false;
-        for (let i = 0; i < this.hand.length; i++) {
-            let value = this.hand[i].value;
-            if (value == 'ace') {
-                value = 11;
-                hasAce++;
-            }
-            if (value == "king" || value == "queen" || value == "jack" || value == '10') value = 10;
-            value = Number(value)
-            score += value;
-        }
-        while (score > 21 && hasAce > 0) {
-            hasAce--; score-=10;
-        }
-        return score
-    }
-
-    receiveMoney(amount) {
-        this.money += amount;
-    }
-
-    placeBet(amount) {
-        if (amount > this.money) {
-            amount = this.money;
-            this.money = 0;
-        } else {
-            this.money -= amount;
-        }
-        return amount;
-    }
-
-    drawCard(card) {
-        this.hand.push(card);
-    }
-
-    hasBlackJack() {
-        this.hasblackjack = true;
-    }
-}
-
 class Card {
+    suit;
+    value;
+    numval;
+    str;
     constructor(suit, value) {
+        super(suit, value)
         this.suit = suit;
         this.value = value;
+        switch (this.value) {
+            case 'A':
+                this.numval = 1;
+                break;
+            case 'K':
+                this.numval = 0;
+                break;
+            case 'Q':
+                this.numval = 0;
+                break;
+            case 'J':
+                this.numval = 0;
+                break;
+            case 'T':
+                this.numval = 0;
+                break;
+            default:
+                this.numval = Number(this.value);
+        }
         this.str = value + " of " + suit;
     }
 }
 class Deck {
-    constructor(numOfDecks) {
+    constructor() {
         let suits = ['clubs', 'spades', 'hearts', 'diamonds']
-        let values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace']
+        let values = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
         this.deck = [];
-        for (let i = 0; i < numOfDecks; i++) {
-            for (let i = 0; i < suits.length; i++) {
-                for (let n = 0; n < values.length; n++) {
-                    this.deck.push(new Card(suits[i], values[n]));
-                }
+        for (let i = 0; i < suits.length; i++) {
+            for (let n = 0; n < values.length; n++) {
+                this.deck.push(new Card(suits[i], values[n]));
+            }
+        }
+        for (let i = 0; i < suits.length; i++) {
+            for (let n = 0; n < values.length; n++) {
+                this.deck.push(new Card(suits[i], values[n]));
+            }
+        }
+        for (let i = 0; i < suits.length; i++) {
+            for (let n = 0; n < values.length; n++) {
+                this.deck.push(new Card(suits[i], values[n]));
             }
         }
     }
@@ -170,34 +70,225 @@ class Deck {
         }
     }
 }
+class Player {
+    hand;
+    money;
+    bet;
+    middle;
+    self;
+    banker;
+    tie;
 
-class BlackJack {
+    constructor(money) {
+        this.hand = [];
+        this.money = money;
+        this.bet = 0;
+        this.middle = [];
+        this.self = false;
+        this.banker = false;
+        this.tie = false;
+    }
+
+    getScore () {
+        let score = 0;
+        let hasAce = false;
+        for (let i = 0; i < this.hand.length; i++) {
+            let value = this.hand[i].value;
+            if (value == 'A') {
+                value = 11;
+                hasAce = true;
+            } else if (value == "K" || value == "Q" || value == "J" || value == 'T') {
+                value = 10;
+            }
+            value = Number(value)
+            score += value;
+        }
+        if (score > 21 && hasAce) {
+            if (score > 31) {
+                return score-10;
+            }
+            return score-10;
+        }else if (score > 21) {
+            return score;
+        }else {
+            return score;
+        }
+    }
+
+    getpokerscore(player) {
+        let suits = [0, 0, 0, 0]
+        let values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        let flush = false;
+        let straight = false;
+        let royal = false;
+        let three = false;
+        let pair = false;
+        let twopair = false;
+        let highest = 0;
+        let cards = [];
+        for (const card of player.hand) {
+            cards.push(card)
+        }
+        for (const card of player.middle) {
+            cards.push(card)
+        }
+        for (const card of cards) {
+            if (card.suit == 'diamonds') {
+                suits[0]++;
+            }else if (card.suit == 'hearts') {
+                suits[1]++;
+            }else if (card.suit == 'clubs') {
+                suits[2]++;
+            }else if (card.suit == 'spades') {
+                suits[3]++;
+            }
+            if (card.value == 'A') {
+                values[12]++;
+            }else if (card.value == 'K') {
+                values[11]++;
+            }else if (card.value == 'Q') {
+                values[10]++;
+            }else if (card.value == 'J') {
+                values[9]++;
+            }else if (card.value == 'T') {
+                values[8]++;
+            }else {
+                values[card.value-2]++;
+            }
+        }
+        for (const suit of suits) {
+            if (suit >= 5) {
+                flush = true;
+            }
+        }
+        if (values[12] && values[11] && values[10] && values[9] && values[8]) {
+            royal = true;
+        }
+        if (royal && flush) {
+            return [1, 14]
+        }
+        for (let i = 0; i < values.length-5; i++) {
+            if (values[i] && values[i+1] && values[i+2] && values[i+3] && values[i+4]) {
+                straight = true;
+                highest = i+6
+            }
+        }
+        if (straight && flush) {
+            return [2, highest]
+        }
+        for (let i = 0; i < values.length; i++) {
+            if (values[i] >= 4) {
+                return [3, i+2]
+            }else if (values[i] == 3) {
+                three = true;
+                highest = i+2
+            }else if (values[i] == 2) {
+                if (twopair) {
+                    highest = i+2
+                }
+                if (pair) {
+                    twopair = true;
+                    highest = i+2
+                }else {
+                    pair = true;
+                    if (!three) {
+                        highest = i+2
+                    }
+                }
+            }else if (!three && !pair &&  !flush && !straight) {
+                highest = i+2;
+            }
+        }
+        if (three && pair) {
+            return [4, highest]
+        } else if (flush) {
+            return [5, highest]
+        }else if (straight) {
+            return [6, highest]
+        }else if (three) {
+            return [7, highest]
+        }else if (twopair) {
+            return [8, highest]
+        }else if (pair) {
+            return [9, highest]
+        }else {
+            return [10, highest]
+        }
+    }
+
+    receiveMoney(amount) {
+        this.money += amount;
+    }
+
+    placeBet(amount) {
+        if (amount > this.money) {
+            amount = this.money;
+            this.money = 0;
+        } else {
+            this.money -= amount;
+        }
+        this.bet = amount;
+    }
+
+    drawCard(card) {
+        this.hand.push(card);
+    }
+
+    hasBlackJack() {
+        this.hasBlackJack = true;
+    }
+}
+class PlayerList {
+    players;
+
+    constructor() {
+        this.players = [];
+    }
+
+    addPlayer(player) {
+        if (! this.players.includes(player)){
+            this.players.push(player);
+        }
+    }
+
+    removePlayer(player){
+        let index = this.players.indexOf(player);
+        if (index > -1)
+            this.players.splice(index, 1);
+    }
+}
+class Baccarat {
     numOfPlayers;
     playerlist;
     deck;
+    playerhand;
+    dealerhand;
 
     constructor(numOfPlayers) {
         this.numOfPlayers = numOfPlayers;
         this.playerlist = new PlayerList;
-        this.deck = new Deck(1);
+        this.deck = new Deck;
         this.deck.shuffle();
+        this.playerhand = [];
+        this.dealerhand = [];
+        this.playertotal = 0;
+        this.dealertotal = 0;
 
         for (let i = 0; i < numOfPlayers; i++) {
-            let player = new Player(100)
-            this.playerlist.addPlayer(player)
+            this.playerlist.addPlayer(new Player(100))
         }
     }
 
-    drawCards() {
-        for (const player of this.playerlist) {
-            player.drawCard(this.deck.draw());
+    bet(player, amount) {
+        if (amount > player.money) {
+            amount = player.money;
+            player.money = 0;
+        }else {
+            player.money -= amount;
         }
-        for (const player of this.playerlist) {
-            player.drawCard(this.deck.draw());
-        }
+        player.bet += amount;
     }
 }
-
 
 class betchip {
     constructor(amount,x) {
@@ -239,7 +330,6 @@ class button {
         return false
     }
 }
-
 class bj {
     constructor(numOfPlayers) {
         this.ctx = canvas.getContext('2d');
@@ -567,61 +657,3 @@ class bj {
         return this.betAmount
     }
 }
-
-let playerCount = document.querySelector('.numPlayers').textContent
-let ctx = canvas.getContext('2d');
-let bjgame = new bj(playerCount)
-bjgame.bet()
-
-window.onresize = function() {
-    ctx.fillStyle = '#86391a'
-    ctx.fillRect(0,0,window.innerWidth,window.innerHeight)
-    bjgame.clearBoard()
-}
-
-function checkIfButtonClicked(x,y) {
-    if (window.innerHeight*0.87 < y && window.innerHeight*0.87+100 > y)
-    bjgame.buttons.forEach((but) => {
-        if (but.click(x)) {
-            bjgame.hitOrStand(but.action)
-        }
-    })
-}
-
-canvas.addEventListener('click', (event) => {
-    if (bjgame.stage == 'bet') {
-        if (event.offsetY > window.innerHeight*0.83 && event.offsetY < window.innerHeight*0.83+100) {
-            bjgame.betchips.forEach((elm) => {
-                if (elm.click(event.offsetX)) {
-                    playerBal-=elm.amount
-                    bjgame.addBet(elm.amount)
-                    bjgame.clearBoard()
-                }
-            })
-            if (bjgame.resetButton.click(event.offsetX)) {
-                playerBal=bjgame.startBal
-                bjgame.betAmount = 0
-                bjgame.clearBoard()
-            }
-            
-        }
-    }
-    else if (bjgame.stage == 'game') {
-        checkIfButtonClicked(event.offsetX, event.offsetY)
-    }
-    if ((event.offsetX < 50 && event.offsetX > 0) && (event.offsetY < 50 && event.offsetY > 0))
-    {
-        console.log('true')
-        window.location.href = '/'
-    }
-})
-
-document.addEventListener('keydown', (event) => {
-    if (event.key == ' ') {
-        if (bjgame.stage == 'bet') {
-            if (bjgame.betAmount > 0) {
-                bjgame.startGame()
-            }
-        }
-    }
-})
