@@ -536,7 +536,9 @@ class pokerGUI {
         this.rotatePlayers[this.activePlayer].money -= 50
         this.rotPlayers()
         this.clearBoard()
-        while (this.)
+        // while (this.everyoneBet) {
+
+        // }
     }
 
     drawButtons() {

@@ -93,7 +93,7 @@ app.get( "/history", ( req, res ) => {
             let data = results; // results is still an array
             // data's object structure: 
             //  { item: ___ , quantity:___ , description: ____ }
-            res.render('history', { inventory : results });
+            res.render('history', { inventory : results});
         }
     });
 } );
@@ -111,7 +111,21 @@ app.get('/blackjack', (req, res) => {
             let data = results; // results is still an array
             // data's object structure: 
             //  { item: ___ , quantity:___ , description: ____ }
-            res.render('blackjack', { inventory : results });
+            res.render('blackjack', { inventory : results, players : req.body.numOfComputers });
+        }
+    });
+})
+
+app.get('/poker', (req, res) => {
+    console.log(req.body.numOfComputers)
+    db.execute(get_total_profit_sql, (error, results) => {
+        if (error)
+            res.status(500).send(error); //Internal Server Error
+        else {
+            let data = results; // results is still an array
+            // data's object structure: 
+            //  { item: ___ , quantity:___ , description: ____ }
+            res.render('poker', { inventory : results, players : req.body.numOfComputers });
         }
     });
 })
