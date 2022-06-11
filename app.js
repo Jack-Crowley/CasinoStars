@@ -124,6 +124,10 @@ app.get('/slots', (req, res) => {
     res.render('slots')
 })
 
+app.get('/baccarat', (req, res) => {
+    res.render('baccarat')
+})
+
 app.post('/', ( req, res ) => {
     if (req.body.game == 'bj') {
         db.execute(get_total_profit_sql, (error, results) => {
