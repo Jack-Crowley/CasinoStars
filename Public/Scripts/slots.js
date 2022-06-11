@@ -17,7 +17,6 @@ getsymbol();
 function draw() {
     ctx.strokeStyle='fuchsia';
     ctx.lineWidth=3;
-    ctx.strokeRect(canvas.width/50, canvas.height/50, canvas.width/50*49, canvas.height/50*47);
     ctx.beginPath();
     ctx.arc(canvas.width/50*25.6, canvas.height/50*44.5, canvas.width/15.36/2, 0, 2 * Math.PI);
     ctx.closePath();
