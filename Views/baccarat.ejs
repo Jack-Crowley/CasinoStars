@@ -14,8 +14,28 @@
 </head>
 <body>
   <p class="playerval" style="display:none" data-playerval="10000"></p>
-  <p class="playercount" style="display:none" data-playercount="2"></p>
-  <canvas width="100%" height="100%"></canvas>
+  <p class="playercount" style="display:none" data-playercount='4'></p>
+  <a class="waves-effect waves-light btn modal-trigger hidden" href="#modal1" style="display:none"></a>
+  <canvas width="100%" height="100%" style="background-color: #86391a;"></canvas>
+
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4 class="Center">BlackJack Game Ended</h4>
+      <h3 class="GameEnded">Profit: 100</h3>
+      <h3 class="profit">Profit: 100</h3>
+      <h3 class="dealer">Profit: 100</h3>
+      <h3 class="player">Profit: 100</h3>
+    </div>
+    <div class="modal-footer">
+        <form action="/blackjack" method="post">
+            <input type="hidden" name="amount" class="amount">
+            <input type="hidden" name="numOfComputers" value="">
+            <input type="submit" name="mode" value="PLAY" class="green btn">
+            <input type="submit" name="mode" value="STOP" class="red btn">
+        </form>
+    </div>
+  </div>
+
   <script>
     var canvas = document.querySelector('canvas');
     canvas.width = window.innerWidth;
