@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="Styles/dashboard.css">
+    <link rel="stylesheet" href="Styles/history.css">
     <link rel="stylesheet" href="Styles/navbar.css">
     <link rel="stylesheet" href="Styles/scrollbar.css">
     <title>Casino Stars</title>
@@ -26,9 +29,44 @@
               })
               return sum
             }%>
-            <li class="right"><%=getTotal()%></li>
+            <li class="right">$<%=getTotal()%></li>
           </ul>
         </div>
       </nav>
+    
+    <h2 class="white-text header">History</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Game</th>
+          <th>Profit</th>
+          <th>Date Played</th>
+        </tr>
+      </thead>
+
+      <% function dateFormat(date) {
+        let week = 'Sunday Monday Tuesday Wednesday Thursday Friday Saturday';
+        let newDate = new Date(date);
+        return `${week.split(' ')[date.getDay()]}, ${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}, ${date.getHours() + ':' + String(date.getMinutes()).padStart(2, '0')}`;
+      }; %>
+      <% function profitCol(profit) {
+        return (profit > 0 ? 'green' : 'red');
+      }; %>
+      <tbody>
+        <% for (let i=0; i<inventory.length; i++) { %>
+            <tr>
+              <td><%= inventory[i].game %></td>
+              <td><div>
+                <span style="float: left;">$</span>
+                <span style="color: <%= profitCol(inventory[i].profit) %>;" id="profit"><%= inventory[i].profit %></span>
+              </div></td>
+              <td><%= dateFormat(inventory[i].date) %></td>
+            </tr>
+        <% }; %>
+      </tbody>
+    </table>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </body>
 </html>
