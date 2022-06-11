@@ -119,3 +119,45 @@ ul.rules {
     list-style-type:circle;
     font-size: 2em;
 }
+
+/* Modal CSS */
+.modal, .tabs {
+    background-color: #232228;
+    color: white;
+}
+
+.tabs {
+    background-color: #232228;
+    color: white;
+}
+
+.material-icons {
+    color: white;
+}
+
+.tabs {
+    padding-top: 10px;
+}
+
+.tabs .tab a {
+    color:#fff;
+}
+
+.tabs .tab a:hover {
+    background-color:#15141b;
+    color: #fff;
+}
+
+.tabs .tab a.active {
+    background-color:#211f28;
+    color:rgb(255, 255, 255);
+}
+
+.tabs .indicator {
+    background-color:rgb(143, 143, 143);
+}
+
+ol>ul:not(.browser-default)>li {
+    list-style-type: disc;
+    margin-left: 15px;
+}

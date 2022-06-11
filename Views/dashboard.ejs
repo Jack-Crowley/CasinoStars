@@ -111,7 +111,7 @@
           <canvas class="chart"style="background-color: #0c0b10;" width="1350" height="300" data-values = '<%=getWeek()%>'></canvas>
         </div>
         <div class="item center z-depth-5">
-          <h4>Best Preforming Games</h4>
+          <h4>Best Performing Games</h4>
           <table class="container">
             <thead>
               <tr>
@@ -141,7 +141,7 @@
         </div>
       </div>
       <h2 class="white-text header">Games Suggested For You</h2>
-      <a href="#pokermodal" class="modal-trigger">
+      <a href="#poker-modal" class="modal-trigger">
       <div class="gamecard-layout">
         <div class="card game">
           <div class="card-image">
@@ -152,7 +152,7 @@
           </div>
         </div>
         </a>
-        <a href="#bjmodal" class="modal-trigger">
+        <a href="#bj-modal" class="modal-trigger">
           <div class="card game">
             <div class="card-image">
               <img src="images/BlackJack.jpg">
@@ -163,161 +163,280 @@
           </div>
         </a>
         
-        <div class="card game">
-          <div class="card-image">
-            <img src="images/slots.jpg">
+        <a href="#bacc-modal" class="modal-trigger">
+          <div class="card game">
+            <div class="card-image">
+              <img src="images/Baccarat.jpg">
+            </div>
+            <div class="card-content">
+              <p>Baccarat</p>
+            </div>
           </div>
-          <div class="card-content">
-            <p>Slots</p>
+        </a>
+        <a href="#roul-modal" class="modal-trigger">
+          <div class="card game">
+            <div class="card-image">
+              <img src="images/roulette.jpg">
+            </div>
+            <div class="card-content">
+              <p>Roulette</p>
+            </div>
           </div>
-        </div>
-        <div class="card game">
-          <div class="card-image">
-            <img src="images/roulette.jpg">
+        </a>
+        <a href="#slots-modal" class="modal-trigger">
+          <div class="card game">
+            <div class="card-image">
+              <img src="images/slots.jpg">
+            </div>
+            <div class="card-content">
+              <p>Slots</p>
+            </div>
           </div>
-          <div class="card-content">
-            <p>Roulette</p>
-          </div>
-        </div>
-        <div class="card game">
-          <div class="card-image">
-            <img src="images/Baccarat.jpg">
-          </div>
-          <div class="card-content">
-            <p>Baccarat</p>
-          </div>
-        </div>
+        </a>
       </div>
 
     <!-- Modal Structure -->
-    <div id="bjmodal" class="modal modal-fixed-footer">
+    <div id="poker-modal" class="modal">
+      <div class="modal-header">
+        <img src="/images/pokerBanner.jpg" alt="" height="200" width="100%">
+      </div>
+      <div class="modal-content">
+        <h4>Poker</h4>
+        <ul class="tabs">
+          <li class="tab col s2"><a class="active" href="#instructionsPoker"><i class="material-icons">info</i></a></li>
+          <li class="tab col s2"><a href="#setPoker"><i class="material-icons">settings</i></a></li>
+        </ul>
+        <div id="instructionsPoker" class="col s12">
+          <br>
+          <p>Instructions</p>
+          <ol>
+            <li>Each player is dealt 2 cards face down.</li>
+            <li>The player to the left of the dealer automatically bids the small blind.</li>
+            <li>The player to the left of the small blind automatically bids the big blind.</li>
+            <li>Each of the next players then decides whether they want to call, raise, or fold.</li>
+            <ul>
+              <li>If a player calls, then they match the current bid amount.</li>
+              <li>If a player raises, they decide how much they want to raise the bidding amount and each player must either match the new bid or fold.</li>
+              <li>If a player folds, they drop out of the round and cannot win.</li>
+            </ul>
+            <li>The dealer puts a card out of play face down on the table.</li>
+            <li>The dealer deals out 3 cards to the center face up.</li>
+            <li>Each of the players bid again.</li>
+            <ul>
+              <li>If nobody has bid, or everyone before has checked, the player can also check.</li>
+              <li>If a player checks, then they do not bid</li>
+              <ul>
+                <li>Essentially, the player has called a bid of 0.</li>
+              </ul>
+            </ul>
+            <li>The dealer puts another card out of play face down on the table.</li>
+            <li>The dealer deals another card to the center face up.</li>
+            <li>Each of the players bid again.</li>
+            <li>The dealer puts another card out of play face down on the table and another card to the center face up.</li>
+            <li>Each of the players bid again.</li>
+            <li>The dealer puts another card out of play face down on the table and one last card to the center face up.</li>
+            <li>Each player uses the 5 face up cards in the center as well as their 2 cards in order to create the best possible hand.</li>
+            <li>From best to worst, the hands are:</li>
+            <ul>
+              <li>Royal Flush</li>
+              <li>Straight Flush</li>
+              <li>Four of a Kind</li>
+              <li>Full House</li>
+              <li>Flush</li>
+              <li>Straight</li>
+              <li>Three of a Kind</li>
+              <li>Two Pair</li>
+              <li>Pair</li>
+              <li>High Card</li>
+            </ul>
+            <li>Whoever has the best hand wins the pot.</li>
+          </ol>
+        </div>
+        <div id="setPoker">
+          <br>
+          <p>Settings</p>
+          <form action="#" method="post">
+            <p>Number of Computers</p>
+            <p class="range-field">
+              <input type="range" name="numOfComputers" min="0" max="4"/>
+            </p>
+            <br>
+            <p>Number of Decks</p>
+            <p class="range-field">
+              <input type="range" name="numOfDecks" min="0" max="8"/>
+            </p>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer" style="margin: 0 auto; background-color: #232228; display: flex; align-items: center; justify-content: center;">
+        <a class="btn waves-effect waves-light green" style="font-weight: bold; width: 90%; border: 2px solid white; margin-right: 12px;" href="/poker">PLAY</a>
+        <a href="#!" class="red modal-close waves-effect waves-red btn-flat" style="font-weight: bold; color: white; border: 2px solid white;">Close</a>
+      </div>
+    </div>
+
+    <div id="bj-modal" class="modal">
       <div class="modal-header">
         <img src="/images/BlackJackBanner.jpg" alt="" height="200" width="100%">
       </div>
       <div class="modal-content">
-        <h4 class="Game-Title">BlackJack</h4>
-        <div class="row">
-          <div class="col s12">
-            <ul class="tabs">
-              <li class="tab col s2"><a class="active" href="#playBJ">Settings</a></li>
-              <li class="tab col s2"><a href="#instructionsBJ">Instructions</a></li>
-              <li class="tab col s2"><a href="#scoreBJ">SCORING</a></li>
-            </ul>
-          </div>
-          <div id="playBJ" class="col s12">
-            <form action="/" method="post">
-              <p>Number of Computers</p>
-              <p class="range-field">
-                <input type="range" name="numOfComputers" min="0" max="4"/>
-              </p>
-              <input type="hidden" name="game" value = "bj">
-              <input type="submit" class="btn" value="PLAY">
-            </form>
-          </div>
-          <div id="instructionsBJ" class="col s12">
-            <h5>Blackjack is a card game in which players try to obtain a combination of cards worth 21 points. 
-              Here are the rules:
-            </h5>
-            <ol>
-              <li>Each player is dealt 2 cards face up and the dealer is dealt 1 card face up and 1 card face down</li>
-              <li>Each player can then either hit or stay
-                <ol>
-                  <li>If a player hits, they get another card</li>
-                  <li>If a player stays, they do not get another card
-                  </li>
-                </ol>
-              </li>
-              <li>Aces are worth either 1 or 11 points depending on what the player wants it to be</li>
-              <li>All face cards are worth 10</li>
-              <li>All other cards are worth the number written on them</li>
-              <li>After all of the players have gone, the dealer goes
-              </li>
-              <li>If the value of the dealer’s hand is less than 17, they must hit</li>
-              <li>If it is 17 or more, the dealer must stay
-              </li>
-            </ol>
-          </div>
-          <div id="scoreBJ" class="col s12">
-            <h5>Scoring</h5>
+        <h4>BlackJack</h4>
+        <ul class="tabs">
+          <li class="tab col s2"><a class="active" href="#instructionsBJ"><i class="material-icons">info</i></a></li>
+          <li class="tab col s2"><a href="#setBJ"><i class="material-icons">settings</i></a></li>
+        </ul>
+        <div id="instructionsBJ" class="col s12">
+          <br>
+          <p>Instructions</p>
+          <ol>
+            <li>Each player is dealt 2 cards face up and the dealer is dealt 1 card face up and 1 card face down.</li>
+            <li>Each player can then either hit or stay.</li>
             <ul>
-              <li>If the total of a player’s hand is more than 21, they lose</li>
-              <li>For each player, if they did not bust and either the dealer bust or they have a higher score than the dealer, they win money</li>
-              <li>If the player ties with the dealer, they get their money back
-              </li>
+              <li>If a player hits, they get another card.</li>
+              <li>If a player stays, they do not get another card.</li>
             </ul>
+            <li>Aces are worth either 1 or 11 points depending on what the player wants it to be.</li>
+            <li>All face cards are worth 10.</li>
+            <li>All other cards are worth the number written on them.</li>
+            <li>If the total of a player’s hand is more than 21, they bust and automatically lose.</li>
+            <li>After all of the players have gone, the dealer goes.</li>
+            <ul>
+              <li>If the value of the dealer’s hand is less than 17, they must hit.</li>
+              <li>If it is 17 or more, the dealer must stay.</li>
+            </ul>
+            <li>For each player, if they did not bust and either the dealer bust or they have a higher score than the dealer, they win money.</li>
+            <li>If the player ties with the dealer, they get their money back.</li>
+          </ol>
         </div>
+        <div id="setBJ">
+          <br>
+          <p>Settings</p>
+          <form action="#" method="post">
+            <p>Number of Computers</p>
+            <p class="range-field">
+              <input type="range" name="numOfComputers" min="0" max="4"/>
+            </p>
+            <br>
+            <p>Number of Decks</p>
+            <p class="range-field">
+              <input type="range" name="numOfDecks" min="0" max="8"/>
+            </p>
+          </form>
         </div>
       </div>
+      <div class="modal-footer" style="margin: 0 auto; background-color: #232228; display: flex; align-items: center; justify-content: center;">
+        <a class="btn waves-effect waves-light green" style="font-weight: bold; width: 90%; border: 2px solid white; margin-right: 12px;" href="/blackjack">PLAY</a>
+        <a href="#!" class="red modal-close waves-effect waves-red btn-flat" style="font-weight: bold; color: white; border: 2px solid white;">Close</a>
+      </div>
     </div>
-    <div id="pokermodal" class="modal modal-fixed-footer">
+
+    <div id="bacc-modal" class="modal">
       <div class="modal-header">
-        <img src="/images/PokerBanner.jpg" alt="" height="200" width="100%">
+        <img src="/images/BaccaratBanner.jpg" alt="" height="200" width="100%">
       </div>
       <div class="modal-content">
-        <h4 class="Game-Title">Poker</h4>
-        <div class="row">
-          <div class="col s12">
-            <ul class="tabs">
-              <li class="tab col s2"><a class="active" href="#playPoker">Settings</a></li>
-              <li class="tab col s2"><a href="#instructionsPoker">Instructions</a></li>
-              <li class="tab col s2"><a href="#scoringPoker">Scoring</a></li>
+        <h4>Baccarat</h4>
+        <ul class="tabs">
+          <li class="tab col s2"><a class="active" href="#instructionsBacc"><i class="material-icons">info</i></a></li>
+          <li class="tab col s2"><a href="#setBacc"><i class="material-icons">settings</i></a></li>
+        </ul>
+        <div id="instructionsBacc" class="col s12">
+          <br>
+          <p>Instructions</p>
+          <ol>
+            <li>Players first decide whether they are going to bid on the dealer’s hand, the player’s hand, or if the dealer’s hand is going to tie the player’s hand.</li>
+            <li>Both hands, the dealer’s and the player’s, get dealt 2 cards.</li>
+            <li>If either hand’s total is equal to 8 or 9, the game ends.</li>
+            <ul>
+              <li>Face cards are worth 0 and aces are worth 1.</li>
+              <li>All other cards are worth the number written on them.</li>
             </ul>
-          </div>
-          <div id="playPoker" class="col s12">
-            <form action="#" method="post">
-              <p>Number of Computers</p>
-              <p class="range-field">
-                <input type="range" name="numOfComputers" min="0" max="4"/>
-              </p>
-              <input type="hidden" value="poker">
-              <input type="text" name="playerBal" placeholder="Capped amount of money, leave blank if no cap">
-              <input type="submit" class="btn" value="PLAY">
-            </form>
-          </div>
-          <div id="instructionsPoker" class="col s12">
-            <h5>Poker is a challenging mind game whose ultimate objective is winning the pot. Here are the rules:</h5>
-            <ol class="rules">
-              <li>Each player is dealt 2 cards face down</li>
-              <li>The player to the left of the dealer automatically bids the small blind</li>
-              <li>The player to the left of the small blind automatically bids the big blind</li>
-              <li>Each of the next players then decides whether they want to call, raise, or fold
-                <ol>
-                  <li>If a player calls, then they match the current bid amount</li>
-                  <li>If a player raises, they decide how much they want to raise the bidding amount and each player must either match the new bid or fold</li>
-                  <li>If a player folds, they drop out of the round and cannot win</li>
-                </ol>
-              </li>
-              <li>The dealer puts a card out of play face down on the table</li>
-              <li>The dealer deals out 3 cards to the center face up</li>
-              <li>Each of the players bid again</li>
-              <li>If nobody has bid, or everyone before has checked, the player can also check</li>
-              <li>The dealer puts another card out of play face down on the table</li>
-              <li>The dealer deals another card to the center face up</li>
-              <li>Each of the players bid again</li>
-              <li>The dealer puts another card out of play face down on the table</li>
-              <li>The dealer deals one last card face up to the center of the table</li>
-              <li>Each player uses the 5 face up cards in the center as well as their 2 cards in order to create the best possible hand</li>
-              <li>Refers to Scoring</li>
-            </ol>
-          </div>
-          <div id="scoringPoker" class="col s12">
-              <h5>Scoring</h5>
-              <ul>
-                <li>Royal Flush</li>
-                <li>Straight Flush</li>
-                <li>Four of a Kind</li>
-                <li>Full House</li>
-                <li>Flush</li>
-                <li>Straight</li>
-                <li>Three of a kind</li>
-                <li>Two Pair</li>
-                <li>Pair</li>
-                <li>High Card</li>
-              </ul>
-          </div>
+            <li>If neither hand equals 8 or 9, play continues.</li>
+            <li>Depending on the total value of the hand, both the player and dealer will stay or draw a card.</li>
+            <ul>
+              <li>If a hand stays, it does not draw a card.</li>
+            </ul>
+            <li>Whichever hand has the number closest to 9 wins.</li>
+            <li>Playesr win money based on what they bet on.</li>
+          </ol>
+        </div>
+        <div id="setBacc">
+          <br>
+          <p>Settings</p>
+          <form action="#" method="post">
+            <p>Number of Computers</p>
+            <p class="range-field">
+              <input type="range" name="numOfComputers" min="0" max="4"/>
+            </p>
+            <br>
+            <p>Number of Decks</p>
+            <p class="range-field">
+              <input type="range" name="numOfDecks" min="0" max="8"/>
+            </p>
+          </form>
         </div>
       </div>
+      <div class="modal-footer" style="margin: 0 auto; background-color: #232228; display: flex; align-items: center; justify-content: center;">
+        <a class="btn waves-effect waves-light green" style="font-weight: bold; width: 90%; border: 2px solid white; margin-right: 12px;" href="/baccarat">PLAY</a>
+        <a href="#!" class="red modal-close waves-effect waves-red btn-flat" style="font-weight: bold; color: white; border: 2px solid white;">Close</a>
+      </div>
     </div>
+
+    <div id="roul-modal" class="modal">
+      <div class="modal-header">
+        <img src="/images/pokerBanner.jpg" alt="" height="200" width="100%">
+      </div>
+      <div class="modal-content">
+        <h4>Roulette</h4>
+        <ul class="tabs">
+          <li class="tab col s2"><a class="active" href="#instructionsRoul"><i class="material-icons">info</i></a></li>
+        </ul>
+        <div id="instructionsRoul" class="col s12">
+          <br>
+          <p>Instructions</p>
+          <ol>
+            <li>Each player bets how much money they want on which color they believe the ball will stop at.</li>
+            <li>The ball spins around the wheel and stops at a random space.</li>
+            <li>Players will make or lose money depending on if they were right about the color of the space the ball stopped at.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="modal-footer" style="margin: 0 auto; background-color: #232228; display: flex; align-items: center; justify-content: center;">
+        <a class="btn waves-effect waves-light green" style="font-weight: bold; width: 90%; border: 2px solid white; margin-right: 12px;" href="/roulette">PLAY</a>
+        <a href="#!" class="red modal-close waves-effect waves-red btn-flat" style="font-weight: bold; color: white; border: 2px solid white;">Close</a>
+      </div>
+    </div>
+
+    <div id="slots-modal" class="modal">
+      <div class="modal-header">
+        <img src="/images/pokerBanner.jpg" alt="" height="200" width="100%">
+      </div>
+      <div class="modal-content">
+        <h4>Slots</h4>
+        <ul class="tabs">
+          <li class="tab col s2"><a class="active" href="#instructionsSlots"><i class="material-icons">info</i></a></li>
+        </ul>
+        <div id="instructionsSlots" class="col s12">
+          <br>
+          <p>Instructions</p>
+          <ol>
+            <li>Players will decide how much money they would like to bet.</li>
+            <li>Players will spin the slot machine.</li>
+            <li>Depending on the result, the player might make money.</li>
+            <ul>
+              <li>If all reels have a different symbol, the player does not make money.</li>
+              <li>If 2 of the reels have the same symbol, the player makes twice what they bet.</li>
+              <li>If all 3 reels have the same symbol, the player makes 1000x what they bet.</li>
+            </ul>
+          </ol>
+        </div>
+
+      </div>
+      <div class="modal-footer" style="margin: 0 auto; background-color: #232228; display: flex; align-items: center; justify-content: center;">
+        <a class="btn waves-effect waves-light green" style="font-weight: bold; width: 90%; border: 2px solid white; margin-right: 12px;" href="/slots">PLAY</a>
+        <a href="#!" class="red modal-close waves-effect waves-red btn-flat" style="font-weight: bold; color: white; border: 2px solid white;">Close</a>
+      </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
