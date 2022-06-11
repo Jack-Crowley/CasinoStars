@@ -138,6 +138,19 @@ app.post('/', ( req, res ) => {
             }
         });
     }
+    else if (req.body.game == 'poker') {
+        db.execute(get_total_profit_sql, (error, results) => {
+            if (error)
+                res.status(500).send(error); //Internal Server Error
+            else {
+                let data = results; // results is still an array
+                // data's object structure: 
+                //  { item: ___ , quantity:___ , description: ____ }
+                console.log(req.body.numOfComputers)
+                res.render('poker', { inventory : results,  players : req.body.numOfComputers});
+            }
+        });
+    }
 })
 
 app.post("/blackjack", ( req, res ) => {
