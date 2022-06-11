@@ -5,16 +5,15 @@ body {
 }
 
 .popular {
-    margin: 20px 45px 20px 45px;
-    display: grid;
+    /* margin: 20px 45px 20px 45px; */
+    margin: 40px auto;
+    display: flex;
     /* width: 1640px; */
-    grid-template-columns: 1fr 1fr;
-    column-gap: 20px;
-    row-gap: 20px;
-}
-
-.center {
-    margin: 20px auto;
+    /* grid-template-columns: 1fr 1fr; */
+    column-gap: 60px;
+    /* row-gap: 20px; */
+    place-content: center;
+    justify-content: center;
 }
 
 .right {
@@ -58,8 +57,9 @@ body {
 
 .info > p {
     text-align: center;
-    padding-left: 7px;
-    padding-right: 7px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 16px;
 }
 
 .buttons > .btn {
@@ -104,4 +104,9 @@ body {
 
 .tabs .indicator {
     background-color:rgb(143, 143, 143);
+}
+
+ol>ul:not(.browser-default)>li {
+    list-style-type: disc;
+    margin-left: 15px;
 }
