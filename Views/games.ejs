@@ -22,6 +22,14 @@
             <li><a href="/games" class="active">Games</a></li>
             <li><a href="/stat" class="">Statistics</a></li>
             <li><a href="/history" class="">History</a></li>
+            <%function getTotal() {
+              let sum = 0
+              inventory.forEach((num) => {
+                sum+=num.profit
+              })
+              return sum
+            }%>
+            <li class="right">$<%=getTotal()%></li>
           </ul>
         </div>
       </nav>

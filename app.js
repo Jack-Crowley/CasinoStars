@@ -22,6 +22,8 @@ const get_total_profit_sql = `
         game, profit, date
     FROM
         casino
+    ORDER BY date
+    DESC
 `
 
 // define a route for item Create
@@ -180,7 +182,7 @@ app.post("/blackjack", ( req, res ) => {
     }
     let date = new Date()
 
-    db.execute(create_item_sql, ['Blackjack', req.body.amount, getDate()], (error, results) => {
+    db.execute(create_item_sql, ['BlackJack', req.body.amount, getDate()], (error, results) => {
         if (error)
             res.status(500).send(error); //Internal Server Error
         else {

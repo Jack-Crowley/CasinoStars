@@ -1,0 +1,39 @@
+
+body {
+    background-color: #232228;
+    font-family: 'Roboto';
+    color: white;
+}
+
+table {
+    margin-left: 2%;
+    margin-top: 1%;
+    width: 96%;
+}
+
+tr {
+    border: 2px solid white;
+}
+
+tbody > tr:hover {
+    background-color: rgb(171, 68, 208);
+    cursor: pointer;
+}
+
+th {
+    font-size: 24px;
+    padding-left: 10px;
+    background-color: white;
+    color: #232228;
+}
+
+td {
+    padding-left: 15px;
+    color: white;
+    border: 2px solid white;
+}
+
+#profit {
+    float: right;
+    padding-right: 15px;
+}
