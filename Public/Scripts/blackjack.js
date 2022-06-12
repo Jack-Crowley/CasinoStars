@@ -372,6 +372,7 @@ class bj {
         this.dealer.hand.push(this.deck.draw())
         this.clearBoard()
         await this.sleep(timeBetweenCards)
+        this.computer()
         this.turnOver = true
         this.clearBoard()
     }
@@ -417,7 +418,7 @@ class bj {
         }
     }
 
-    computer() {
+    async computer() {
         for (let i = 0; i < this.players.length; i++) {
             while (this.players[i].stand == false) {
                 let action = Math.floor(Math.random()*2)
@@ -431,6 +432,8 @@ class bj {
                 else {   
                     this.players[i].stand = true
                 }
+                await this.sleep(500)
+                this.clearBoard()
             }
         }
     }
@@ -485,7 +488,7 @@ class bj {
         ctx.fillText(betText, 0, window.innerHeight*0.95)
     }
 
-    calcdealer() {
+    async calcdealer() {
         let i = 0
         this.dealer.openhand = []
         this.dealer.hand.forEach((card) => {
@@ -495,8 +498,9 @@ class bj {
             let card = this.deck.draw()
             this.dealer.hand.push(card)
             this.dealer.openhand.push(card)
+            await this.sleep(500)
+            this.clearBoard()
         }
-        this.clearBoard()
         this.endGame()
     }
 
