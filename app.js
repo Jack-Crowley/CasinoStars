@@ -132,6 +132,7 @@ app.get('/baccarat', (req, res) => {
 
 app.post('/', ( req, res ) => {
     if (req.body.game == 'bj') {
+        console.log('NUM OF COMPUTERS: ' + req.body.numOfComputers)
         db.execute(get_total_profit_sql, (error, results) => {
             if (error)
                 res.status(500).send(error); //Internal Server Error
@@ -139,8 +140,8 @@ app.post('/', ( req, res ) => {
                 let data = results; // results is still an array
                 // data's object structure: 
                 //  { item: ___ , quantity:___ , description: ____ }
-                console.log(req.body.numOfComputers)
                 res.render('blackjack', { inventory : results,  players : req.body.numOfComputers});
+                // console.log('NUM OF COMPUTERS: ' + req.body.numOfComputers)
             }
         });
     }
