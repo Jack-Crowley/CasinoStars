@@ -15,6 +15,11 @@ tr {
     border: 2px solid white;
 }
 
+tbody > tr:hover {
+    background-color: rgb(171, 68, 208);
+    cursor: pointer;
+}
+
 th {
     font-size: 24px;
     padding-left: 10px;

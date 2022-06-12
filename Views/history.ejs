@@ -47,20 +47,20 @@
       <% function dateFormat(date) {
         let week = 'Sunday Monday Tuesday Wednesday Thursday Friday Saturday';
         let newDate = new Date(date);
-        return `${week.split(' ')[date.getDay()]}, ${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}, ${date.getHours() + ':' + String(date.getMinutes()).padStart(2, '0')}`;
+        return `${week.split(' ')[date.getDay()]}, ${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}, ${(date.getHours() <= 12 ? (date.getHours() === 0 ? 12 : date.getHours()) : date.getHours() - 12) + ':' + String(date.getMinutes()).padStart(2, '0')} ${date.getHours() < 12 ? 'AM' : 'PM'}`;
       }; %>
       <% function profitCol(profit) {
         return (profit > 0 ? 'green' : 'red');
       }; %>
       <tbody>
         <% for (let i=0; i<inventory.length; i++) { %>
-            <tr>
-              <td><%= inventory[i].game %></td>
-              <td><div>
-                <span style="float: left;">$</span>
-                <span style="color: <%= profitCol(inventory[i].profit) %>;" id="profit"><%= inventory[i].profit %></span>
-              </div></td>
-              <td><%= dateFormat(inventory[i].date) %></td>
+            <tr onclick="window.location='/<%= inventory[i].game.toLowerCase() %>'">
+                <td><%= inventory[i].game %></td>
+                <td><div>
+                  <span style="float: left;">$</span>
+                  <span style="color: <%= profitCol(inventory[i].profit) %>;" id="profit"><%= inventory[i].profit %></span>
+                </div></td>
+                <td><%= dateFormat(inventory[i].date) %></td>
             </tr>
         <% }; %>
       </tbody>
