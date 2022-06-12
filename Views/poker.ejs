@@ -26,14 +26,13 @@
 
     <div id="modal1" class="modal">
         <div class="modal-content">
-          <h4 class="Center">BlackJack Game Ended</h4>
-          <h3 class="GameEnded">Profit: 100</h3>
-          <h3 class="profit">Profit: 100</h3>
-          <h3 class="dealer">Profit: 100</h3>
-          <h3 class="player">Profit: 100</h3>
+          <h4 class="Center">Poker Game Ended</h4>
+          <ul class="GameEnded">Profit:
+
+          </ul>
         </div>
         <div class="modal-footer">
-            <form action="/blackjack" method="post">
+            <form action="/poker" method="post">
                 <input type="hidden" name="amount" class="amount">
                 <input type="hidden" name="numOfComputers" value="<%=players%>">
                 <input type="submit" name="mode" value="PLAY" class="green btn">

@@ -98,7 +98,7 @@ class Dealer {
         for (const card of player.hand) {
             cards.push(card)
         }
-        for (const card of player.middle) {
+        for (const card of this.centerCards) {
             cards.push(card)
         }
         for (const card of cards) {
@@ -364,18 +364,22 @@ class pokerGUI {
         this.player1 = new Player(playerBal)
         this.players = []
         this.activePlayer=50
+        this.tempActivePlayer=0
         this.minbet = 0
-        this.positions = [[100, window.innerHeight*0.3],[window.innerWidth*0.7, window.innerHeight*0.3],[100, window.innerHeight*0.5],[window.innerWidth*0.7, window.innerHeight*0.5]]
-        console.log(numOfPlayers)
+        this.ge = false
+        this.lastRaise = 0
+        this.active = false
+        this.turnOver = false
+        this.nextP = false
+        this.centerCards = []
+        this.positions = [[100, window.innerHeight*0.5], [100, window.innerHeight*0.2],[window.innerWidth*0.8, window.innerHeight*0.2],[window.innerWidth*0.8, window.innerHeight*0.5]]
         for (let i = 0; i < numOfPlayers; i++) {
-            console.log('Player Added')
             this.players.push(new Player(Math.floor(Math.random()*10000)))
         }
         this.rotatePlayers = [this.player1]
         this.players.forEach((player) => {
             this.rotatePlayers.push(player)
         }) 
-        console.log(this.players)
         
     }
 
@@ -440,7 +444,7 @@ class pokerGUI {
         if (card.value)
             image.src = `images\\Cards\\${card.value}_of_${card.suit}.png` 
         else
-            image.src = `images\\Cards\\card_back_red.png`
+        image.src = `images\\C@gards\\card_back_red.png`
         image.onload = () => {
             this.ctx.drawImage(image, x, y, 130, 130*1.5)
         }
@@ -468,7 +472,37 @@ class pokerGUI {
             this.emptyCard(card,x,startY)
             x+=150
         })
-        if (this.activePlayer == this.rotatePlayers.indexOf(player)) {
+        if (player.stand) {
+            this.ctx.fillStyle='gray'
+        }
+        else if (this.activePlayer == this.rotatePlayers.indexOf(player)) {
+            this.ctx.fillStyle='yellow'
+        }
+        else {
+            this.ctx.fillStyle='white'
+        }
+        let text = `Computer: ${player.money}`
+        this.ctx.fillText(text, startX, startY+120+150)
+    }
+
+    computerCard (card, x, y) {
+        let image = new Image()
+        image.src = `images\\Cards\\${card.value}_of_${card.suit}.png`
+        image.onload = () => {
+            this.ctx.drawImage(image, x, y, 130, 130*1.5)
+        }
+    }
+
+    computerHand (player, startX, startY) {
+        let x = startX
+        player.hand.forEach((card) => {
+            this.computerCard(card,x,startY)
+            x+=150
+        })
+        if (player.stand) {
+            this.ctx.fillStyle='gray'
+        }
+        else if (this.activePlayer == this.rotatePlayers.indexOf(player)) {
             this.ctx.fillStyle='yellow'
         }
         else {
@@ -483,7 +517,6 @@ class pokerGUI {
         let timeBetweenCards = 500
         this.stage = 'game'
         for (let i = 0; i < this.players.length; i++) {
-            console.log(i)
             this.players[i].hand.push(this.deck.draw())
             this.clearBoard()
             await this.sleep(timeBetweenCards)
@@ -492,7 +525,6 @@ class pokerGUI {
         this.clearBoard()
         await this.sleep(timeBetweenCards)
         for (let i = 0; i < this.players.length; i++) {
-            console.log(i)
             this.players[i].hand.push(this.deck.draw())
             this.clearBoard()
             await this.sleep(timeBetweenCards)
@@ -500,11 +532,10 @@ class pokerGUI {
         this.player1.hand.push(this.deck.draw())
         this.clearBoard()
         await this.sleep(timeBetweenCards)
-        this.computer()
-        this.turnOver = true
         this.activePlayer = 0
+        await this.start()
+        this.turnOver = true
         this.clearBoard()
-        this.start()
     }
 
     rotPlayers() {
@@ -515,7 +546,7 @@ class pokerGUI {
     }
 
     everyoneBet() {
-        peoples = 0
+        let peoples = 0
         for (let i = 0; i < this.rotatePlayers.length; i++) {
             if (this.rotatePlayers[i].stand) {
                 peoples++
@@ -528,17 +559,37 @@ class pokerGUI {
     }
 
     async start() {
+        this.clearBoard()
         await this.sleep(1000)
         this.rotatePlayers[this.activePlayer].money -= 50/2
+        this.rotatePlayers[this.activePlayer].bet = 25
         this.rotPlayers()
+        this.minbet = 25
         this.clearBoard()
         await this.sleep(1000)
         this.rotatePlayers[this.activePlayer].money -= 50
+        this.rotatePlayers[this.activePlayer].bet = 50
         this.rotPlayers()
+        this.minbet = 50
         this.clearBoard()
-        // while (this.everyoneBet) {
+    }
 
-        // }
+    async computer(i) {
+        let action = Math.floor(Math.random()*3)
+        if (action == 0) {
+            this.rotatePlayers[i].stand = true
+        }
+        else if (action == 1) {
+            this.pot += this.minbet-this.rotatePlayers[i].bet
+            this.rotatePlayers[i].money -= this.minbet-this.rotatePlayers[i].bet
+            this.rotatePlayers[i].bet = this.minbet
+        }
+        else {
+            this.lastRaise = i
+            this.pot += this.minbet-this.rotatePlayers[i].bet
+            this.rotatePlayers[i].money -= this.minbet-this.rotatePlayers[i].bet
+            this.rotatePlayers[i].bet = this.minbet
+        }
     }
 
     drawButtons() {
@@ -553,8 +604,8 @@ class pokerGUI {
                         this.buttons.splice(i, 1)
                     }
                 }
-                let sc = new button(window.innerWidth-480, 'check')
-                this.buttons.push(sc)
+                let cc = new button(window.innerWidth-480, 'check')
+                this.buttons.push(cc)
             }
         }
         let raise = new Image()
@@ -566,8 +617,8 @@ class pokerGUI {
                     this.buttons.splice(i, 1)
                 }
             }
-            let hc = new button(window.innerWidth-135, 'raise')
-            this.buttons.push(hc)
+            let rc = new button(window.innerWidth-135, 'raise')
+            this.buttons.push(rc)
         }
         let call = new Image()
         call.src = `images\\call.png`, 
@@ -578,8 +629,8 @@ class pokerGUI {
                     this.buttons.splice(i, 1)
                 }
             }
-            let sc = new button(window.innerWidth-365, 'call')
-            this.buttons.push(call)
+            let cc = new button(window.innerWidth-365, 'call')
+            this.buttons.push(cc)
         }
         let fold = new Image()
         fold.src = `images\\fold.png`, 
@@ -590,16 +641,80 @@ class pokerGUI {
                     this.buttons.splice(i, 1)
                 }
             }
-            let sc = new button(window.innerWidth-250, 'stand')
-            this.buttons.push(sc)
+            let fc = new button(window.innerWidth-250, 'fold')
+            this.buttons.push(fc)
         }
     }
 
-    game() {
+
+    async gameLoop() {
+        if (this.turnOver && !this.active && this.activePlayer != 50) {
+            this.active = true
+            if (this.rotatePlayers[this.activePlayer].stand) {
+                this.rotPlayers()
+                this.active = false
+                this.clearBoard()
+            }
+            else if (this.activePlayer != 0) {
+                this.computer(this.activePlayer)
+                await this.sleep(1000)
+                this.rotPlayers()
+                this.active = false
+                this.clearBoard()
+            }
+            else {
+                this.active = false
+            }
+        }
+    }
+
+    async nextPhase() {
+        await this.sleep (500)
+        if (this.centerCards.length == 0) {
+            for (let i = 0; i < 3; i++) {
+                this.centerCards.push(this.deck.draw())
+                this.clearBoard()
+                await this.sleep(1000)
+            }
+        }
+        else if (this.centerCards.length == 5 && !this.ge) {
+            this.centerCards.splice(5, 1)
+            this.endGame()
+        }
+        else {
+            this.centerCards.push(this.deck.draw())
+            this.clearBoard()
+            await this.sleep(1000)
+        }
+        
+        this.activePlayer = this.tempActivePlayer
+        this.minbet = 1
+        this.rotatePlayers.forEach((player) => {
+            player.bet = 0
+        })
+        this.nextP = false
+        this.clearBoard()
+    }
+
+    async game() {
+        
+        if ( this.turnOver && this.everyoneBet()) {
+            this.gameLoop()
+        }
+        if (!this.everyoneBet() && this.turnOver && !this.nextP) {
+            this.nextP = true
+            this.tempActivePlayer = this.activePlayer
+            this.activePlayer = 50
+            this.nextPhase()
+        }
         this.buttons = []
         this.imageHand(this.player1.hand, window.innerWidth/2-150, window.innerHeight*0.7)
+        this.imageHand(this.centerCards, window.innerWidth/2-450, window.innerHeight*0.4)
         let text = `$${this.rotatePlayers[0].money}`
-        if (this.activePlayer == 0) {
+        if (this.rotatePlayers[0].stand) {
+            this.ctx.fillStyle='gray'
+        }
+        else if (this.activePlayer == 0) {
             this.ctx.fillStyle='yellow'
             this.drawButtons()
         }
@@ -607,28 +722,174 @@ class pokerGUI {
             this.ctx.fillStyle='white'
         }
         this.ctx.fillText(text, window.innerWidth/2-150, window.innerHeight*0.7+240)
-        for (let i = 0; i < this.players.length; i++) {
-            console.log(this.positions[i][0], this.positions[i][1])
-            this.emptyHand(this.players[i], this.positions[i][0], this.positions[i][1])
+        if (this.ge) {
+            for (let i = 0; i < this.players.length; i++) {
+                this.computerHand(this.players[i], this.positions[i][0], this.positions[i][1])
+            }
+        }
+        else {
+            for (let i = 0; i < this.players.length; i++) {
+                this.emptyHand(this.players[i], this.positions[i][0], this.positions[i][1])
+            }
         }
         ctx.fillStyle='#fff'
-        let betText = `Pot: ${this.pot}`
-        ctx.fillText(betText, window.innerWidth/2-100, window.innerHeight*0.2)
+        let potText = `Pot: ${this.pot}`
+        let betText = `Bet: ${this.minbet}`
+        ctx.fillText(potText, window.innerWidth/2-100, window.innerHeight*0.2)
+        ctx.fillText(betText, window.innerWidth/2-100, window.innerHeight*0.15)
+     
+        let fold = 0
+        this.rotatePlayers.forEach((player) => {
+            if (player.stand) {
+                fold++
+            }
+        }) 
+        if (fold >= this.rotatePlayers.length-1 && !this.ge) {
+            this.endGame()
+        }
     }
 
-    async computer() {
+    
+
+    getScore(player) {
+            let suits = [0, 0, 0, 0]
+            let values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            let flush = false;
+            let straight = false;
+            let royal = false;
+            let three = false;
+            let pair = false;
+            let twopair = false;
+            let highest = 0;
+            let cards = [];
+            for (const card of player.hand) {
+                cards.push(card)
+            }
+            for (const card of this.centerCards) {
+                cards.push(card)
+            }
+            for (const card of cards) {
+                if (card.suit == 'diamonds') {
+                    suits[0]++;
+                }else if (card.suit == 'hearts') {
+                    suits[1]++;
+                }else if (card.suit == 'clubs') {
+                    suits[2]++;
+                }else if (card.suit == 'spades') {
+                    suits[3]++;
+                }
+                if (card.value == 'A') {
+                    values[12]++;
+                }else if (card.value == 'K') {
+                    values[11]++;
+                }else if (card.value == 'Q') {
+                    values[10]++;
+                }else if (card.value == 'J') {
+                    values[9]++;
+                }else if (card.value == 'T') {
+                    values[8]++;
+                }else {
+                    values[card.value-2]++;
+                }
+            }
+            for (const suit of suits) {
+                if (suit >= 5) {
+                    flush = true;
+                }
+            }
+            if (values[12] && values[11] && values[10] && values[9] && values[8]) {
+                royal = true;
+            }
+            if (royal && flush) {
+                return [1, 14]
+            }
+            for (let i = 0; i < values.length-5; i++) {
+                if (values[i] && values[i+1] && values[i+2] && values[i+3] && values[i+4]) {
+                    straight = true;
+                    highest = i+6
+                }
+            }
+            if (straight && flush) {
+                return [2, highest]
+            }
+            for (let i = 0; i < values.length; i++) {
+                if (values[i] >= 4) {
+                    return [3, i+2]
+                }else if (values[i] == 3) {
+                    three = true;
+                    highest = i+2
+                }else if (values[i] == 2) {
+                    if (twopair) {
+                        highest = i+2
+                    }else if (pair) {
+                        twopair = true;
+                        highest = i+2
+                    }else {
+                        pair = true;
+                        if (!three) {
+                            highest = i+2
+                        }
+                    }
+                }else if (!three && !pair &&  !flush && !straight) {
+                    highest = i+2;
+                }
+            }
+            if (three && pair) {
+                return [4, highest]
+            } else if (flush) {
+                return [5, highest]
+            }else if (straight) {
+                return [6, highest]
+            }else if (three) {
+                return [7, highest]
+            }else if (twopair) {
+                return [8, highest]
+            }else if (pair) {
+                return [9, highest]
+            }else {
+                return [10, highest]
+            }
+    }
+
+    getWinner() {
+        console.log('Get Winner')
         
     }
 
     move(action) {
-        
+        if (action == 'call') {
+            this.pot += this.minbet-this.rotatePlayers[0].bet
+            this.rotatePlayers[0].money -= this.minbet-this.rotatePlayers[0].bet
+            this.rotatePlayers[0].bet = this.minbet
+        }
+        else if (action == 'fold') {
+            this.rotatePlayers[0].stand=true
+        }
+        else if (action == 'raise') {
+            this.pot += this.minbet-this.rotatePlayers[0].bet
+            this.rotatePlayers[0].money -= this.minbet-this.rotatePlayers[0].bet
+            this.rotatePlayers[0].bet = this.minbet
+            let x = 'bad'
+            while (Number(x) != x && x != '') {
+                x = prompt('How much do you want to raise')
+            }
+            this.minbet += Number(x)
+            this.rotatePlayers[0].money -= this.minbet-this.rotatePlayers[0].bet
+            this.rotatePlayers[0].bet = this.minbet
+            this.clearBoard()
+        }
+        else if (action == 'r') {
+            
+        }
+        this.rotPlayers()
+        this.clearBoard()
     }
 
     bet() {
         this.betchips = []
         let maxChip = 0
         for (let i = this.bets.length; i >= 0; i--) {
-            if (this.bets[i] <= playerBal) {
+            if (this.bets[i] <= this.rotatePlayers[0].money) {
                 maxChip = i+1
                 break
             }
@@ -645,82 +906,81 @@ class pokerGUI {
             x+=112.5
         }
         this.drawChip('r', x)
-        var txt = '$'+playerBal
+        var txt = '$'+this.rotatePlayers[0].money
         ctx.fillStyle='#e98647'
         ctx.fillRect(window.innerWidth/2-ctx.measureText(txt).width-10, window.innerHeight*0.83-60, ctx.measureText(txt).width*3, 60)
         ctx.strokeStyle  = '#86391a'
         ctx.lineWidth = 12;
         ctx.strokeRect(window.innerWidth/2-ctx.measureText(txt).width-10, window.innerHeight*0.83-60, ctx.measureText(txt).width*3, 60)
         ctx.fillStyle='#fff'
-        ctx.fillText(txt, window.innerWidth/2-10, window.innerHeight*0.83-15,)
-    }
-
-    async calcdealer() {
-        let i = 0
-        this.dealer.openhand = []
-        this.dealer.hand.forEach((card) => {
-            this.dealer.openhand.push(card)
-        })
-        while (this.dealer.getScore() < 16) {
-            let card = this.deck.draw()
-            this.dealer.hand.push(card)
-            this.dealer.openhand.push(card)
-            await this.sleep(500)
-            this.clearBoard()
-        }
-        this.endGame()
+        ctx.fillText(txt, window.innerWidth/2-10, window.innerHeight*0.83-15)
     }
 
     endGame() {
+        this.ge = true
+        this.getWinner()
         let a = document.querySelector('a')
         let gameended = document.querySelector('.GameEnded')
-        let profit = document.querySelector('.profit')
-        let dealer = document.querySelector('.dealer')
-        let player = document.querySelector('.player')
         let amount = document.querySelector('.amount')
-
-        dealer.textContent = `Dealer: ${this.dealer.getScore()}`
-        player.textContent = `Player: ${this.player1.getScore()}`
-
-        if (this.player1.getScore() > 21) {
-            gameended.textContent = 'Busted'
-            gameended.classList.add('red-text')
-            profit.textContent = `Profit: ` + (-this.betAmount)
-            amount.value = -this.betAmount
-        }
-        else if (this.player1.getScore() == 21 && this.player1.hand.length == 2) {
-            gameended.textContent = 'Natural 21'
-            gameended.classList.add('green-text')
-            profit.textContent = `Profit: ` + (this.betAmount*(5/2)-this.betAmount)
-            amount.value = this.betAmount*(5/2)-this.betAmount
-        }
-        else if (this.player1.getScore() == this.dealer.getScore()) {
-            gameended.textContent = 'Pushed'
-            gameended.classList.add('yellow-text')
-            profit.textContent = `Profit: 0`
-            amount.value = 0
-        }
-        else if (this.dealer.getScore() > 21) {
-            gameended.textContent = 'You won'
-            gameended.classList.add('green-text')
-            profit.textContent = `Profit: ` + (this.betAmount*(2)-this.betAmount)
-            amount.value = this.betAmount*(2)-this.betAmount
-        }
-        else if (this.player1.getScore() > this.dealer.getScore()) {
-            gameended.textContent = 'You won'
-            gameended.classList.add('green-text')
-            profit.textContent = `Profit: ` + (this.betAmount*(2)-this.betAmount)
-            amount.value = this.betAmount*(2)-this.betAmount
-        }
-        else {
-            gameended.textContent = 'You Lost'
-            gameended.classList.add('red-text')
-            profit.textContent = `Profit: ` + (-this.betAmount)
-            amount.value = -this.betAmount
-        }
+        console.log('gameended')
         setTimeout(() => {
+            console.log('gameENDED')
+            let highest_scores = [];
+            let highest_values = [];
+            let ties = [];
+            let people = [];
+            for (const player of this.rotatePlayers) {
+                if (!player.stand) {
+                    let besthand = this.getScore(player)
+                    console.log(besthand)
+                    let score = besthand[0]
+                    let value = besthand[1]
+                    highest_scores.push(score)
+                    highest_values.push(value)
+                }
+            }
+            console.log(highest_scores)
+            console.log(highest_values)
+            let min = highest_scores.reduce(function(a, b) {
+                return Math.min(a, b);
+            }, Infinity);
+            console.log(min)
+            for (let i = 0; i < highest_scores.length; i++) {
+                if (highest_scores[i] == min) {
+                    ties.push(highest_values[i])
+                }
+            }
+            console.log(ties)
+            let max = ties.reduce(function(a, b) {
+                return Math.max(a, b);
+            }, -Infinity);
+            console.log(max)
+            let counter = 0;
+            for (let i = 0; i < ties.length; i++) {
+                if (ties[i] == max) {
+                    counter++;
+                    people.push(i)
+                }
+            }
+            let x = 0
+            if (highest_values[0] == max) {
+                x = highest_values[0]
+            }
+            else {
+                x = 0
+            }
+            for (let i = 0; i < highest_values.length; i++) {
+                
+                if (highest_values[i] == max) {
+                    let li = document.createElement('li');
+                    li.setAttribute('class','item');
+                    gameended.appendChild(li);
+                    li.innerHTML=`Player ${i+1} has won and received ${this.pot/people.length}`;
+                }
+            }
+            amount.textContent = x
             a.click()
-        }, 1250) 
+        },1000)
     }
 
     clearBoard() {
@@ -731,7 +991,6 @@ class pokerGUI {
 
     addBet(amount) {
         this.betAmount+=amount
-        console.log(this.betAmount, 'added', this.getBetAmount())
     }
 
     getBetAmount() {
@@ -755,7 +1014,7 @@ function checkIfButtonClicked(x,y) {
     if (window.innerHeight*0.87 < y && window.innerHeight*0.87+100 > y)
     bjgame.buttons.forEach((but) => {
         if (but.click(x)) {
-            bjgame.hitOrStand(but.action)
+            bjgame.move(but.action)
         }
     })
 }
@@ -765,17 +1024,17 @@ canvas.addEventListener('click', (event) => {
         if (event.offsetY > window.innerHeight*0.83 && event.offsetY < window.innerHeight*0.83+100) {
             bjgame.betchips.forEach((elm) => {
                 if (elm.click(event.offsetX)) {
-                    playerBal-=elm.amount
+                    bjgame.rotatePlayers[0].money-=elm.amount
                     bjgame.addBet(elm.amount)
                     bjgame.clearBoard()
                 }
             })
             if (bjgame.resetButton.click(event.offsetX)) {
-                playerBal=bjgame.startBal
+                bjgame.rotatePlayers[0].money=bjgame.startBal
                 bjgame.betAmount = 0
                 bjgame.clearBoard()
             }
-            
+            bjgame.clearBoard()
         }
     }
     else if (bjgame.stage == 'game') {
@@ -783,17 +1042,12 @@ canvas.addEventListener('click', (event) => {
     }
     if ((event.offsetX < 50 && event.offsetX > 0) && (event.offsetY < 50 && event.offsetY > 0))
     {
-        console.log('true')
         window.location.href = '/'
     }
 })
 
 document.addEventListener('keydown', (event) => {
     if (event.key == ' ') {
-        bjgame.activePlayer++
-        if (bjgame.activePlayer > bjgame.rotatePlayers.length-1) {
-            bjgame.activePlayer = 0
-        }
-        bjgame.clearBoard()
+        
     }
 })
