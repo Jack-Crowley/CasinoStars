@@ -126,6 +126,7 @@ app.get('/slots', (req, res) => {
 
 app.post('/', ( req, res ) => {
     if (req.body.game == 'bj') {
+        console.log(req.body.numOfComputers)
         db.execute(get_total_profit_sql, (error, results) => {
             if (error)
                 res.status(500).send(error); //Internal Server Error
@@ -133,7 +134,6 @@ app.post('/', ( req, res ) => {
                 let data = results; // results is still an array
                 // data's object structure: 
                 //  { item: ___ , quantity:___ , description: ____ }
-                console.log(req.body.numOfComputers)
                 res.render('blackjack', { inventory : results,  players : req.body.numOfComputers});
             }
         });
@@ -176,6 +176,39 @@ app.post("/blackjack", ( req, res ) => {
                         //  { item: ___ , quantity:___ , description: ____ }
                         console.log(req.body.numOfComputers)
                         res.render('blackjack', { inventory : results,  players : req.body.numOfComputers});
+                    }
+                });
+            }
+            else {
+                res.redirect('/')
+            }
+        }
+    });
+})
+
+app.post("/poker", ( req, res ) => {
+    function getDate() {
+        let years = date.getFullYear()
+        let months = date.getMonth()+1
+        let day = date.getDate()
+        return String(years)+'-'+months+'-'+day+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds()
+    }
+    let date = new Date()
+    console.log(req.body.amount)
+    db.execute(create_item_sql, ['Poker', Number(req.body.amount), getDate()], (error, results) => {
+        if (error)
+            res.status(500).send(error); //Internal Server Error
+        else {
+            if (req.body.mode == 'PLAY') {
+                db.execute(get_total_profit_sql, (error, results) => {
+                    if (error)
+                        res.status(500).send(error); //Internal Server Error
+                    else {
+                        let data = results; // results is still an array
+                        // data's object structure: 
+                        //  { item: ___ , quantity:___ , description: ____ }
+                        console.log(req.body.numOfComputers)
+                        res.render('poker', { inventory : results,  players : req.body.numOfComputers});
                     }
                 });
             }

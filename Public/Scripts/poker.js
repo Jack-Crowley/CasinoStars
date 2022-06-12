@@ -98,7 +98,7 @@ class Dealer {
         for (const card of player.hand) {
             cards.push(card)
         }
-        for (const card of player.middle) {
+        for (const card of this.centerCards) {
             cards.push(card)
         }
         for (const card of cards) {
@@ -366,22 +366,20 @@ class pokerGUI {
         this.activePlayer=50
         this.tempActivePlayer=0
         this.minbet = 0
+        this.ge = false
         this.lastRaise = 0
         this.active = false
         this.turnOver = false
         this.nextP = false
         this.centerCards = []
-        this.positions = [[100, window.innerHeight*0.3],[window.innerWidth*0.8, window.innerHeight*0.3],[100, window.innerHeight*0.5],[window.innerWidth*0.8, window.innerHeight*0.5]]
-        console.log(numOfPlayers)
+        this.positions = [[100, window.innerHeight*0.5], [100, window.innerHeight*0.2],[window.innerWidth*0.8, window.innerHeight*0.2],[window.innerWidth*0.8, window.innerHeight*0.5]]
         for (let i = 0; i < numOfPlayers; i++) {
-            console.log('Player Added')
             this.players.push(new Player(Math.floor(Math.random()*10000)))
         }
         this.rotatePlayers = [this.player1]
         this.players.forEach((player) => {
             this.rotatePlayers.push(player)
         }) 
-        console.log(this.players)
         
     }
 
@@ -487,12 +485,38 @@ class pokerGUI {
         this.ctx.fillText(text, startX, startY+120+150)
     }
 
+    computerCard (card, x, y) {
+        let image = new Image()
+        image.src = `images\\Cards\\${card.value}_of_${card.suit}.png`
+        image.onload = () => {
+            this.ctx.drawImage(image, x, y, 130, 130*1.5)
+        }
+    }
+
+    computerHand (player, startX, startY) {
+        let x = startX
+        player.hand.forEach((card) => {
+            this.computerCard(card,x,startY)
+            x+=150
+        })
+        if (player.stand) {
+            this.ctx.fillStyle='gray'
+        }
+        else if (this.activePlayer == this.rotatePlayers.indexOf(player)) {
+            this.ctx.fillStyle='yellow'
+        }
+        else {
+            this.ctx.fillStyle='white'
+        }
+        let text = `Computer: ${player.money}`
+        this.ctx.fillText(text, startX, startY+120+150)
+    }
+
     async startGame() {
         ctx.font = "40px Lato";
         let timeBetweenCards = 500
         this.stage = 'game'
         for (let i = 0; i < this.players.length; i++) {
-            console.log(i)
             this.players[i].hand.push(this.deck.draw())
             this.clearBoard()
             await this.sleep(timeBetweenCards)
@@ -501,7 +525,6 @@ class pokerGUI {
         this.clearBoard()
         await this.sleep(timeBetweenCards)
         for (let i = 0; i < this.players.length; i++) {
-            console.log(i)
             this.players[i].hand.push(this.deck.draw())
             this.clearBoard()
             await this.sleep(timeBetweenCards)
@@ -532,7 +555,6 @@ class pokerGUI {
                 peoples++
             }
         }
-        console.log(`People `+peoples)
         return !(peoples == this.rotatePlayers.length)
     }
 
@@ -554,7 +576,6 @@ class pokerGUI {
 
     async computer(i) {
         let action = Math.floor(Math.random()*3)
-        console.log('Computer ', action)
         if (action == 0) {
             this.rotatePlayers[i].stand = true
         }
@@ -635,8 +656,6 @@ class pokerGUI {
                 this.clearBoard()
             }
             else if (this.activePlayer != 0) {
-                console.log(this.rotatePlayers + ' is equal to ' + this.activePlayer)
-                console.log(this.activePlayer, 'Active player '+this.rotatePlayers[this.activePlayer].money)
                 this.computer(this.activePlayer)
                 await this.sleep(1000)
                 this.rotPlayers()
@@ -658,20 +677,21 @@ class pokerGUI {
                 await this.sleep(1000)
             }
         }
+        else if (this.centerCards.length == 5 && !this.ge) {
+            this.centerCards.splice(5, 1)
+            this.endGame()
+        }
         else {
             this.centerCards.push(this.deck.draw())
             this.clearBoard()
             await this.sleep(1000)
         }
-        if (this.centerCards.length == 5) {
-            this.endGame()
-        }
+        
         this.activePlayer = this.tempActivePlayer
         this.minbet = 1
         this.rotatePlayers.forEach((player) => {
             player.bet = 0
         })
-        console.log(this.activePlayer)
         this.nextP = false
         this.clearBoard()
     }
@@ -683,7 +703,6 @@ class pokerGUI {
         }
         if (!this.everyoneBet() && this.turnOver && !this.nextP) {
             this.nextP = true
-            console.log('Phase ended')
             this.tempActivePlayer = this.activePlayer
             this.activePlayer = 50
             this.nextPhase()
@@ -703,9 +722,15 @@ class pokerGUI {
             this.ctx.fillStyle='white'
         }
         this.ctx.fillText(text, window.innerWidth/2-150, window.innerHeight*0.7+240)
-        for (let i = 0; i < this.players.length; i++) {
-            console.log(this.positions[i][0], this.positions[i][1])
-            this.emptyHand(this.players[i], this.positions[i][0], this.positions[i][1])
+        if (this.ge) {
+            for (let i = 0; i < this.players.length; i++) {
+                this.computerHand(this.players[i], this.positions[i][0], this.positions[i][1])
+            }
+        }
+        else {
+            for (let i = 0; i < this.players.length; i++) {
+                this.emptyHand(this.players[i], this.positions[i][0], this.positions[i][1])
+            }
         }
         ctx.fillStyle='#fff'
         let potText = `Pot: ${this.pot}`
@@ -719,15 +744,119 @@ class pokerGUI {
                 fold++
             }
         }) 
-        if (fold >= this.rotatePlayers.length-1) {
+        if (fold >= this.rotatePlayers.length-1 && !this.ge) {
             this.endGame()
         }
     }
 
     
 
+    getScore(player) {
+            let suits = [0, 0, 0, 0]
+            let values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            let flush = false;
+            let straight = false;
+            let royal = false;
+            let three = false;
+            let pair = false;
+            let twopair = false;
+            let highest = 0;
+            let cards = [];
+            for (const card of player.hand) {
+                cards.push(card)
+            }
+            for (const card of this.centerCards) {
+                cards.push(card)
+            }
+            for (const card of cards) {
+                if (card.suit == 'diamonds') {
+                    suits[0]++;
+                }else if (card.suit == 'hearts') {
+                    suits[1]++;
+                }else if (card.suit == 'clubs') {
+                    suits[2]++;
+                }else if (card.suit == 'spades') {
+                    suits[3]++;
+                }
+                if (card.value == 'A') {
+                    values[12]++;
+                }else if (card.value == 'K') {
+                    values[11]++;
+                }else if (card.value == 'Q') {
+                    values[10]++;
+                }else if (card.value == 'J') {
+                    values[9]++;
+                }else if (card.value == 'T') {
+                    values[8]++;
+                }else {
+                    values[card.value-2]++;
+                }
+            }
+            for (const suit of suits) {
+                if (suit >= 5) {
+                    flush = true;
+                }
+            }
+            if (values[12] && values[11] && values[10] && values[9] && values[8]) {
+                royal = true;
+            }
+            if (royal && flush) {
+                return [1, 14]
+            }
+            for (let i = 0; i < values.length-5; i++) {
+                if (values[i] && values[i+1] && values[i+2] && values[i+3] && values[i+4]) {
+                    straight = true;
+                    highest = i+6
+                }
+            }
+            if (straight && flush) {
+                return [2, highest]
+            }
+            for (let i = 0; i < values.length; i++) {
+                if (values[i] >= 4) {
+                    return [3, i+2]
+                }else if (values[i] == 3) {
+                    three = true;
+                    highest = i+2
+                }else if (values[i] == 2) {
+                    if (twopair) {
+                        highest = i+2
+                    }else if (pair) {
+                        twopair = true;
+                        highest = i+2
+                    }else {
+                        pair = true;
+                        if (!three) {
+                            highest = i+2
+                        }
+                    }
+                }else if (!three && !pair &&  !flush && !straight) {
+                    highest = i+2;
+                }
+            }
+            if (three && pair) {
+                return [4, highest]
+            } else if (flush) {
+                return [5, highest]
+            }else if (straight) {
+                return [6, highest]
+            }else if (three) {
+                return [7, highest]
+            }else if (twopair) {
+                return [8, highest]
+            }else if (pair) {
+                return [9, highest]
+            }else {
+                return [10, highest]
+            }
+    }
+
+    getWinner() {
+        console.log('Get Winner')
+        
+    }
+
     move(action) {
-        console.log('move')
         if (action == 'call') {
             this.pot += this.minbet-this.rotatePlayers[0].bet
             this.rotatePlayers[0].money -= this.minbet-this.rotatePlayers[0].bet
@@ -743,7 +872,6 @@ class pokerGUI {
             let x = 'bad'
             while (Number(x) != x && x != '') {
                 x = prompt('How much do you want to raise')
-                console.log(x)
             }
             this.minbet += Number(x)
             this.rotatePlayers[0].money -= this.minbet-this.rotatePlayers[0].bet
@@ -789,11 +917,70 @@ class pokerGUI {
     }
 
     endGame() {
+        this.ge = true
+        this.getWinner()
         let a = document.querySelector('a')
         let gameended = document.querySelector('.GameEnded')
+        let amount = document.querySelector('.amount')
+        console.log('gameended')
         setTimeout(() => {
+            console.log('gameENDED')
+            let highest_scores = [];
+            let highest_values = [];
+            let ties = [];
+            let people = [];
+            for (const player of this.rotatePlayers) {
+                if (!player.stand) {
+                    let besthand = this.getScore(player)
+                    console.log(besthand)
+                    let score = besthand[0]
+                    let value = besthand[1]
+                    highest_scores.push(score)
+                    highest_values.push(value)
+                }
+            }
+            console.log(highest_scores)
+            console.log(highest_values)
+            let min = highest_scores.reduce(function(a, b) {
+                return Math.min(a, b);
+            }, Infinity);
+            console.log(min)
+            for (let i = 0; i < highest_scores.length; i++) {
+                if (highest_scores[i] == min) {
+                    ties.push(highest_values[i])
+                }
+            }
+            console.log(ties)
+            let max = ties.reduce(function(a, b) {
+                return Math.max(a, b);
+            }, -Infinity);
+            console.log(max)
+            let counter = 0;
+            for (let i = 0; i < ties.length; i++) {
+                if (ties[i] == max) {
+                    counter++;
+                    people.push(i)
+                }
+            }
+            let x = 0
+            if (highest_values[0] == max) {
+                x = highest_values[0]
+            }
+            else {
+                x = 0
+            }
+            for (let i = 0; i < highest_values.length; i++) {
+                
+                if (highest_values[i] == max) {
+                    let li = document.createElement('li');
+                    li.setAttribute('class','item');
+                    gameended.appendChild(li);
+                    li.innerHTML=`Player ${i+1} has won and received ${this.pot/people.length}`;
+                }
+            }
+            amount.textContent = x
             a.click()
-        }, 1250) 
+        },1000)
     }
 
     clearBoard() {
@@ -804,7 +991,6 @@ class pokerGUI {
 
     addBet(amount) {
         this.betAmount+=amount
-        console.log(this.betAmount, 'added', this.getBetAmount())
     }
 
     getBetAmount() {
@@ -829,7 +1015,6 @@ function checkIfButtonClicked(x,y) {
     bjgame.buttons.forEach((but) => {
         if (but.click(x)) {
             bjgame.move(but.action)
-            console.log(but.action)
         }
     })
 }
@@ -857,7 +1042,6 @@ canvas.addEventListener('click', (event) => {
     }
     if ((event.offsetX < 50 && event.offsetX > 0) && (event.offsetY < 50 && event.offsetY > 0))
     {
-        console.log('true')
         window.location.href = '/'
     }
 })
