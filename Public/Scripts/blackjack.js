@@ -484,8 +484,10 @@ class bj {
         ctx.strokeRect(window.innerWidth/2-ctx.measureText(txt).width-10, window.innerHeight*0.83-60, ctx.measureText(txt).width*3, 60)
         ctx.fillStyle='#fff'
         ctx.fillText(txt, window.innerWidth/2-10, window.innerHeight*0.83-15,)
+        let spaceText = 'Hit Space to Play'
         let betText = `Player Bet: ${this.getBetAmount()}`
         ctx.fillText(betText, 0, window.innerHeight*0.95)
+        ctx.fillText(spaceText, window.innerWidth/2-ctx.measureText(spaceText).width/2, 100)
     }
 
     async calcdealer() {
