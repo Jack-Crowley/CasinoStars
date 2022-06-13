@@ -56,11 +56,16 @@ class Player {
         let twopair = false;
         let highest = 0;
         let cards = [];
+        let start = 0;
         for (const card of player.hand) {
             cards.push(card)
         }
         for (const card of player.middle) {
             cards.push(card)
+        }
+        console.log('cards')
+        for (const card of cards) {
+            console.log(cards)
         }
         for (const card of cards) {
             if (card.suit == 'diamonds') {
@@ -86,8 +91,6 @@ class Player {
                 values[card.value-2]++;
             }
         }
-        console.log(suits)
-        console.log(values)
         for (const suit of suits) {
             if (suit >= 5) {
                 flush = true;
@@ -96,19 +99,103 @@ class Player {
         if (values[12] && values[11] && values[10] && values[9] && values[8]) {
             royal = true;
         }
-        console.log(royal)
         if (royal && flush) {
-            return [1, 14]
+            let counter = 0;
+            if (suits[0] >= 5) {
+                for (const card of cards) {
+                    if (card.value == 'T' || card.value == 'J' || card.value == 'Q' || card.value == 'K' || card.value == 'A') {
+                        if (card.suit == 'diamonds') {
+                            counter++;
+                        }
+                    }
+                }
+            }
+            if (suits[1] >= 5) {
+                console.log('hi')
+                for (const card of cards) {
+                    console.log('hi2')
+                    if (card.value == 'T' || card.value == 'J' || card.value == 'Q' || card.value == 'K' || card.value == 'A') {
+                        console.log(card)
+                        if (card.suit == 'hearts') {
+                            counter++;
+                        }
+                    }
+                }
+            }
+            if (suits[2] >= 5) {
+                for (const card of cards) {
+                    if (card.value == 'T' || card.value == 'J' || card.value == 'Q' || card.value == 'K' || card.value == 'A') {
+                        if (card.suit == 'clubs') {
+                            counter++;
+                        }
+                    }
+                }
+            }
+            if (suits[3] >= 5) {
+                for (const card of cards) {
+                    if (card.value == 'T' || card.value == 'J' || card.value == 'Q' || card.value == 'K' || card.value == 'A') {
+                        if (card.suit == 'spades') {
+                            counter++;
+                        }
+                    }
+                }
+            }
+            if (counter >= 5) {
+                return [1, 14]
+            }
         }
         for (let i = 0; i < values.length-4; i++) {
             if (values[i] && values[i+1] && values[i+2] && values[i+3] && values[i+4]) {
                 straight = true;
+                start = 1;
                 highest = i+6
             }
         }
-        console.log(straight)
+        if (values[12] && values[0], values[1], values[2], values[3]) {
+            straight = true;
+            highest = 14;
+        }
         if (straight && flush) {
-            return [2, highest]
+            let counter = 0;
+            if (suits[0] >= 5) {
+                for (const card of cards) {
+                    if (card.value == values[start] || card.value == values[start+1] || card.value == values[start+2] || card.value == values[start+3] || card.value == values[start+4]) {
+                        if (card.suit == 'diamonds') {
+                            counter++;
+                        }
+                    }
+                }
+            }
+            if (suits[1] >= 5) {
+                for (const card of cards) {
+                    if (card.value == values[start] || card.value == values[start+1] || card.value == values[start+2] || card.value == values[start+3] || card.value == values[start+4]) {
+                        if (card.suit == 'hearts') {
+                            counter++;
+                        }
+                    }
+                }
+            }
+            if (suits[2] >= 5) {
+                for (const card of cards) {
+                    if (card.value == values[start] || card.value == values[start+1] || card.value == values[start+2] || card.value == values[start+3] || card.value == values[start+4]) {
+                        if (card.suit == 'clubs') {
+                            counter++;
+                        }
+                    }
+                }
+            }
+            if (suits[3] >= 5) {
+                for (const card of cards) {
+                    if (card.value == values[start] || card.value == values[start+1] || card.value == values[start+2] || card.value == values[start+3] || card.value == values[start+4]) {
+                        if (card.suit == 'spades') {
+                            counter++;
+                        }
+                    }
+                }
+            }
+            if (counter >= 5) {
+                return [2, (values[start+4])+2]
+            }
         }
         for (let i = 0; i < values.length; i++) {
             if (values[i] >= 4) {
@@ -204,11 +291,10 @@ class Card {
 
 let player = new Player(100);
 player.hand.push(new Card("hearts", 'A'))
-player.hand.push(new Card("spades", 'K'))
-player.middle.push(new Card("clubs", 'Q'))
-player.middle.push(new Card("spades", 'J'))
-player.middle.push(new Card("spades", 'T'))
-player.middle.push(new Card("hearts", '3'))
-player.middle.push(new Card("spades", '6'))
-
+player.hand.push(new Card("hearts", 'K'))
+player.middle.push(new Card("hearts", 'Q'))
+player.middle.push(new Card("hearts", 'J'))
+player.middle.push(new Card("hearts", 'T'))
+player.middle.push(new Card("spades", '3'))
+player.middle.push(new Card("spades", '7'))
 console.log(player.getpokerscore(player))
