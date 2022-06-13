@@ -158,7 +158,7 @@ class Player {
         if (royal && flush) {
             return [1, 14]
         }
-        for (let i = 0; i < values.length-5; i++) {
+        for (let i = 0; i < values.length-4; i++) {
             if (values[i] && values[i+1] && values[i+2] && values[i+3] && values[i+4]) {
                 straight = true;
                 highest = i+6
