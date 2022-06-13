@@ -13,7 +13,20 @@
     <title>Casino Stars</title>
 </head>
 <body>
-  <p class="playerval" style="display:none" data-playerval="10000"></p>
+  <%function getTotal() {
+    let sum = 0
+    inventory.forEach((num) => {
+      sum+=num.profit
+    })
+    return sum
+  }%>
+  <div style="display: none;">
+    <form action="/roulette" method="post">
+      <input type="text" name="amount" class="amount">
+      <input type="submit" class="submit">
+    </form>
+  </div>
+  <p class="playerval" style="display:none" data-playerval="<%=getTotal()%>"></p>
   <canvas width="100%" height="100%"></canvas>
   <script>
     var canvas = document.querySelector('canvas');

@@ -13,8 +13,15 @@
     <title>Casino Stars</title>
 </head>
 <body>
-  <p class="playerval" style="display:none" data-playerval="10000"></p>
-  <p class="playercount" style="display:none" data-playercount='4'></p>
+  <%function getTotal() {
+      let sum = 0
+      inventory.forEach((num) => {
+        sum+=num.profit
+      })
+      return sum
+  }%>
+  <p class="playerval" style="display:none" data-playerval="<%=getTotal()%>"></p>
+  <p class="playercount" style="display:none" data-playercount='<%=players%>'></p>
   <a class="waves-effect waves-light btn modal-trigger hidden" href="#modal1" style="display:none"></a>
   <canvas width="100%" height="100%" style="background-color: #86391a;"></canvas>
 
@@ -27,7 +34,7 @@
       <h3 class="player">Profit: 100</h3>
     </div>
     <div class="modal-footer">
-        <form action="/blackjack" method="post">
+        <form action="/baccarat" method="post">
             <input type="hidden" name="amount" class="amount">
             <input type="hidden" name="numOfComputers" value="">
             <input type="submit" name="mode" value="PLAY" class="green btn">
@@ -36,7 +43,14 @@
     </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.modal');
+            instances = M.Modal.init(elems);
+        });
     var canvas = document.querySelector('canvas');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;

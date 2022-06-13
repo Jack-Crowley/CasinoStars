@@ -1,3 +1,6 @@
+const e = require("express");
+
+let tr = 0
 console.log(canvas.width)
 console.log(canvas.height)
 const ctx = canvas.getContext("2d");
@@ -15,6 +18,11 @@ let playerbal = playerval.dataset.playerval;
 draw();
 getsymbol();
 function draw() {
+    ctx.fillStyle='white'
+    ctx.fillStyle = 'red'
+    ctx.fillRect(window.innerWidth*0.9, window.innerHeight*0.9,window.innerWidth*0.1, window.innerHeight*0.1 )
+    ctx.fillStyle='white'
+    ctx.fillText(`Cashout`, window.innerWidth*0.9, window.innerHeight)
     ctx.strokeStyle='fuchsia';
     ctx.lineWidth=3;
     ctx.beginPath();
@@ -99,10 +107,13 @@ canvas.addEventListener('click', function(event)  {
             clearInterval(drawIntervalId)
             if (reel1 == reel2 && reel2 == reel3) {
                 win = betnum * 1000
-                playerbal += win;
+                tr += win;
             }else if (reel1 == reel2 || reel1 == reel3 || reel2 == reel3) {
                 win = betnum * 2
-                playerbal += win;
+                tr+=win
+            }
+            else {
+                tr -= betnum
             }
             draw();
             betnum = 0;
@@ -120,5 +131,11 @@ canvas.addEventListener('click', function(event)  {
             betnum += 5;
             draw();
         }
+    }
+    else if (event.offsetX > window.innerWidth*0.9 && event.offsetY >  window.innerHeight*0.9) {
+        let x = document.querySelector('.submit')
+        let y = document.querySelector('.amount')
+        y.value = tr
+        x.click()
     }
 })
