@@ -62,6 +62,10 @@ app.get( "/", ( req, res ) => {
     });
 } );
 
+app.get('/testserver', (req,res) => {
+    res.render('test')
+})
+
 // define a route for the stuff inventory page
 app.get( "/games", ( req, res ) => {
     db.execute(get_total_profit_sql, (error, results) => {
