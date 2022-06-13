@@ -170,6 +170,15 @@
               </ul>
               <li>Whoever has the best hand wins the pot.</li>
             </ol>
+            <form action="#" method="post">
+              <input type="hidden" name="numOfComputers" value="2">
+              <input type="hidden" name="numOfDecks" value="1">
+              <input type="hidden" name="game" value="Poker">
+              <div class="modal-footer" style="background-color: #232228; display: flex; align-items: center; justify-content: center; padding: 0;">
+                <input type="submit" class="btn" style="background-color: #4cb050; font-weight: bold; width: 90%; border: 2px solid white; margin-right: 12px;" value="PLAY">
+                <a href="#!" class="red modal-close waves-effect waves-red btn-flat" style="font-weight: bold; color: white; border: 2px solid white;">Close</a>
+              </div>
+            </form>
           </div>
           <div id="setPoker">
             <br>
@@ -184,15 +193,22 @@
               <p class="range-field">
                 <input type="range" name="numOfDecks" min="0" max="8"/>
               </p>
+              <input type="hidden" name="game" value="bj">
+              <form>
+                <div class="modal-footer" style="background-color: #232228; display: flex; align-items: center; justify-content: center; padding: 0;">
+                  <input type="submit" class="btn" style="background-color: #4cb050; font-weight: bold; width: 90%; border: 2px solid white; margin-right: 12px;" value="PLAY">
+                  <a href="#!" class="red modal-close waves-effect waves-red btn-flat" style="font-weight: bold; color: white; border: 2px solid white;">Close</a>
+                </div>
+              </form>
             </form>
           </div>
         </div>
-        <div class="modal-footer" style="margin: 0 auto; background-color: #232228; display: flex; align-items: center; justify-content: center;">
+        <!-- <div class="modal-footer" style="margin: 0 auto; background-color: #232228; display: flex; align-items: center; justify-content: center;">
           <a class="btn waves-effect waves-light green" style="font-weight: bold; width: 90%; border: 2px solid white; margin-right: 12px;" href="/poker">PLAY</a>
           <a href="#!" class="red modal-close waves-effect waves-red btn-flat" style="font-weight: bold; color: white; border: 2px solid white;">Close</a>
-        </div>
+        </div> -->
       </div>
-
+  
       <div id="bj-modal" class="modal">
         <div class="modal-header">
           <img src="/images/BlackJackBanner.jpg" alt="" height="200" width="100%">
@@ -225,6 +241,15 @@
               <li>For each player, if they did not bust and either the dealer bust or they have a higher score than the dealer, they win money.</li>
               <li>If the player ties with the dealer, they get their money back.</li>
             </ol>
+            <form action="#" method="post">
+              <input type="hidden" name="numOfComputers" value="2">
+              <input type="hidden" name="numOfDecks" value="1">
+              <input type="hidden" name="game" value="bj">
+              <div class="modal-footer" style="background-color: #232228; display: flex; align-items: center; justify-content: center; padding: 0;">
+                <input type="submit" class="btn" style="background-color: #4cb050; font-weight: bold; width: 90%; border: 2px solid white; margin-right: 12px;" value="PLAY">
+                <a href="#!" class="red modal-close waves-effect waves-red btn-flat" style="font-weight: bold; color: white; border: 2px solid white;">Close</a>
+              </div>
+            </form>
           </div>
           <div id="setBJ">
             <br>
@@ -237,17 +262,27 @@
               <br>
               <p>Number of Decks</p>
               <p class="range-field">
-                <input type="range" name="numOfDecks" min="0" max="8"/>
+                <input type="range" name="numOfDecks" min="1" max="8"/>
               </p>
+              <input type="hidden" name="game" value="bj">
+              <form>
+                <div class="modal-footer" style="background-color: #232228; display: flex; align-items: center; justify-content: center; padding: 0;">
+                  <input type="submit" class="btn" style="background-color: #4cb050; font-weight: bold; width: 90%; border: 2px solid white; margin-right: 12px;" value="PLAY">
+                  <a href="#!" class="red modal-close waves-effect waves-red btn-flat" style="font-weight: bold; color: white; border: 2px solid white;">Close</a>
+                </div>
+              </form>
             </form>
           </div>
         </div>
-        <div class="modal-footer" style="margin: 0 auto; background-color: #232228; display: flex; align-items: center; justify-content: center;">
-          <a class="btn waves-effect waves-light green" style="font-weight: bold; width: 90%; border: 2px solid white; margin-right: 12px;" href="/blackjack">PLAY</a>
+        <!-- <div class="modal-footer" style="margin: 0 auto; background-color: #232228; display: flex; align-items: center; justify-content: center;"> -->
+          <!-- <a class="btn waves-effect waves-light green" style="font-weight: bold; width: 90%; border: 2px solid white; margin-right: 12px;" href="/blackjack">PLAY</a> -->
+        <!-- </div> -->
+        <!-- <form class="modal-footer" style="margin: 0 auto; background-color: #232228; display: flex; align-items: center; justify-content: center;">
+          <input type="submit" class="btn" value="PLAY">
           <a href="#!" class="red modal-close waves-effect waves-red btn-flat" style="font-weight: bold; color: white; border: 2px solid white;">Close</a>
-        </div>
+        </form> -->
       </div>
-
+  
       <div id="bacc-modal" class="modal">
         <div class="modal-header">
           <img src="/images/BaccaratBanner.jpg" alt="" height="200" width="100%">
@@ -275,8 +310,17 @@
                 <li>If a hand stays, it does not draw a card.</li>
               </ul>
               <li>Whichever hand has the number closest to 9 wins.</li>
-              <li>Playesr win money based on what they bet on.</li>
+              <li>Players win money based on what they bet on.</li>
             </ol>
+            <form action="#" method="post">
+              <input type="hidden" name="numOfComputers" value="2">
+              <input type="hidden" name="numOfDecks" value="1">
+              <input type="hidden" name="game" value="Baccarat">
+              <div class="modal-footer" style="background-color: #232228; display: flex; align-items: center; justify-content: center; padding: 0;">
+                <input type="submit" class="btn" style="background-color: #4cb050; font-weight: bold; width: 90%; border: 2px solid white; margin-right: 12px;" value="PLAY">
+                <a href="#!" class="red modal-close waves-effect waves-red btn-flat" style="font-weight: bold; color: white; border: 2px solid white;">Close</a>
+              </div>
+            </form>
           </div>
           <div id="setBacc">
             <br>
@@ -291,15 +335,22 @@
               <p class="range-field">
                 <input type="range" name="numOfDecks" min="0" max="8"/>
               </p>
+              <input type="hidden" name="game" value="bj">
+              <form>
+                <div class="modal-footer" style="background-color: #232228; display: flex; align-items: center; justify-content: center; padding: 0;">
+                  <input type="submit" class="btn" style="background-color: #4cb050; font-weight: bold; width: 90%; border: 2px solid white; margin-right: 12px;" value="PLAY">
+                  <a href="#!" class="red modal-close waves-effect waves-red btn-flat" style="font-weight: bold; color: white; border: 2px solid white;">Close</a>
+                </div>
+              </form>
             </form>
           </div>
         </div>
-        <div class="modal-footer" style="margin: 0 auto; background-color: #232228; display: flex; align-items: center; justify-content: center;">
+        <!-- <div class="modal-footer" style="margin: 0 auto; background-color: #232228; display: flex; align-items: center; justify-content: center;">
           <a class="btn waves-effect waves-light green" style="font-weight: bold; width: 90%; border: 2px solid white; margin-right: 12px;" href="/baccarat">PLAY</a>
           <a href="#!" class="red modal-close waves-effect waves-red btn-flat" style="font-weight: bold; color: white; border: 2px solid white;">Close</a>
-        </div>
+        </div> -->
       </div>
-
+  
       <div id="roul-modal" class="modal">
         <div class="modal-header">
           <img src="/images/pokerBanner.jpg" alt="" height="200" width="100%">
@@ -317,14 +368,21 @@
               <li>The ball spins around the wheel and stops at a random space.</li>
               <li>Players will make or lose money depending on if they were right about the color of the space the ball stopped at.</li>
             </ol>
+            <form action="#" method="post">
+              <input type="hidden" name="game" value="Roulette">
+              <div class="modal-footer" style="background-color: #232228; display: flex; align-items: center; justify-content: center; padding: 0;">
+                <input type="submit" class="btn" style="background-color: #4cb050; font-weight: bold; width: 90%; border: 2px solid white; margin-right: 12px;" value="PLAY">
+                <a href="#!" class="red modal-close waves-effect waves-red btn-flat" style="font-weight: bold; color: white; border: 2px solid white;">Close</a>
+              </div>
+            </form>
           </div>
         </div>
-        <div class="modal-footer" style="margin: 0 auto; background-color: #232228; display: flex; align-items: center; justify-content: center;">
+        <!-- <div class="modal-footer" style="margin: 0 auto; background-color: #232228; display: flex; align-items: center; justify-content: center;">
           <a class="btn waves-effect waves-light green" style="font-weight: bold; width: 90%; border: 2px solid white; margin-right: 12px;" href="/roulette">PLAY</a>
           <a href="#!" class="red modal-close waves-effect waves-red btn-flat" style="font-weight: bold; color: white; border: 2px solid white;">Close</a>
-        </div>
+        </div> -->
       </div>
-
+  
       <div id="slots-modal" class="modal">
         <div class="modal-header">
           <img src="/images/pokerBanner.jpg" alt="" height="200" width="100%">
@@ -347,13 +405,20 @@
                 <li>If all 3 reels have the same symbol, the player makes 1000x what they bet.</li>
               </ul>
             </ol>
+            <form action="#" method="post">
+              <input type="hidden" name="game" value="Slots">
+              <div class="modal-footer" style="background-color: #232228; display: flex; align-items: center; justify-content: center; padding: 0;">
+                <input type="submit" class="btn" style="background-color: #4cb050; font-weight: bold; width: 90%; border: 2px solid white; margin-right: 12px;" value="PLAY">
+                <a href="#!" class="red modal-close waves-effect waves-red btn-flat" style="font-weight: bold; color: white; border: 2px solid white;">Close</a>
+              </div>
+            </form>
           </div>
-
+  
         </div>
-        <div class="modal-footer" style="margin: 0 auto; background-color: #232228; display: flex; align-items: center; justify-content: center;">
+        <!-- <div class="modal-footer" style="margin: 0 auto; background-color: #232228; display: flex; align-items: center; justify-content: center;">
           <a class="btn waves-effect waves-light green" style="font-weight: bold; width: 90%; border: 2px solid white; margin-right: 12px;" href="/slots">PLAY</a>
           <a href="#!" class="red modal-close waves-effect waves-red btn-flat" style="font-weight: bold; color: white; border: 2px solid white;">Close</a>
-        </div>
+        </div> -->
       </div>
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
