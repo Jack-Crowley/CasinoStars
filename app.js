@@ -72,6 +72,19 @@ app.get( "/games", ( req, res ) => {
     });
 } );
 
+app.get( "/admin", ( req, res ) => {
+    db.execute(get_total_profit_sql, (error, results) => {
+        if (error)
+            res.status(500).send(error); //Internal Server Error
+        else {
+            let data = results; // results is still an array
+            // data's object structure: 
+            //  { item: ___ , quantity:___ , description: ____ }
+            res.render('admin', { inventory : results });
+        }
+    });
+} );
+
 // define a route for the item detail page
 app.get( "/stat", ( req, res ) => {
     db.execute(get_total_profit_sql, (error, results) => {
@@ -235,6 +248,23 @@ app.post("/poker", ( req, res ) => {
             else {
                 res.redirect('/')
             }
+        }
+    });
+})
+
+app.post("/admin", ( req, res ) => {
+    function getDate() {
+        let years = date.getFullYear()
+        let months = date.getMonth()+1
+        let day = date.getDate()
+        return String(years)+'-'+months+'-'+day+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds()
+    }
+    let date = new Date()
+    db.execute(create_item_sql, ['Admin Given', Number(req.body.amount), getDate()], (error, results) => {
+        if (error)
+            res.status(500).send(error); //Internal Server Error
+        else {
+            res.redirect('/admin')
         }
     });
 })
