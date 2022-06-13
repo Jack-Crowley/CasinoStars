@@ -8,10 +8,12 @@
     "readline-sync": "^1.4.10"
   },
   "name": "casinostars",
+  "description": "",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js",
+    "devstart": "nodemon -e js,ejs,sql,env app.js",
     "initdb": "node db/db_init.js"
   },
   "repository": {
@@ -23,6 +25,5 @@
   "bugs": {
     "url": "https://github.com/Jack-Crowley/CasinoStars/issues"
   },
-  "homepage": "https://github.com/Jack-Crowley/CasinoStars#readme",
-  "description": ""
+  "homepage": "https://github.com/Jack-Crowley/CasinoStars#readme"
 }
