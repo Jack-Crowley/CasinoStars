@@ -52,7 +52,7 @@ app.get( "/stuff", ( req, res ) => {
 app.get( "/", ( req, res ) => {
     db.execute(get_total_profit_sql, (error, results) => {
         if (error)
-            res.status(500).send(error); //Internal Server Error
+            res.status(500).send(error + ' Issue connecting with database'); //Internal Server Error
         else {
             let data = results; // results is still an array
             // data's object structure: 
