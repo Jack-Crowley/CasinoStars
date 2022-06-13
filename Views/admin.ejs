@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="Styles/dashboard.css">
+    <link rel="stylesheet" href="Styles/admin.css">
+    <link rel="stylesheet" href="Styles/navbar.css">
+    <link rel="stylesheet" href="Styles/scrollbar.css">
+    <title>Casino Stars</title>
+</head>
+<body>
+    <nav>
+        <div class="nav">
+            <ul>
+            <li><img src="images/logo.png" alt="" width="75"></li>
+            <li><a href="/" class="">Dashboard</a></li>
+            <li><a href="/games" class="">Games</a></li>
+            <li><a href="/stat" class="">Statistics</a></li>
+            <li><a href="/history" class="">History</a></li>
+            <li><a href="/admin" class="active">Admin Panel</a></li>
+            <%function getTotal() {
+                let sum = 0
+                inventory.forEach((num) => {
+                sum+=num.profit
+                })
+                return sum
+            }%>
+            <li class="right">$<%=getTotal()%></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container center passwordDIV">
+        <h1 class="white-text">Enter Password to enter</h1>
+        <input type="password" class="white-text password"  style="font-size: 2em; height: 4rem;">
+        <a href="#" class="btn passwordBTN">Submit</a>
+    </div>
+    <div class="container center addDIV hidden">
+        <h1 class="white-text">Enter add amount</h1>
+        <form action="/admin" method="post">
+            <input type="number" class="white-text password"  style="font-size: 2em; height: 4rem;" name="amount">
+            <input type="submit" class="btn passwordBTN" value="add">
+        </form>
+        
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script> 
+        M.AutoInit();
+      </script>
+    <script src="Scripts/admin.js"></script>
+</body>
+</html>
