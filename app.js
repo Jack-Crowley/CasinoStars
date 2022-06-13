@@ -158,7 +158,7 @@ app.post('/', ( req, res ) => {
             }
         });
     }
-    else if (req.body.game == 'poker') {
+    else if (req.body.game == 'Poker') {
         db.execute(get_total_profit_sql, (error, results) => {
             if (error)
                 res.status(500).send(error); //Internal Server Error
