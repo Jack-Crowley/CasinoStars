@@ -9,10 +9,11 @@ const logger = require("morgan");
 const db = require('./db/db_connection');
 
 app.use(logger("dev"));
-app.use(express.static(__dirname+'/public'))
+
 app.use( express.urlencoded({ extended: false }) );
 app.set( "views",  __dirname + "/views");
 app.set( "view engine", "ejs" );
+app.use(express.static(__dirname+'/public'))
 
 const read_stuff_all_sql = `
     SELECT 
@@ -63,7 +64,7 @@ app.get( "/", ( req, res ) => {
 } );
 
 app.get('/testserver', (req,res) => {
-    res.render('test')
+    res.sendFile(__dirname+'/views/test.html');
 })
 
 // define a route for the stuff inventory page
