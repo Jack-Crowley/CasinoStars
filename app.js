@@ -1,15 +1,20 @@
 const e = require("express");
 const express = require( "express" );
 const app = express();
-const port = 8080;
+
+const dotenv = require('dotenv');
+dotenv.config();
+
+const port = process.env.PORT;
 const logger = require("morgan");
 const db = require('./db/db_connection');
 
 app.use(logger("dev"));
-app.use(express.static(__dirname+'/public'))
+
 app.use( express.urlencoded({ extended: false }) );
 app.set( "views",  __dirname + "/views");
 app.set( "view engine", "ejs" );
+app.use(express.static(__dirname+'/public'))
 
 const read_stuff_all_sql = `
     SELECT 
@@ -49,7 +54,7 @@ app.get( "/stuff", ( req, res ) => {
 app.get( "/", ( req, res ) => {
     db.execute(get_total_profit_sql, (error, results) => {
         if (error)
-            res.status(500).send(error); //Internal Server Error
+            res.status(500).send(error + ' Issue connecting with database'); //Internal Server Error
         else {
             let data = results; // results is still an array
             // data's object structure: 
@@ -58,6 +63,10 @@ app.get( "/", ( req, res ) => {
         }
     });
 } );
+
+app.get('/testserver', (req,res) => {
+    res.sendFile(__dirname+'/views/test.html');
+})
 
 // define a route for the stuff inventory page
 app.get( "/games", ( req, res ) => {
