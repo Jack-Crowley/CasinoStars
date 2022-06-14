@@ -117,9 +117,7 @@
               let dates = []
               let values = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
               inventory.forEach((date) => {
-                console.log(getDate(date), getDateNoDatabase(today), 'dates')
                 if (getDate(date) == getDateNoDatabase(today)) {
-                  console.log('Correct Date')
                   let time = new Date(date.date);
                   values[Math.ceil(time.getHours())+1] += date.profit
                 }
@@ -172,9 +170,7 @@
               let dates = []
               let values = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
               inventory.forEach((date) => {
-                console.log(getDate(date), getDateNoDatabase(today), 'dates')
                 if (getDate(date) == getDateNoDatabase(today)) {
-                  console.log('Correct Date')
                   let time = new Date(date.date);
                   values[Math.ceil(time.getHours())+1] += 1
                 }
@@ -287,11 +283,11 @@
       </div>
       <div class="item center z-depth-5 P">
         <h4 class="white-text">Total Earning</h4>
-        <h3 class="P"><%=getTotal()%></h3>
+        <h3 class="white-text"><%=getTotal()%></h3>
       </div>
       <div class="item z-depth-5 center earningSwitchText P">
         <h4 class="white-text" data-main="Profit" data-one = 'Daily' data-two="Weekly" data-three="Monthly">Daily Profit</h4>
-        <h3 class="P"  data-one = '<%=getDayEarning()%>' data-two="<%=getWeekEarning()%>" data-three="<%=getMonthEarning()%>"><%=getDayEarning()%></h3>
+        <h3 class="white-text earn"  data-one = '<%=getDayEarning()%>' data-two="<%=getWeekEarning()%>" data-three="<%=getMonthEarning()%>"><%=getDayEarning()%></h3>
       </div>
     </div>
     <div class="parent">
@@ -318,11 +314,11 @@
       </div>
       <div class="item center z-depth-5 P">
         <h4 class="white-text">Total Games Played</h4>
-        <h3 class="P"><%=inventory.length%></h3>
+        <h3 class="white-text"><%=inventory.length%></h3>
       </div>
       <div class="item z-depth-5 center GPSwitchText P">
         <h4 class="white-text" data-main="Games Played" data-one = 'Daily' data-two="Weekly" data-three="Monthly">Daily Games Played</h4>
-        <h3 class="P"  data-one = '<%=DayGamesPlayed()%>' data-two="<%=WeekGamesPlayed()%>" data-three="<%=MonthlyGamesPlayed()%>"><%=WeekGamesPlayed()%></h3>
+        <h3 class="white-text"  data-one = '<%=DayGamesPlayed()%>' data-two="<%=WeekGamesPlayed()%>" data-three="<%=MonthlyGamesPlayed()%>"><%=WeekGamesPlayed()%></h3>
       </div>
     </div>
     <%function GetGameStats(game) {
@@ -477,6 +473,14 @@
         tempDate.setDate(today.getDate() - i)
         monthyValues.push(`${tempDate.getMonth()+1}/${tempDate.getDate()}`)
       }
+      let b = document.querySelector('.earn')
+      console.log(b.textContent)
+      if (b.textContent <= 0) {
+        let x = document.querySelector('.earningSwitchText')
+        x.classList.remove('P')
+        x.classList.add('N')
+      }
+      
 
     </script>
     <script src="/Scripts/statistics.js"></script>
