@@ -246,7 +246,7 @@ app.post("/baccarat", ( req, res ) => {
                         // data's object structure: 
                         //  { item: ___ , quantity:___ , description: ____ }
                         console.log(req.body.numOfComputers)
-                        res.render('blackjack', { inventory : results,  players : req.body.numOfComputers});
+                        res.render('baccarat', { inventory : results,  players : req.body.numOfComputers});
                     }
                 });
             }
