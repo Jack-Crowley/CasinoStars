@@ -301,8 +301,6 @@ CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
     this.closePath();
     return this;
 }
-
-playerBal = 1000;
 class betchip {
     constructor(amount,x) {
         this.amount = amount
