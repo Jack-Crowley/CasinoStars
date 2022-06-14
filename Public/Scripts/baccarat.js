@@ -361,7 +361,7 @@ class bc {
         this.player0 = new Player();
         this.players = []
         this.positions = [[100, window.innerHeight*0.3],[window.innerWidth*.6, window.innerHeight*0.3],[100, window.innerHeight*0.5],[window.innerWidth*0.7, window.innerHeight*0.5]]
-        this.tiepositions = [[window.innerWidth/2.27, window.innerHeight*.15], [window.innerWidth/1.95, window.innerHeight*.15], [window.innerWidth/2.27, window.innerHeight*.3], [window.innerWidth/1.95, window.innerHeight*.3], [window.innerWidth/2.27, window.innerHeight*.45]];
+        this.tiepositions = [[window.innerWidth/2.27, window.innerHeight*.25], [window.innerWidth/1.95, window.innerHeight*.25], [window.innerWidth/2.27, window.innerHeight*.39], [window.innerWidth/1.95, window.innerHeight*.39], [window.innerWidth/2.27, window.innerHeight*.53]];
         this.playerpositions = [[window.innerWidth/9, window.innerHeight*.15+340], [window.innerWidth/9+102, window.innerHeight*.15+340], [window.innerWidth/9+204, window.innerHeight*.15+340], [window.innerWidth/9+306, window.innerHeight*.15+340], [window.innerWidth/9+408, window.innerHeight*.15+340]];
         this.dealerpositions = [[window.innerWidth*0.58+408, window.innerHeight*.15+340], [window.innerWidth*0.58+306, window.innerHeight*.15+340], [window.innerWidth*0.58+204, window.innerHeight*.15+340], [window.innerWidth*0.58+102, window.innerHeight*.15+340], [window.innerWidth*0.58, window.innerHeight*.15+340]];
         this.positionnums = [0, 0, 0]
@@ -409,6 +409,7 @@ class bc {
         this.ctx.font = '70px Arial';
         this.ctx.fillText("Player's Hand:", window.innerWidth/8, window.innerHeight*0.25)
         this.ctx.fillText("Dealer's Hand:", window.innerWidth*0.59, window.innerHeight*0.25)
+        this.ctx.fillText("Tie:", window.innerWidth*.475, window.innerHeight*0.24)
 
         console.log(this.betlocations)
         for (let i = 0; i < this.betlocations.length; i++) {
@@ -547,7 +548,7 @@ class bc {
         this.imageHand(this.player0.hand, this.positions[1][0], this.positions[1][1])
         let baccaratRule = new Image()
         baccaratRule.onload = function() {
-            ctx.drawImage(baccaratRule, canvas.width*.4, canvas.height*.59, 300, 300);
+            ctx.drawImage(baccaratRule, canvas.width*.42, canvas.height*.65, 275, 275);
         };
         baccaratRule.src = 'images/baccarat_rules.png';
         ctx.fillStyle='#fff'
@@ -614,9 +615,7 @@ class bc {
         let player = document.querySelector('.player')
         let amount = document.querySelector('.amount')
 
-        console.log(this.player1.getScore())
-
-        player.textContent = `Player: ${this.player1.getScore()}`
+        player.textContent = `Player: ${this.playertotal}`
 
         if (this.baccaratgame.playertotal > this.baccaratgame.dealertotal) {
             if (this.player1.self) {
@@ -774,6 +773,7 @@ document.addEventListener('keydown', (event) => {
                             bcgame.positionnums[2]+=1;
                             bcgame.betlocations.push([`p${i+2}`, bcgame.tiepositions[bcgame.positionnums[2]-1][0], bcgame.tiepositions[bcgame.positionnums[2]-1][1]])
                         }
+                        
                     }
                     bcgame.startGame()
                 }
