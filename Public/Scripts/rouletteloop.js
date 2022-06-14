@@ -1,3 +1,5 @@
+let tp = 0
+
 class Ball {
     x;
     y;
@@ -13,7 +15,6 @@ class Ball {
         this.continue = false;
         this.angle = 0;
         this.rand = Math.floor(Math.random() * 38);
-        console.log(this.rand)
     }
 
     /**
@@ -41,7 +42,6 @@ class Ball {
         //     this.angle+= (2 * Math.PI)/190;
         // }
         if (this.angle <= (4 * Math.PI) + ((2*Math.PI)/38)*this.rand) {
-            console.log(this.angle)
             this.angle += (2 * Math.PI)/76;
         }else if (this.continue == false){
             this.getwinner();
@@ -55,21 +55,33 @@ class Ball {
     }
 
     getwinner() {
+        let profit = 0
         if (this.rand == 0 || this.rand == 19) {
             if (bet == 'green') {
-                playerbal += betnum * 2;
+                profit += betnum * 2;
+            }
+            else {
+                profit -= betnum
             }
         }else if (this.rand % 2 == 0) {
             if (bet == 'red') {
-                playerbal += betnum * 2;
+                profit += betnum * 2;
+            }
+            else {
+                profit -= betnum
             }
         }else {
             if (bet == 'black') {
-                playerbal += betnum * 2
+                profit += betnum * 2
+            }
+            else {
+                profit -= betnum
             }
         }
         betnum = 0;
         bet = undefined;
+        console.log(profit)
+        tp+=profit
     }
 
     //Add more methods as helpful:
@@ -149,7 +161,13 @@ function draw(){
     ctx.fillRect(canvas.width/4-300, canvas.height/4+295, 300, 100)
     ctx.fillStyle = "white";
     ctx.fillText("Green", canvas.width/4-250, canvas.height/4+370)
-
+    ctx.fillText(`Profit: ${tp}`, 0, window.innerHeight*0.9)
+    ctx.fillStyle='white'
+    ctx.fillStyle = 'red'
+    ctx.fillRect(window.innerWidth*0.9, window.innerHeight*0.9,window.innerWidth*0.1, window.innerHeight*0.1 )
+    ctx.fillStyle='white'
+    ctx.fillText(`Cashout`, window.innerWidth*0.9, window.innerHeight)
+    
     if (playerbal >= 1) {
         const one = new Image();
         one.onload = function() {
@@ -252,7 +270,6 @@ canvas.addEventListener("click", function(event) {
     }else if (event.offsetX > canvas.width/4-300 && event.offsetX < canvas.width/4 && event.offsetY > canvas.height/4+400 && event.offsetY < canvas.height/4+500) {
         if (typeof bet != "undefined" && betnum > 0) {
             ball = new Ball(window.innerWidth/2, window.innerHeight/2, 20);
-            console.log(ball)
             drawIntervalId = window.setInterval(start, FRAME_LENGTH);
         }
     }else if (Math.sqrt( (event.offsetX-canvas.width/4*3) ** 2 + (event.offsetY-(canvas.height/4-50)) **2 ) < 150) {
@@ -309,5 +326,11 @@ canvas.addEventListener("click", function(event) {
             clearchips();
             draw();
         };
+    }
+    else if (event.offsetX > window.innerWidth*0.9 && event.offsetY >  window.innerHeight*0.9) {
+        let x = document.querySelector('.submit')
+        let y = document.querySelector('.amount')
+        y.value = tp
+        x.click()
     }
 });

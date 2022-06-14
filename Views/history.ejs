@@ -55,7 +55,7 @@
       }; %>
       <tbody>
         <% for (let i=0; i<inventory.length; i++) { %>
-            <tr onclick="window.location='/<%= inventory[i].game.toLowerCase() %>'">
+            <tr id="<%= inventory[i].game.toLowerCase() %>"> <!-- onclick="<%  %>"> | window.location='/<%= inventory[i].game.toLowerCase() %> '-->
                 <td><%= inventory[i].game %></td>
                 <td><div>
                   <span style="float: left;">$</span>
@@ -67,6 +67,34 @@
       </tbody>
     </table>
 
+    <!-- Forms -->
+    <form action="/" method="post" id="poker">
+      <input type="hidden" name="numOfComputers" value="2">
+      <input type="hidden" name="numOfDecks" value="1">
+      <input type="hidden" name="game" value="Poker">
+    </form>
+
+    <form action="/" method="post" id="blackjack">
+      <input id="players" type="hidden" name="numOfComputers" value="2">
+      <input type="hidden" name="numOfDecks" value="1">
+      <input type="hidden" name="game" value="bj">
+    </form>
+
+    <form action="/" method="post" id="baccarat">
+      <input type="hidden" name="numOfComputers" value="2">
+      <input type="hidden" name="numOfDecks" value="1">
+      <input type="hidden" name="game" value="Baccarat">
+    </form>
+
+    <form action="/" method="post" id="roulette">
+      <input type="hidden" name="game" value="Roulette">
+    </form>
+
+    <form action="/" method="post" id="slots">
+      <input type="hidden" name="game" value="Slots">
+    </form>
+
+    <script src="Scripts/history.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </body>

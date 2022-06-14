@@ -608,6 +608,7 @@ class bc {
     }
 
     endGame() {
+        console.log('Game ended')
         let a = document.querySelector('a')
         let gameended = document.querySelector('.GameEnded')
         let profit = document.querySelector('.profit')
@@ -624,6 +625,9 @@ class bc {
                 amount.value = this.betAmount*(2)-this.betAmount
             }else {
                 gameended.textContent = 'You lost'
+                if (gameended.classList.contains('green-text')) {
+                    gameended.classList.remove('green-text')
+                }
                 gameended.classList.add('red-text')
                 profit.textContent = `Profit: ` + (-this.betAmount)
                 amount.value = -this.betAmount
@@ -639,6 +643,9 @@ class bc {
                 amount.value = winnings
             }else {
                 gameended.textContent = 'You lost'
+                if (gameended.classList.contains('green-text')) {
+                    gameended.classList.remove('green-text')
+                }
                 gameended.classList.add('red-text')
                 profit.textContent = `Profit: ` + (-this.betAmount)
                 amount.value = -this.betAmount
@@ -652,6 +659,9 @@ class bc {
                 amount.value = this.betAmount*(9)-this.betAmount
             }else {
                 gameended.textContent = 'You lost'
+                if (gameended.classList.contains('green-text')) {
+                    gameended.classList.remove('green-text')
+                }
                 gameended.classList.add('red-text')
                 profit.textContent = `Profit: ` + (-this.betAmount)
                 amount.value = -this.betAmount
@@ -659,7 +669,7 @@ class bc {
         }
         setTimeout(() => {
             a.click()
-        }, 1250) 
+        }, 5000) 
     }
 
     clearBoard() {

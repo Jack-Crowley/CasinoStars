@@ -1,3 +1,4 @@
+const e = require("express");
 const express = require( "express" );
 const app = express();
 
@@ -9,10 +10,11 @@ const logger = require("morgan");
 const db = require('./db/db_connection');
 
 app.use(logger("dev"));
-app.use(express.static(__dirname+'/public'))
+
 app.use( express.urlencoded({ extended: false }) );
 app.set( "views",  __dirname + "/views");
 app.set( "view engine", "ejs" );
+app.use(express.static(__dirname+'/public'))
 
 const read_stuff_all_sql = `
     SELECT 
@@ -52,7 +54,7 @@ app.get( "/stuff", ( req, res ) => {
 app.get( "/", ( req, res ) => {
     db.execute(get_total_profit_sql, (error, results) => {
         if (error)
-            res.status(500).send(error); //Internal Server Error
+            res.status(500).send(error + ' Issue connecting with database'); //Internal Server Error
         else {
             let data = results; // results is still an array
             // data's object structure: 
@@ -61,6 +63,10 @@ app.get( "/", ( req, res ) => {
         }
     });
 } );
+
+app.get('/testserver', (req,res) => {
+    res.sendFile(__dirname+'/views/test.html');
+})
 
 // define a route for the stuff inventory page
 app.get( "/games", ( req, res ) => {
@@ -162,32 +168,27 @@ app.get('/baccarat', (req, res) => {
 })
 
 app.post('/', ( req, res ) => {
-    if (req.body.game == 'bj') {
-        console.log(req.body.numOfComputers)
-        db.execute(get_total_profit_sql, (error, results) => {
-            if (error)
-                res.status(500).send(error); //Internal Server Error
-            else {
-                let data = results; // results is still an array
-                // data's object structure: 
-                //  { item: ___ , quantity:___ , description: ____ }
+    db.execute(get_total_profit_sql, (error, results) => {
+        if (error)
+            res.status(500).send(error); //Internal Server Error
+        else {
+            if (req.body.game == 'bj') {
                 res.render('blackjack', { inventory : results,  players : req.body.numOfComputers});
             }
-        });
-    }
-    else if (req.body.game == 'Poker') {
-        db.execute(get_total_profit_sql, (error, results) => {
-            if (error)
-                res.status(500).send(error); //Internal Server Error
-            else {
-                let data = results; // results is still an array
-                // data's object structure: 
-                //  { item: ___ , quantity:___ , description: ____ }
-                console.log(req.body.numOfComputers)
+            else if (req.body.game == 'Poker') {
                 res.render('poker', { inventory : results,  players : req.body.numOfComputers});
             }
-        });
-    }
+            else if (req.body.game == 'Baccarat') {
+                res.render('baccarat', { inventory : results,  players : req.body.numOfComputers});
+            }
+            else if (req.body.game == 'Slots') {
+                res.render('slots', { inventory : results});
+            }
+            else if (req.body.game == 'Roulette') {
+                res.render('roulette', { inventory : results});
+            }
+        }
+    });
 })
 
 app.post("/blackjack", ( req, res ) => {
@@ -200,6 +201,106 @@ app.post("/blackjack", ( req, res ) => {
     let date = new Date()
 
     db.execute(create_item_sql, ['BlackJack', req.body.amount, getDate()], (error, results) => {
+        if (error)
+            res.status(500).send(error); //Internal Server Error
+        else {
+            if (req.body.mode == 'PLAY') {
+                db.execute(get_total_profit_sql, (error, results) => {
+                    if (error)
+                        res.status(500).send(error); //Internal Server Error
+                    else {
+                        let data = results; // results is still an array
+                        // data's object structure: 
+                        //  { item: ___ , quantity:___ , description: ____ }
+                        console.log(req.body.numOfComputers)
+                        res.render('blackjack', { inventory : results,  players : req.body.numOfComputers});
+                    }
+                });
+            }
+            else {
+                res.redirect('/')
+            }
+        }
+    });
+})
+
+app.post("/baccarat", ( req, res ) => {
+    function getDate() {
+        let years = date.getFullYear()
+        let months = date.getMonth()+1
+        let day = date.getDate()
+        return String(years)+'-'+months+'-'+day+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds()
+    }
+    let date = new Date()
+
+    db.execute(create_item_sql, ['Baccarat', req.body.amount, getDate()], (error, results) => {
+        if (error)
+            res.status(500).send(error); //Internal Server Error
+        else {
+            if (req.body.mode == 'PLAY') {
+                db.execute(get_total_profit_sql, (error, results) => {
+                    if (error)
+                        res.status(500).send(error); //Internal Server Error
+                    else {
+                        let data = results; // results is still an array
+                        // data's object structure: 
+                        //  { item: ___ , quantity:___ , description: ____ }
+                        console.log(req.body.numOfComputers)
+                        res.render('blackjack', { inventory : results,  players : req.body.numOfComputers});
+                    }
+                });
+            }
+            else {
+                res.redirect('/')
+            }
+        }
+    });
+})
+
+
+app.post("/roulette", ( req, res ) => {
+    function getDate() {
+        let years = date.getFullYear()
+        let months = date.getMonth()+1
+        let day = date.getDate()
+        return String(years)+'-'+months+'-'+day+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds()
+    }
+    let date = new Date()
+
+    db.execute(create_item_sql, ['Roulette', req.body.amount, getDate()], (error, results) => {
+        if (error)
+            res.status(500).send(error); //Internal Server Error
+        else {
+            if (req.body.mode == 'PLAY') {
+                db.execute(get_total_profit_sql, (error, results) => {
+                    if (error)
+                        res.status(500).send(error); //Internal Server Error
+                    else {
+                        let data = results; // results is still an array
+                        // data's object structure: 
+                        //  { item: ___ , quantity:___ , description: ____ }
+                        console.log(req.body.numOfComputers)
+                        res.render('blackjack', { inventory : results,  players : req.body.numOfComputers});
+                    }
+                });
+            }
+            else {
+                res.redirect('/')
+            }
+        }
+    });
+})
+
+app.post("/slots", ( req, res ) => {
+    function getDate() {
+        let years = date.getFullYear()
+        let months = date.getMonth()+1
+        let day = date.getDate()
+        return String(years)+'-'+months+'-'+day+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds()
+    }
+    let date = new Date()
+
+    db.execute(create_item_sql, ['Slots', req.body.amount, getDate()], (error, results) => {
         if (error)
             res.status(500).send(error); //Internal Server Error
         else {
