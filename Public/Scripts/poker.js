@@ -1065,7 +1065,7 @@ class pokerGUI {
                     li.innerHTML=`Player ${i+1} has won and received ${this.pot/people.length}`;
                 }
             }
-            amount.textContent = x
+            amount.value = x
             a.click()
         },1000)
     }

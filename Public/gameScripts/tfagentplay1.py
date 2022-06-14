@@ -69,8 +69,6 @@ def hitOrStay(a,b,c):
     time_step = env.step(policy_step.action)
     return python_environment.hitOrStay
 
-f = open('scores.txt', 'w')
-
 cards = [11,2,3,4,5,6,7,8,9,10,10,10,10]
 for a in cards:
     for b in cards:
@@ -78,4 +76,3 @@ for a in cards:
         for c in cards:
             oneOrZeros.append(str(hitOrStay(a,b,c)))
         stringOfArray = ','.join(oneOrZeros)
-        f.write(stringOfArray+'\n')
