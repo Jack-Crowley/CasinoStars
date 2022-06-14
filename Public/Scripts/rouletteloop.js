@@ -161,12 +161,12 @@ function draw(){
     ctx.fillRect(canvas.width/4-300, canvas.height/4+295, 300, 100)
     ctx.fillStyle = "white";
     ctx.fillText("Green", canvas.width/4-250, canvas.height/4+370)
-    ctx.fillText(`Profit: ${tp}`, 0, window.innerHeight*0.9)
+    ctx.fillText(`Profit: ${tp}`, window.innerWidth*0.1, window.innerHeight*0.9)
     ctx.fillStyle='white'
     ctx.fillStyle = 'red'
-    ctx.fillRect(window.innerWidth*0.9, window.innerHeight*0.9,window.innerWidth*0.1, window.innerHeight*0.1 )
+    ctx.fillRect(window.innerWidth*0.75, window.innerHeight*0.875,window.innerWidth*0.2, window.innerHeight*0.1 )
     ctx.fillStyle='white'
-    ctx.fillText(`Cashout`, window.innerWidth*0.9, window.innerHeight)
+    ctx.fillText(`Cashout`, window.innerWidth*0.78, window.innerHeight*.95)
     
     if (playerbal >= 1) {
         const one = new Image();
@@ -327,7 +327,7 @@ canvas.addEventListener("click", function(event) {
             draw();
         };
     }
-    else if (event.offsetX > window.innerWidth*0.9 && event.offsetY >  window.innerHeight*0.9) {
+    else if (event.offsetX > window.innerWidth*0.75 && event.offsetX < window.innerWidth*0.75+window.innerWidth*0.2 && event.offsetY >  window.innerHeight*0.875 && event.offsetY< window.innerHeight*0.875+window.innerHeight*0.1) {
         let x = document.querySelector('.submit')
         let y = document.querySelector('.amount')
         y.value = tp

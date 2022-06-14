@@ -301,8 +301,6 @@ CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
     this.closePath();
     return this;
 }
-
-playerBal = 1000;
 class betchip {
     constructor(amount,x) {
         this.amount = amount
@@ -615,7 +613,7 @@ class bc {
         let player = document.querySelector('.player')
         let amount = document.querySelector('.amount')
 
-        player.textContent = `Player: ${this.playertotal}`
+        player.textContent = `Player total: ${this.baccaratgame.playertotal}`
 
         if (this.baccaratgame.playertotal > this.baccaratgame.dealertotal) {
             if (this.player1.self) {
