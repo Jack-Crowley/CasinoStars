@@ -575,7 +575,9 @@ class pokerGUI {
     }
 
     async computer(i) {
-        let action = Math.floor(Math.random()*3)
+        // let action = Math.floor(Math.random()*3)
+        let actions = [0, 1, 1, 1, 2, 2, 2, 2, 2]
+        let action = Math.floor(Math.random() * actions.length)
         if (action == 0) {
             this.rotatePlayers[i].stand = true
         }
@@ -586,6 +588,7 @@ class pokerGUI {
         }
         else {
             this.lastRaise = i
+            this.minbet += Math.floor(Math.random() * 101) + 50
             this.pot += this.minbet-this.rotatePlayers[i].bet
             this.rotatePlayers[i].money -= this.minbet-this.rotatePlayers[i].bet
             this.rotatePlayers[i].bet = this.minbet
