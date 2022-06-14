@@ -5,7 +5,7 @@ const app = express();
 const dotenv = require('dotenv');
 dotenv.config();
 
-const port = 80;
+const port = process.env.PORT;
 const logger = require("morgan");
 const db = require('./db/db_connection');
 
