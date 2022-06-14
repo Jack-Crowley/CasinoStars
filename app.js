@@ -2,6 +2,7 @@ const e = require("express");
 const express = require( "express" );
 const app = express();
 
+const path = require('path')
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -12,9 +13,9 @@ const db = require('./db/db_connection');
 app.use(logger("dev"));
 
 app.use( express.urlencoded({ extended: false }) );
-app.set( "views",  __dirname + "/views");
+app.set( "views", path.join((__dirname + "/views")));
 app.set( "view engine", "ejs" );
-app.use(express.static(__dirname+'/public'))
+app.use(express.static(path.join(__dirname+'/public')))
 
 const read_stuff_all_sql = `
     SELECT 
