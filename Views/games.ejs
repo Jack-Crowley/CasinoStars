@@ -44,7 +44,7 @@
             <p>A challenging mind game whose ultimate objective is winning the pot.</p>
             <div class="buttons">
               <a class="btn waves-effect waves-light grey lighten-1 modal-trigger" href="#poker-modal">MORE INFO<span class="right"><i class="material-icons">info</i></span></a>
-              <a class="btn waves-effect waves-light green" style="font-weight: bold;" href="/poker">PLAY<span class="right"><i class="material-icons">play_circle_outline</i></span></a>
+              <a class="btn waves-effect waves-light green" style="font-weight: bold;" onclick="document.querySelector('form#poker').submit()">PLAY<span class="right"><i class="material-icons">play_circle_outline</i></span></a>
             </div>
           </div>
         </div>
@@ -56,7 +56,7 @@
             <p>A card game in which players try to obtain a combination of cards worth 21 points.</p>
             <div class="buttons">
               <a class="btn waves-effect waves-light grey lighten-1 modal-trigger" href="#bj-modal">MORE INFO<span class="right"><i class="material-icons">info</i></a>
-              <a class="btn waves-effect waves-light green" style="font-weight: bold;" href="/blackjack">PLAY<span class="right"><i class="material-icons">play_circle_outline</i></span></a>
+              <a class="btn waves-effect waves-light green" style="font-weight: bold;" onclick="document.querySelector('form#blackjack').submit()">PLAY<span class="right"><i class="material-icons">play_circle_outline</i></span></a>
             </div>
           </div>
         </div>
@@ -71,7 +71,7 @@
             <p>A card game in which the winner is the player who holds two or three cards totaling closest to nine.</p>
             <div class="buttons">
               <a class="btn waves-effect waves-light grey lighten-1 modal-trigger" href="#bacc-modal">MORE INFO<span class="right"><i class="material-icons">info</i></a>
-              <a class="btn waves-effect waves-light green" style="font-weight: bold;" href="/baccarat">PLAY<span class="right"><i class="material-icons">play_circle_outline</i></span></a>
+              <a class="btn waves-effect waves-light green" style="font-weight: bold;" onclick="document.querySelector('form#baccarat').submit()">PLAY<span class="right"><i class="material-icons">play_circle_outline</i></span></a>
             </div>
           </div>
         </div>
@@ -83,7 +83,7 @@
             <p>A no-skill gambling game that will leave your head spinning.</p>
             <div class="buttons">
               <a class="btn waves-effect waves-light grey lighten-1 modal-trigger" href="#roul-modal">MORE INFO<span class="right"><i class="material-icons">info</i></a>
-              <a class="btn waves-effect waves-light green" style="font-weight: bold;" href="/roulette">PLAY<span class="right"><i class="material-icons">play_circle_outline</i></span></a>
+              <a class="btn waves-effect waves-light green" style="font-weight: bold;" onclick="document.querySelector('form#roulette').submit()">PLAY<span class="right"><i class="material-icons">play_circle_outline</i></span></a>
             </div>
           </div>
         </div>
@@ -97,7 +97,7 @@
             <p>Slot machines are gambling machines that create a game of chance for their customers.</p>
             <div class="buttons">
               <a class="btn waves-effect waves-light grey lighten-1 modal-trigger" href="#slots-modal">MORE INFO<span class="right"><i class="material-icons">info</i></a>
-              <a class="btn waves-effect waves-light green" style="font-weight: bold;" href="/slots">PLAY<span class="right"><i class="material-icons">play_circle_outline</i></span></a>
+              <a class="btn waves-effect waves-light green" style="font-weight: bold;" onclick="document.querySelector('form#slots').submit()">PLAY<span class="right"><i class="material-icons">play_circle_outline</i></span></a>
             </div>
           </div>
         </div>
@@ -171,7 +171,7 @@
               </ul>
               <li>Whoever has the best hand wins the pot.</li>
             </ol>
-            <form action="#" method="post">
+            <form action="/" method="post">
               <input type="hidden" name="numOfComputers" value="2">
               <input type="hidden" name="numOfDecks" value="1">
               <input type="hidden" name="game" value="Poker">
@@ -184,7 +184,7 @@
           <div id="setPoker">
             <br>
             <p>Settings</p>
-            <form action="#" method="post">
+            <form action="/" method="post">
               <p>Number of Computers</p>
               <p class="range-field">
                 <input type="range" name="numOfComputers" min="0" max="4"/>
@@ -242,7 +242,7 @@
               <li>For each player, if they did not bust and either the dealer bust or they have a higher score than the dealer, they win money.</li>
               <li>If the player ties with the dealer, they get their money back.</li>
             </ol>
-            <form action="#" method="post">
+            <form action="/" method="post">
               <input type="hidden" name="numOfComputers" value="2">
               <input type="hidden" name="numOfDecks" value="1">
               <input type="hidden" name="game" value="bj">
@@ -255,7 +255,7 @@
           <div id="setBJ">
             <br>
             <p>Settings</p>
-            <form action="#" method="post">
+            <form action="/" method="post">
               <p>Number of Computers</p>
               <p class="range-field">
                 <input type="range" name="numOfComputers" min="0" max="4"/>
@@ -313,7 +313,7 @@
               <li>Whichever hand has the number closest to 9 wins.</li>
               <li>Players win money based on what they bet on.</li>
             </ol>
-            <form action="#" method="post">
+            <form action="/" method="post">
               <input type="hidden" name="numOfComputers" value="2">
               <input type="hidden" name="numOfDecks" value="1">
               <input type="hidden" name="game" value="Baccarat">
@@ -326,7 +326,7 @@
           <div id="setBacc">
             <br>
             <p>Settings</p>
-            <form action="#" method="post">
+            <form action="/" method="post">
               <p>Number of Computers</p>
               <p class="range-field">
                 <input type="range" name="numOfComputers" min="0" max="4"/>
@@ -369,7 +369,7 @@
               <li>The ball spins around the wheel and stops at a random space.</li>
               <li>Players will make or lose money depending on if they were right about the color of the space the ball stopped at.</li>
             </ol>
-            <form action="#" method="post">
+            <form action="/" method="post">
               <input type="hidden" name="game" value="Roulette">
               <div class="modal-footer" style="background-color: #232228; display: flex; align-items: center; justify-content: center; padding: 0;">
                 <input type="submit" class="btn" style="background-color: #4cb050; font-weight: bold; width: 90%; border: 2px solid white; margin-right: 12px;" value="PLAY">
@@ -406,7 +406,7 @@
                 <li>If all 3 reels have the same symbol, the player makes 1000x what they bet.</li>
               </ul>
             </ol>
-            <form action="#" method="post">
+            <form action="/" method="post">
               <input type="hidden" name="game" value="Slots">
               <div class="modal-footer" style="background-color: #232228; display: flex; align-items: center; justify-content: center; padding: 0;">
                 <input type="submit" class="btn" style="background-color: #4cb050; font-weight: bold; width: 90%; border: 2px solid white; margin-right: 12px;" value="PLAY">
@@ -421,6 +421,33 @@
           <a href="#!" class="red modal-close waves-effect waves-red btn-flat" style="font-weight: bold; color: white; border: 2px solid white;">Close</a>
         </div> -->
       </div>
+
+      <!-- Forms -->
+    <form action="/" method="post" id="poker">
+      <input type="hidden" name="numOfComputers" value="2">
+      <input type="hidden" name="numOfDecks" value="1">
+      <input type="hidden" name="game" value="Poker">
+    </form>
+
+    <form action="/" method="post" id="blackjack">
+      <input id="players" type="hidden" name="numOfComputers" value="2">
+      <input type="hidden" name="numOfDecks" value="1">
+      <input type="hidden" name="game" value="bj">
+    </form>
+
+    <form action="/" method="post" id="baccarat">
+      <input type="hidden" name="numOfComputers" value="2">
+      <input type="hidden" name="numOfDecks" value="1">
+      <input type="hidden" name="game" value="Baccarat">
+    </form>
+
+    <form action="/" method="post" id="roulette">
+      <input type="hidden" name="game" value="Roulette">
+    </form>
+
+    <form action="/" method="post" id="slots">
+      <input type="hidden" name="game" value="Slots">
+    </form>
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
