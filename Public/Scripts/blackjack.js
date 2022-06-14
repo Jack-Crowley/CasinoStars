@@ -788,32 +788,21 @@ class bj {
         20:18:0
         20:19:0
         20:20:0`.split('\n');
-        console.log(contents)
-        let actions = []; //new Array(21).fill(new Array(10).fill(0));
-        for (let a=0; a<21; a++) {
-            let newArr = [];
-            for (let j=0; j<10; j++) {
-                newArr.push(0)
-            };
-            actions.push(newArr);
-        };
+        let actions = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+
         console.log(actions)
         for (let i=0; i<contents.length; i++) {
             contents[i] = contents[i].trim();
-            // let conts = contents[i].split(' ')
-            // console.log(conts)
-            // conts = conts[conts.length-1]
             let params = contents[i].split(':');
-            console.log(params);
-            actions[Number(params[0])][Number(params[1])] = Number(params[2]);
+            actions[Number(params[0])-1][Number(params[1])-1] = Number(params[2]);
         };
-        console.log(actions)
+        console.log('actions: ' + actions)
         for (let i = 0; i < this.players.length; i++) {
             while (this.players[i].stand == false) {
                 // let action = Math.floor(Math.random()*2)
-                let action = actions[this.players[i].getScore()][this.players[0].getScore()];
+                let action = actions[this.players[i].getScore()-1][this.players[0].getScore()-1];
                 console.log('action: ' + action)
-                if (action == 0) {
+                if (action == 1) {
                     let tempcard = this.deck.draw()
                     this.players[i].hand.push(tempcard)
                     if (this.players[0].getScore() > 21) {
