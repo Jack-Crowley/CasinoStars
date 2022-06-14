@@ -15,7 +15,7 @@ app.use(logger("dev"));
 app.use( express.urlencoded({ extended: false }) );
 app.set( "views", path.join((__dirname + "/Views")));
 app.set( "view engine", "ejs" );
-app.use(express.static(path.join(__dirname+'/public')))
+app.use(express.static(path.join(__dirname+'/Public')))
 
 const read_stuff_all_sql = `
     SELECT 
