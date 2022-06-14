@@ -18,9 +18,11 @@ getsymbol();
 function draw() {
     ctx.fillStyle='white'
     ctx.fillStyle = 'red'
-    ctx.fillRect(window.innerWidth*0.9, window.innerHeight*0.9,window.innerWidth*0.1, window.innerHeight*0.1 )
-    ctx.fillStyle='white'
-    ctx.fillText(`Cashout`, window.innerWidth*0.9, window.innerHeight)
+    exitButton = new Image()
+    exitButton.src='images\\exit.png'
+    exitButton.onload = () => {
+        ctx.drawImage(exitButton, 20, 0, 50, 50)
+    }
     ctx.strokeStyle='fuchsia';
     ctx.lineWidth=3;
     ctx.beginPath();
@@ -130,7 +132,7 @@ canvas.addEventListener('click', function(event)  {
             draw();
         }
     }
-    else if (event.offsetX > window.innerWidth*0.9 && event.offsetY >  window.innerHeight*0.9) {
+    else if (event.offsetX > 20 && event.offsetX < 70 && event.offsetY < 50) {
         let x = document.querySelector('.submit')
         let y = document.querySelector('.amount')
         y.value = tr
