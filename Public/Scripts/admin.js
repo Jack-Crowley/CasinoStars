@@ -15,7 +15,7 @@ function hash(text) {
 }
 
 x.addEventListener('click', () => {
-    if(hash(password.value) == -1112340794) {
+    if(hash(password.value) == -122826213) {
         pdiv.classList.add('hidden')
         adiv.classList.remove('hidden')
     }

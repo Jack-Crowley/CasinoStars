@@ -102,7 +102,7 @@ class BlackJack(py_environment.PyEnvironment):
         self._action_spec = array_spec.BoundedArraySpec(
         shape=(), dtype=np.int32, minimum=0, maximum=1, name='play')
         self._observation_spec = array_spec.BoundedArraySpec(
-            shape=(1,3), dtype=np.int32, minimum=0, maximum=30, name='board')
+            shape=(1,2), dtype=np.int32, minimum=0, maximum=30, name='board')
         self._episode_ended = False
     
     def showDeck(self):
@@ -179,7 +179,7 @@ class BlackJack(py_environment.PyEnvironment):
         games += 1
         print(f'Game: {games}')
         self.StartGame()
-        self._state = [self.hand.value, self.dealer.value, self.hand.aces]
+        self._state = [self.hand.value, self.dealer.value]
         self._episode_ended = False
         return ts.restart(np.array([self._state], dtype=np.int32))
         
@@ -207,7 +207,7 @@ class BlackJack(py_environment.PyEnvironment):
                     card = self.deck.drawCard()   
                     self.hand.addCard(card)
                     self._state[0] = self.hand.value
-                    return ts.transition(np.array([self._state], dtype=np.int32), reward=0.05, discount=1.0)
+                    return ts.transition(np.array([self._state], dtype=np.int32), reward=1, discount=1)
             else:
                 self._episode_ended = True
                 return ts.termination(np.array([self._state], dtype=np.int32), 2.5)
@@ -266,8 +266,8 @@ dataset = replay_buffer.as_dataset(num_parallel_calls=3,
                                    sample_batch_size=batch_size, 
                                    num_steps=2).prefetch(3)
 iterator = iter(dataset)
-num_iterations = 1000000
-checkpoint_dir = r'C:\\Users\\jack1\Documents\\Coding\\Final\\CasinoStars\\Checkpoints'
+num_iterations = 10000
+checkpoint_dir = r'.\\Checkpoints'
 train_checkpointer = common.Checkpointer(
     ckpt_dir=checkpoint_dir,
     max_to_keep=1,
@@ -276,7 +276,7 @@ train_checkpointer = common.Checkpointer(
     replay_buffer=replay_buffer
 )
 
-policy_dir = r'C:\\Users\\jack1\Documents\\Coding\\Final\\CasinoStars\\Policy'
+policy_dir = r'.\\Public\\gameScripts\\Policy'
 tf_policy_saver = policy_saver.PolicySaver(agent.policy)
 
 env.reset()
@@ -298,4 +298,3 @@ print(returns)
 print(np.mean(returns))
 
 tf_policy_saver.save(policy_dir)
-

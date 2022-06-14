@@ -191,6 +191,17 @@ app.post('/', ( req, res ) => {
     });
 })
 
+app.post("/addgame", ( req, res ) => {
+
+    db.execute(create_item_sql, [req.body.game, req.body.amount, req.body.date], (error, results) => {
+        if (error)
+            res.status(500).send(error); //Internal Server Error
+        else {
+            res.redirect('/')
+        }
+    });
+})
+
 app.post("/blackjack", ( req, res ) => {
     function getDate() {
         let years = date.getFullYear()
