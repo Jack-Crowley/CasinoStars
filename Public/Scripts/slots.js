@@ -1,5 +1,3 @@
-const e = require("express");
-
 let tr = 0
 console.log(canvas.width)
 console.log(canvas.height)
