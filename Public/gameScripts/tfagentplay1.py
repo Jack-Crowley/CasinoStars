@@ -10,18 +10,14 @@ print('Modules Imported')
 games = 0
 
 class Hand:
-    def __init__(self, nums):
-        self.value = sum(nums)
-        self.numOfAces = nums.count(11)
-        while self.value > 21 & self.numOfAces > 0:
-            self.value -= 10
-            self.numOfAces -= 1
+    def __init__(self, value):
+        self.value = value
 
 class BlackJack(py_environment.PyEnvironment):
-    def __init__(self, hand, dealersHand):
+    def __init__(self, hand, dealersHand, numOfAces):
+        self.aces = numOfAces
         self.pc = 1
         self.hand = hand
-        self.cards = []
         self.dealer = dealersHand
         self._action_spec = array_spec.BoundedArraySpec(
         shape=(), dtype=np.int32, minimum=0, maximum=1, name='play')
@@ -29,21 +25,18 @@ class BlackJack(py_environment.PyEnvironment):
             shape=(1,3), dtype=np.int32, minimum=0, maximum=30, name='board')
         self._episode_ended = False
         self.hitOrStay = 0
-    
-    def showDeck(self):
-        print(len(self.deck.cards))
-        for card in self.deck.cards:
-            print(card, end=" ")
-    
+
     def action_spec(self):
         return self._action_spec
+
     def observation_spec(self):
         return self._observation_spec
+
     def _reset(self):
         # state at the start of the game
         global games
         games += 1
-        self._state = [self.hand.value, self.dealer.value, self.hand.numOfAces]
+        self._state = [self.hand.value, self.dealer.value]
         self._episode_ended = False
         return ts.restart(np.array([self._state], dtype=np.int32))
         
@@ -53,15 +46,14 @@ class BlackJack(py_environment.PyEnvironment):
         self._episode_ended = True
         self.hitOrStay = action
         return ts.termination(np.array([self._state], dtype=np.int32), action)
+
 def hitOrStay(a,b,c):
 
-    print(a,b,c)
-
-    python_environment = BlackJack(Hand([a,b]), Hand([cards[c]]))
+    python_environment = BlackJack(Hand(b), Hand(c), a)
     env = tf_py_environment.TFPyEnvironment(python_environment)
 
-    saved_policy = tf.saved_model.load(r'C:\\Users\\jack1\Documents\\Coding\\Final\\CasinoStars\\Policy')
-    policy_state = saved_policy.get_initial_state(batch_size=3)
+    saved_policy = tf.saved_model.load(r'.\\Public\\gameScripts\\Policy')
+    policy_state = saved_policy.get_initial_state(batch_size=64)
 
     time_step = env.reset()
     policy_step = saved_policy.action(time_step, policy_state)
@@ -69,10 +61,4 @@ def hitOrStay(a,b,c):
     time_step = env.step(policy_step.action)
     return python_environment.hitOrStay
 
-cards = [11,2,3,4,5,6,7,8,9,10,10,10,10]
-for a in cards:
-    for b in cards:
-        oneOrZeros = []
-        for c in cards:
-            oneOrZeros.append(str(hitOrStay(a,b,c)))
-        stringOfArray = ','.join(oneOrZeros)
+print(hitOrStay(10, 4, 0))
